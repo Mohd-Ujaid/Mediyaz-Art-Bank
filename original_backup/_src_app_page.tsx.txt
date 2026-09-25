@@ -1,0 +1,621 @@
+import React from "react";
+import Link from "next/link";
+import { Playfair_Display } from "next/font/google";
+import Image from "next/image";
+
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"]
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair"
+});
+
+const page = () => {
+  return (
+    <>
+      {/* hero section  */}
+      <section className="h-[100vh] top-0">
+        <div
+          className="w-full h-[100vh] bg-cover bg-center bg-no-repeat fixed z-[-1]"
+          style={{ backgroundImage: "url('/img/hero.jpg')" }}
+        ></div>
+        <div className="relative z-2 max-w-[92.5rem] mx-auto px-[2.5rem] pt-59 sm:text-2xl">
+          <h1
+            className={`mt-20 text-5xl font-medium text-[#1d3840] ${playfair.className} pl-10`}
+          >
+            The Registerd ART Bank
+          </h1>
+          <div className="mt-13 flex items-start w-full relative">
+            {/* first column */}
+            <div className="mr-[2.5rem] max-w-[22rem] text-center rounded-[1.5625rem] bg-white pt-[1.625rem] px-5 pb-11 border-1 border-[#ff7664] ">
+              <h2 className={`text-[2.375rem] font-light text-[#2b5860] leading-[2.625rem] mb-[2rem] ${playfair.className} `}>
+                I am an Intending parent
+              </h2>
+              <div className="max-w-[15.625rem] mx-auto">
+                <figure className="mx-auto mt-0 mb-[2rem] w-full overflow-hidden rounded-full relative">
+                  <Image
+                    src="/img/aspiring_parent_3.3.png"
+                    alt="Aspiring Parent"
+                    width={500}
+                    height={300}
+                    className="rounded-full w-full h-full"
+                  />
+                </figure>
+                <p className="text-black mb-[1.5rem] text-center text-[16px]  leading-[1.5rem]">
+                  Whether you’re starting your journey to parenthood or exploring your options, <b>Mediyaz ART Bank</b> is here to support you at every step. We focus on providing reliable, quality-driven solutions and clear guidance to help you make informed decisions with confidence.
+                </p>
+
+                <div className="flex gap-4 items-center flex-wrap justify-between ">
+                  <button className="max-w-[6.875rem] leading-[0.9375rem] py-[0.4375rem] px-5 pb-[0.3125rem] text-white bg-[#ff6b59] text-[.875rem] text-center font-[600] rounded-[.625rem]">
+                    Find Your Donor
+                  </button>
+                  <button className="max-w-[6.875rem] leading-[0.9375rem] py-[0.4375rem] px-5 pb-[0.3125rem] text-white bg-[#ff6b59] text-[.875rem] text-center font-[600] rounded-[.625rem]">
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* second column */}
+            <div className="mr-10 max-w-[22rem] rounded-[1.5625rem] text-center bg-white pt-[1.625rem] px-5 pb-11 border-1 border-[#e3c582] ">
+              <h2 className={`${playfair.className} text-[2.375rem] text-light text-[#2b5860] leading-[2.625rem] mb-[2rem]`}>
+                I want to become a donor
+              </h2>
+              <div className="max-w-[15.625rem] mx-auto">
+                <figure className="mx-auto mt-0 mb-[2rem] w-full overflow-hidden rounded-full relative">
+                  <Image
+                    src="/img/find_donor_1.png"
+                    alt="Aspiring Parent"
+                    width={1000}
+                    height={300}
+                    className="rounded-full w-[full] h-full"
+                  />
+                </figure>
+                <p className="text-black mb-[1.5rem] text-center text-[16px] leading-[1.5rem]">
+                Whether you’re considering becoming an egg or sperm donor or exploring your options, <b>Mediyaz ART Bank</b> is here to support you. We provide a structured, confidential, medically guided donation process, with clear information and care to help you make informed decisions.
+                </p>
+
+                <div className="flex gap-4 items-center flex-wrap justify-between ">
+                  <button className="max-w-[6.875rem] leading-[0.9375rem] py-[0.4375rem] px-5 pb-[0.3125rem] text-[#333] bg-[#e3c582] text-[.875rem] text-center font-[600] rounded-[.625rem]">
+                    Become a Donor
+                  </button>
+                  <button className="max-w-[6.875rem] leading-[0.9375rem] py-[0.4375rem] px-5 pb-[0.3125rem] text-[#333] bg-[#e3c582] text-[.875rem] text-center font-[600] rounded-[.625rem]">
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* main  */}
+      <main className="z-1 block relative  leading-[1.5rem]">
+        {/* section about */}
+        <section
+          className="
+        bg-[#2b5860]
+        relative
+        py-[9.75rem]
+        pt-[max(9.375rem,calc(1147px-100vh))]
+    before:absolute
+    before:inset-x-0
+    before:top-0
+    before:h-[calc(100%+1.375rem)]
+    before:w-full
+    before:bg-[url('/assets/images/blooms/sync-async-desktop.svg')]
+    before:bg-cover
+    before:bg-center
+    before:bg-no-repeat
+    before:opacity-75
+    before:content-['']
+        "
+        >
+          <div className="z-1 relative mx-auto max-w-[92.5rem] px-[2.5rem]">
+            <figure className="overflow-hidden aspect-square w-[28.125rem] relative rounded-full block ml-auto pb-[16.875rem]">
+              <Image
+                src="/img/about_4.png"
+                alt="About"
+                width={300}
+                height={300}
+                className="absolute rounded-full w-full h-full object-cover top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]  max-w-[100%]"
+              />
+            </figure>
+
+            <div className="z-1 relative text-[#222] bg-white max-w-[42.5rem] text-center border-1 border-[#807974] my-[-12.6875rem] mx-auto py-[3.75rem] px-[2.125rem] rounded-[1.5625rem] flex flex-col justify-center items-center ">
+              <h2
+                className={`mb-[1.375rem] text-[#2b5860] ${playfair.className} text-[2.375rem] leading-[2.625rem] font-[600] `}
+              >
+                Free Search for a
+                <br />
+                Priceless Outcome
+              </h2>
+              <p
+                className={`mb-[1.8125rem] text-center text-[#222] text-[22px] ${montserrat.className} `}
+              >
+                We offer the largest, most diverse selection of egg donors for
+                your growing family.
+              </p>
+              <ol
+                className={`
+    list-none
+    w-full
+    max-w-[504px]
+    text-left
+    [counter-reset:item]
+    [&>li]:relative
+    [&>li]:${montserrat.className}
+    [&>li]:pl-[35px]
+    [&>li]:text-left
+    [&>li]:text-[16px]
+    [&>li]:leading-[1.3]
+    [&>li]:[counter-increment:item]
+    [&>li]:before:absolute
+    [&>li]:before:left-0
+    [&>li]:before:top-1/2
+    [&>li]:before:flex
+    [&>li]:before:h-6
+    [&>li]:before:w-6
+    [&>li]:before:-translate-y-1/2
+    [&>li]:before:items-center
+    [&>li]:before:justify-center
+    [&>li]:before:rounded-full
+    [&>li]:before:left-[.1875rem]
+    [&>li]:before:bg-[#ff7664]
+    [&>li]:before:font-bold
+    [&>li]:before:text-sm
+    [&>li]:before:text-white
+    [&>li]:before:content-[counter(item)]
+    [&>li:first-child]:mt-3
+                `}
+              >
+                <li>
+                  Create your egg donor database account. To register, you must
+                  be seeking services at one of our affiliate clinics.
+                </li>
+
+                <li>Use our filters to find your ideal donor profile.</li>
+
+                <li className="mb-[.8125rem]">
+                  Once you've selected a donor, click the "order" button and our
+                  team will{" "}
+                  <a href="https://www.myeggbank.com/contact">reach out</a> to
+                  you. If you need assistance, reach out to a member of our
+                  team.
+                </li>
+              </ol>
+
+              <a
+                href="https://www.myeggbank.com/contact"
+                className={`
+    inline-flex
+    h-[1.875rem]
+    items-center
+    justify-center
+    rounded-[.625rem]
+    bg-[#ff6b59]
+    px-[1.5rem]
+    text-[.875rem]
+    font-semibold
+    leading-none
+    text-white
+    no-underline
+    transition-colors
+    hover:bg-[#ff5242]
+    focus-visible:outline-none
+    focus-visible:ring-2
+    focus-visible:ring-[#ff6b59]
+    focus-visible:ring-offset-2
+  `}
+              >
+                Learn More
+              </a>
+            </div>
+
+            <figure className="overflow-hidden aspect-square w-[28.125rem] relative rounded-full block mr-auto pb-[16.875rem] ">
+              <Image
+                src="/img/about-2.png"
+                alt="About"
+                width={500}
+                height={300}
+                className="rounded-full w-full h-full top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] absolute cover-fit"
+              />
+            </figure>
+          </div>
+        </section>
+
+        {/* section stats */}
+        <section
+          className="relative text-center bg-[#95e0b9] py-[8.1875rem] px-0 block 
+        before:absolute
+    before:inset-x-0
+    before:top-0
+    before:h-[calc(100%+44rem)]
+    before:w-full
+    before:bg-[url('/assets/images/blooms/stats-desktop.svg')]
+    before:bg-cover
+    before:bg-center
+    before:bg-no-repeat
+    before:opacity-75
+    before:content-['']
+        "
+        >
+          <div>
+            <h2
+              className={`text-[#2b5860] text-[3.125rem] leading-[3.5rem] ${playfair.className} font-[600]`}
+            >
+              A growing network to help growing families
+            </h2>
+            <ul className="flex justify-center gap-[5rem] mt-[4.688rem] [&>li]:list-item-none [&>li]:w-[17.5rem] [&>li]:h-[17.5rem] [&>li]:flex [&>li]:flex-col [&>li]:justify-center [&>li]:items-center [&>li]:gap-[2.875rem] [&>li]:rounded-[20px] [&>li]:bg-white ">
+              <li>
+                <p
+                  className={`
+    ${playfair.className}
+    text-[96px]
+    leading-none
+    text-[#ff6b59]
+  `}
+                >
+                  10k
+                </p>
+                <p
+                  className={`text-[24px] ${playfair.className} text-[#2b5860]`}
+                >
+                  Babies Born
+                </p>
+              </li>
+              <li>
+                <p
+                  className={`
+    ${playfair.className}
+    text-[96px]
+    leading-none
+    text-[#ff6b59]
+  `}
+                >
+                  275
+                </p>
+                <p
+                  className={`text-[24px] ${playfair.className} text-[#2b5860]`}
+                >
+                  {" "}
+                  Affiliate Clinics
+                </p>
+              </li>
+              <li>
+                <p
+                  className={`
+    ${playfair.className}
+    text-[96px]
+    leading-none
+    text-[#ff6b59]
+  `}
+                >
+                  200+
+                </p>
+                <p
+                  className={`text-[24px] ${playfair.className} text-[#2b5860]`}
+                >
+                  Average Monthly <br /> Donor Profiles
+                </p>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {/* section about */}
+        <section className={`py-[8.1875rem] px-0 bg-white block `}>
+          <div
+            className={`flex flex-nowrap items-center justify-between z-1 relative mx-auto max-w-[92.5rem] px-[2.5rem]`}
+          >
+            <div
+              className={`lg:leading-[2rem] text-[1.375rem] w-full text-[#2b5860] max-w-[29.188rem]`}
+            >
+              <h2
+                className={`text-[37px] leading-[1.2] mb-[24px] font-[600] ${playfair.className} text-[#2b5860]`}
+              >
+                We provide one-on-one guidance to support your unique egg donor
+                search
+              </h2>
+              <p className={`text-[#2b5860]`}>
+                The experienced team at MyEggBank understands that choosing an
+                egg donor can seem overwhelming. We're here to help simplify
+                your experience and available to answer questions that may arise
+                about the donor process, genetics and health history, and our
+                assurance programs. Once you've selected your donor, we liaise
+                with your clinic's doctors and staff to facilitate the process.
+                Additionally, upon request, the MyEggBank team will provide
+                financing options so that you can focus on building your family.
+              </p>
+              <br />
+              <br />
+              <br />
+              <a
+                href="#"
+                className={`text-white inline-block text-[.875rem] rounded-[.625rem] font-[600] px-[1.5rem] h-[1.875rem] leading-[1.875rem] bg-[#ff6b59] underline  ${playfair.className}`}
+              >
+                Learn More
+              </a>
+            </div>
+            <figure className={`w-[63.715%] bg-white `}>
+              <Image
+                src="/img/home.jpg"
+                alt="About Us"
+                width={500}
+                height={300}
+                className="w-[100%] h-auto object-cover"
+              />
+            </figure>
+          </div>
+        </section>
+
+        {/* section stories */}
+        <section
+          className={`relative text-center py-[2.5rem] px-0 bg-[linear-gradient(180deg,#e3c582_18.75rem,#fff_0)] block `}
+        >
+          <div
+            className={`z-1 relative mx-auto max-w-[92.5rem] px-[2.5rem] text-center text-black ${montserrat.className}`}
+          >
+            <h2
+              className={`text-[#333] text-[2rem] leading-[2.375rem] ${playfair.className} font-[600] `}
+            >
+              Success Stories
+            </h2>
+
+            <div
+              className={`flex items-flex-start flex-wrap justify-between max-w-[80rem] mx-auto mt-[2.25rem] `}
+            >
+              <div className={`max-w-[20rem]`}>
+                <figure
+                  className={`w-full overflow-hidden block relative rounded-full `}
+                >
+                  <Image
+                    src="/img/testimonial-1.png"
+                    alt="Testimonial 1"
+                    width={300}
+                    height={200}
+                  />
+                </figure>
+                <blockquote className={`mt-[2rem] text-left `}>
+                  <div>
+                    “My husband and I tried for four years to conceive,
+                    unsuccessfully. I was devastated. We talked to our RE about
+                    our options and he suggested egg donation. After much
+                    talking, thinking, and praying, we decided that the most
+                    important thing was to have a baby, no matter how we made it
+                    happen. We were blessed that our first transfer and
+                    pregnancy were successful. Our beautiful baby girl was born
+                    healthy and perfect in every way. There is no doubt in my
+                    heart and mind that she is 100% my baby and the one that was
+                    always meant for me!”
+                  </div>
+                  <cite
+                    className={`mt-[1.5625rem] text-[#2b5860] block font-[600] `}
+                  >
+                    —<span>Shawna</span>
+                  </cite>
+                </blockquote>
+              </div>
+              <div className={`max-w-[20rem]`}>
+                <figure
+                  className={`w-full overflow-hidden block relative rounded-full `}
+                >
+                  <Image
+                    src="/img/testimonial-2.png"
+                    alt="Testimonial 2"
+                    width={300}
+                    height={200}
+                  />
+                </figure>
+                <blockquote className={`mt-[2rem] text-left `}>
+                  <div>
+                    “When we first began the donor process, we were filled with
+                    so many emotions and quite overwhelmed. MyEggBank made the
+                    process of picking a donor so easy. We [selected a donor] in
+                    less than 24 hours. We just knew she was the one from the
+                    minute we saw her and read her profile. In a process of so
+                    many unknowns, using MyEggBank from the beginning felt just
+                    right. With the help from them and our angel of a donor, we
+                    now have our beautiful miracle!”
+                  </div>
+                  <cite
+                    className={`mt-[1.5625rem] text-[#2b5860] block font-[600] `}
+                  >
+                    —<span>Erica</span>
+                  </cite>
+                </blockquote>
+              </div>
+
+              <div className={`max-w-[20rem]`}>
+                <figure
+                  className={`w-full overflow-hidden block relative rounded-full `}
+                >
+                  <Image
+                    src="/img/testimonial-3.png"
+                    alt="Testimonial 3"
+                    width={300}
+                    height={200}
+                  />
+                </figure>
+                <blockquote className={`mt-[2rem] text-left `}>
+                  <div>
+                    “I have children of my own and they are the most amazing
+                    aspect of my life. The thought of not being able to have
+                    children hurts my heart.”
+                  </div>
+                  <cite
+                    className={`mt-[1.5625rem] text-[#2b5860] block font-[600] `}
+                  >
+                    —<span> Anonymous Donor</span>
+                  </cite>
+                </blockquote>
+              </div>
+            </div>
+
+            <div className={`flex justify-start pt-[3rem] relative underline`}>
+              <a
+                href="https://www.myeggbank.com/about/testimonials"
+                className={`text-[#1d3840] font-[600] text-[16px]`}
+              >
+                See egg bank reviews
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* section articles */}
+        <section
+          className={`relative pt-[5rem] pb-[10.9375rem] px-0 block text-[#000] 
+            before:absolute
+            before:bg-[#fff]
+         before:left-0
+         before:top-[-13rem]
+         before:h-[74.1875rem]
+         before:w-full
+         before:content-['']
+         before:bg-[url('/assets/images/blooms/bg-blog.svg')]
+         before:bg-contain
+         before:bg-center
+         before:bg-no-repeat `}
+        >
+          <div className={`relative z-1 mx-auto max-w-[92.5rem] px-[2.5rem] -mb-10`}>
+            <h2
+              className={`text-[#2b5860] ${playfair.className} font-[600] text-[3.125rem] leading-[3.5rem]`}
+            >
+              Resources for Donors &amp; Aspiring Parents
+            </h2>
+
+            <div className={`mt-[5.3125rem] grid grid-cols-3 gap-[10rem] `}>
+              <div className={``}>
+                <Link
+                  href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know"
+                  className="block"
+                >
+                  <div className="relative h-[13.3125rem] w-full overflow-hidden bg-[#e9eaee]">
+                    <Image
+                      src=""
+                      alt="Finding Swedish egg donors"
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </Link>
+                <div className="pr-14 text-2xl font-medium leading-[1.95rem] mt-8">
+                  <h2>
+                    <a href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know" className={`text-[#2b5860] font-[500] `}>
+                      Finding Swedish Egg Donors: What Intended Parents Should Know
+                    </a>
+                  </h2>
+                  <p className="pr-[2.5rem] py-[1rem] px-0 text-[16px]">
+                    <span className="date">August 25th, 2026</span>by{" "}
+                    <a href="https://www.myeggbank.com/blog?author=MyEggBank" className={`text-[#ff7664] font-[600] `}>
+                      MyEggBank
+                    </a> in{" "}
+                    <a href="https://www.myeggbank.com/blog?category=Swedish+Egg+Donors" className={`text-[#ff7664] font-[600] `}>
+                      Swedish Egg Donors
+                    </a>
+                  </p>
+                  <p className="text-[16px]">
+                    For intended parents with Swedish ancestry, finding an egg donor who shares that heritage may be an important part of …
+                  </p>
+                  <p className="text-[16px] mt-[1.5rem]">
+                    <a className="font-[700] text-[#ff7664] " href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know">
+                      Read more
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className={``}>
+                <Link
+                  href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know"
+                  className="block"
+                >
+                  <div className="relative h-[13.3125rem] w-full overflow-hidden bg-[#e9eaee]">
+                    <Image
+                      src=""
+                      alt="Finding Swedish egg donors"
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </Link>
+                <div className="pr-14 text-2xl font-medium leading-[1.95rem] mt-8">
+                  <h2>
+                    <a href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know" className={`text-[#2b5860] font-[500] `}>
+                      Finding Swedish Egg Donors: What Intended Parents Should Know
+                    </a>
+                  </h2>
+                  <p className="pr-[2.5rem] py-[1rem] px-0 text-[16px]">
+                    <span className="date">August 25th, 2026</span>by{" "}
+                    <a href="https://www.myeggbank.com/blog?author=MyEggBank" className={`text-[#ff7664] font-[600] `}>
+                      MyEggBank
+                    </a> in{" "}
+                    <a href="https://www.myeggbank.com/blog?category=Swedish+Egg+Donors" className={`text-[#ff7664] font-[600] `}>
+                      Swedish Egg Donors
+                    </a>
+                  </p>
+                  <p className="text-[16px]">
+                    For intended parents with Swedish ancestry, finding an egg donor who shares that heritage may be an important part of …
+                  </p>
+                  <p className="text-[16px] mt-[1.5rem]">
+                    <a className="font-[700] text-[#ff7664] " href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know">
+                      Read more
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className={``}>
+                <Link
+                  href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know"
+                  className="block"
+                >
+                  <div className="relative h-[13.3125rem] w-full overflow-hidden bg-[#e9eaee]">
+                    <Image
+                      src=""
+                      alt="Finding Swedish egg donors"
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </Link>
+                <div className="pr-14 text-2xl font-medium leading-[1.95rem] mt-8">
+                  <h2>
+                    <a href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know" className={`text-[#2b5860] font-[500] `}>
+                      Finding Swedish Egg Donors: What Intended Parents Should Know
+                    </a>
+                  </h2>
+                  <p className="pr-[2.5rem] py-[1rem] px-0 text-[16px]">
+                    <span className="date">August 25th, 2026</span>by{" "}
+                    <a href="https://www.myeggbank.com/blog?author=MyEggBank" className={`text-[#ff7664] font-[600] `}>
+                      MyEggBank
+                    </a> in{" "}
+                    <a href="https://www.myeggbank.com/blog?category=Swedish+Egg+Donors" className={`text-[#ff7664] font-[600] `}>
+                      Swedish Egg Donors
+                    </a>
+                  </p>
+                  <p className="text-[16px]">
+                    For intended parents with Swedish ancestry, finding an egg donor who shares that heritage may be an important part of …
+                  </p>
+                  <p className="text-[16px] mt-[1.5rem]">
+                    <a className="font-[700] text-[#ff7664] " href="https://www.myeggbank.com/blog/finding-swedish-egg-donors-what-intended-parents-should-know">
+                      Read more
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+      </main>
+    </>
+  );
+};
+
+export default page;
