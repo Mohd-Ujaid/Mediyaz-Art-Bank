@@ -4,7 +4,20 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   poweredByHeader: false,
   compress: true,
-  allowedDevOrigins: ['192.168.1.9'],
+  allowedDevOrigins: [
+    "192.168.1.6",
+    "192.168.1.6:3000",
+    "192.168.1.6:3001",
+    "192.168.1.6:3002",
+    "192.168.1.9",
+    "192.168.1.60",
+    "192.168.1.60:3000",
+    "localhost",
+    "localhost:3000",
+    "localhost:3001",
+    "localhost:3002",
+    "127.0.0.1",
+  ],
 
   images: {
     formats: ["image/avif", "image/webp"],

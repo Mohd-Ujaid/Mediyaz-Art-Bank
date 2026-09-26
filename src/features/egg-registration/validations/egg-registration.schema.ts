@@ -23,8 +23,8 @@ export const eggPersonalInfoSchema = z.object({
   spouseEducation: z.string().optional().or(z.literal("")),
   dateOfBirth: z.string().min(1, "Date of birth is required"),
   age: z.number().min(23, "Egg donors must be at least 23 years old under ART Act 2021").max(35, "Egg donors cannot exceed 35 years of age under ART Act 2021").optional(),
-  maritalStatus: z.enum(["Married", "Divorced", "Widowed"], {
-    message: "Under ART Act 2021, an oocyte donor must be an ever-married woman (Married, Divorced, or Widowed)"
+  maritalStatus: z.enum(["Married", "Divorced", "Widowed", "Separated"], {
+    message: "Under ART Act 2021, an oocyte donor must be an ever-married woman (Married, Divorced, Widowed, or Separated)"
   }),
   bloodGroup: z.string().min(1, "Blood group is required"),
   education: z.string().min(1, "Education qualification is required"),
@@ -38,7 +38,7 @@ export const eggPersonalInfoSchema = z.object({
   panNumber: z.string().regex(/^[A-Z]{5}\d{4}[A-Z]$/, "Invalid PAN format").optional().or(z.literal("")),
   religion: z.string().min(1, "Religion is required"),
   monthlyIncome: z.string().min(1, "Monthly income is required"),
-  hobby: z.string().min(1, "Hobby / Interests is required"),
+  hobby: z.string().optional().or(z.literal("")),
 });
 
 export const eggContactInfoSchema = z.object({
@@ -75,7 +75,7 @@ export const eggMedicalInfoSchema = z.object({
 export const eggDonorInfoSchema = z.object({
   menstrualCycleDetails: z.string().optional().or(z.literal("")),
   pregnancyHistory: z.string().optional().or(z.literal("")),
-  previousEggDonation: z.enum(["Yes", "No"]).default("No"),
+  previousEggDonation: z.enum(["Yes", "No"]).or(z.literal("")).default(""),
   ivfHistory: z.string().optional().or(z.literal("")),
   ovarianReserve: z.string().optional().or(z.literal("")),
   hormonalTestDetails: z.string().optional().or(z.literal("")),

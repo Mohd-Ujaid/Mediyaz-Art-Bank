@@ -571,8 +571,8 @@ export function EggRegistrationReview({
                 <tr>
                   <td className="p-1.5 border-r border-black">19. Colour of skin</td>
                   <td className="p-1.5 border-r border-black font-semibold">{personalInfo.complexion || "—"}</td>
-                  <td className="p-1.5 border-r border-black ">Hobby / Interests</td>
-                  <td className="p-1.5 font-semibold">{personalInfo.hobby || "—"}</td>
+                  <td className="p-1.5 border-r border-black"></td>
+                  <td className="p-1.5"></td>
                 </tr>
               </tbody>
             </table>
@@ -690,6 +690,9 @@ export function EggRegistrationReview({
       {/* ───────────────────────────────────────────────────────────── */}
       {/* ──── STATUTORY CONSENT CHECKBOXES (FINAL AUTHORIZATION) ──── */}
       {/* ───────────────────────────────────────────────────────────── */}
+      {/* ───────────────────────────────────────────────────────────── */}
+      {/* ──── STATUTORY CONSENT CHECKBOXES (FINAL AUTHORIZATION) ──── */}
+      {/* ───────────────────────────────────────────────────────────── */}
       <div id="statutory-consent-section" className="max-w-5xl mx-auto space-y-4 p-6 rounded-xl border border-rose-300 bg-rose-50/50 shadow-xs">
         <div className="flex items-start gap-2.5">
           <ShieldCheck className="w-5 h-5 text-rose-700 shrink-0 mt-0.5" />
@@ -697,64 +700,94 @@ export function EggRegistrationReview({
             <h4 className="text-sm font-bold text-rose-900">
               Mandatory Legal Declarations under Assisted Reproductive Technology (Regulation) Act, 2021
             </h4>
-            <p className="text-xs text-rose-800/80 mt-0.5">
+            <p className="text-xs font-semibold text-rose-800/90 mt-0.5">
+              सहायक प्रजनन प्रौद्योगिकी (विनियमन) अधिनियम, 2021 के तहत अनिवार्य कानूनी घोषणाएं
+            </p>
+            <p className="text-xs text-rose-800/80 mt-1">
               Please mark each declaration below to confirm your understanding and execute formal electronic submission.
+            </p>
+            <p className="text-[11px] text-rose-700/85 mt-0.5">
+              अपनी समझ की पुष्टि करने और औपचारिक इलेक्ट्रॉनिक प्रस्तुति निष्पादित करने के लिए कृपया नीचे दी गई प्रत्येक घोषणा को चिह्नित करें।
             </p>
           </div>
         </div>
 
         <div className="space-y-3 pt-2">
-          <label className="flex items-start gap-2.5 text-xs text-slate-800 cursor-pointer hover:text-black font-medium">
+          {/* Declaration 1 */}
+          <label className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-rose-100/40 transition-colors cursor-pointer group">
             <input
               type="checkbox"
               checked={consent.confirmTruth}
               onChange={(e) => updateConsent({ confirmTruth: e.target.checked as any })}
-              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63]"
+              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63] shrink-0"
             />
-            <span>
-              I solemnly declare that all personal, obstetric, marital, and health details provided by me in this registration form are completely true and accurate. <span className="text-rose-600 font-bold">*</span>
-            </span>
+            <div className="space-y-0.5 text-xs">
+              <span className="font-semibold text-slate-900 group-hover:text-black">
+                I solemnly declare that all personal, obstetric, marital, and health details provided by me in this registration form are completely true and accurate. <span className="text-rose-600 font-bold">*</span>
+              </span>
+              <span className="block text-[11px] text-slate-600 font-normal leading-relaxed">
+                मैं सत्यनिष्ठा से घोषणा करती हूँ कि इस पंजीकरण फॉर्म में मेरे द्वारा प्रदान किए गए सभी व्यक्तिगत, प्रसूति, वैवाहिक और स्वास्थ्य संबंधी विवरण पूरी तरह सत्य और सटीक हैं।
+              </span>
+            </div>
           </label>
           {errors.confirmTruth && <p className="text-[11px] text-rose-600 font-medium pl-6">{errors.confirmTruth}</p>}
 
-          <label className="flex items-start gap-2.5 text-xs text-slate-800 cursor-pointer hover:text-black font-medium">
+          {/* Declaration 2 */}
+          <label className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-rose-100/40 transition-colors cursor-pointer group">
             <input
               type="checkbox"
               checked={consent.agreeVoluntary}
               onChange={(e) => updateConsent({ agreeVoluntary: e.target.checked as any })}
-              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63]"
+              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63] shrink-0"
             />
-            <span>
-              I confirm that my oocyte donation is completely voluntary and altruistic without commercial coercion. <span className="text-rose-600 font-bold">*</span>
-            </span>
+            <div className="space-y-0.5 text-xs">
+              <span className="font-semibold text-slate-900 group-hover:text-black">
+                I confirm that my oocyte donation is completely voluntary and altruistic without commercial coercion. <span className="text-rose-600 font-bold">*</span>
+              </span>
+              <span className="block text-[11px] text-slate-600 font-normal leading-relaxed">
+                मैं पुष्टि करती हूँ कि मेरा डिंब (अंडाणु) दान बिना किसी व्यावसायिक दबाव या वित्तीय प्रलोभन के, पूरी तरह से स्वैच्छिक और परोपकारी है।
+              </span>
+            </div>
           </label>
           {errors.agreeVoluntary && <p className="text-[11px] text-rose-600 font-medium pl-6">{errors.agreeVoluntary}</p>}
 
-          <label className="flex items-start gap-2.5 text-xs text-slate-800 cursor-pointer hover:text-black font-medium">
+          {/* Declaration 3 */}
+          <label className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-rose-100/40 transition-colors cursor-pointer group">
             <input
               type="checkbox"
               checked={consent.confirmOnceInLifetime}
               onChange={(e) => updateConsent({ confirmOnceInLifetime: e.target.checked as any })}
-              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63]"
+              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63] shrink-0"
             />
-            <span>
-              Under Section 27(3) of ART Act 2021, I declare that I have NEVER previously donated oocytes to any ART clinic or bank, and this is my only lifetime donation. <span className="text-rose-600 font-bold">*</span>
-            </span>
+            <div className="space-y-0.5 text-xs">
+              <span className="font-semibold text-slate-900 group-hover:text-black">
+                Under Section 27(3) of ART Act 2021, I declare that I have NEVER previously donated oocytes to any ART clinic or bank, and this is my only lifetime donation. <span className="text-rose-600 font-bold">*</span>
+              </span>
+              <span className="block text-[11px] text-slate-600 font-normal leading-relaxed">
+                एआरटी अधिनियम 2021 की धारा 27(3) के तहत, मैं घोषणा करती हूँ कि मैंने पूर्व में कभी भी किसी एआरटी क्लिनिक या बैंक में डिंब (अंडाणु) दान नहीं किया है, और यह मेरे जीवनकाल का एकमात्र दान है।
+              </span>
+            </div>
           </label>
           {errors.confirmOnceInLifetime && <p className="text-[11px] text-rose-600 font-medium pl-6">{errors.confirmOnceInLifetime}</p>}
 
+          {/* Declaration 4 (Husband) */}
           {personalInfo.maritalStatus === "Married" && (
             <>
-              <label className="flex items-start gap-2.5 text-xs text-slate-800 cursor-pointer hover:text-black font-medium">
+              <label className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-rose-100/40 transition-colors cursor-pointer group">
                 <input
                   type="checkbox"
                   checked={consent.husbandConsentConfirmed}
                   onChange={(e) => updateConsent({ husbandConsentConfirmed: e.target.checked })}
-                  className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63]"
+                  className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63] shrink-0"
                 />
-                <span>
-                  My husband ({personalInfo.husbandName || personalInfo.spouseName || "Spouse"}) is fully aware of and consents to my voluntary egg donation per ART Act 2021 requirements. <span className="text-rose-600 font-bold">*</span>
-                </span>
+                <div className="space-y-0.5 text-xs">
+                  <span className="font-semibold text-slate-900 group-hover:text-black">
+                    My husband ({personalInfo.husbandName || personalInfo.spouseName || "Spouse"}) is fully aware of and consents to my voluntary egg donation per ART Act 2021 requirements. <span className="text-rose-600 font-bold">*</span>
+                  </span>
+                  <span className="block text-[11px] text-slate-600 font-normal leading-relaxed">
+                    मेरे पति ({personalInfo.husbandName || personalInfo.spouseName || "पति"}) एआरटी अधिनियम 2021 की आवश्यकताओं के अनुसार मेरे स्वैच्छिक डिंब दान से पूरी तरह अवगत हैं और इसके लिए अपनी सहमति देते हैं।
+                  </span>
+                </div>
               </label>
               {errors.husbandConsentConfirmed && (
                 <p className="text-[11px] text-rose-600 font-medium pl-6">{errors.husbandConsentConfirmed}</p>
@@ -762,18 +795,22 @@ export function EggRegistrationReview({
             </>
           )}
 
-
-
-          <label className="flex items-start gap-2.5 text-xs text-slate-800 cursor-pointer hover:text-black font-medium">
+          {/* Declaration 5 */}
+          <label className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-rose-100/40 transition-colors cursor-pointer group">
             <input
               type="checkbox"
               checked={consent.allowStorage}
               onChange={(e) => updateConsent({ allowStorage: e.target.checked as any })}
-              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63]"
+              className="mt-0.5 rounded text-[#285b63] focus:ring-[#285b63] shrink-0"
             />
-            <span>
-              I understand that all medical expenses and mandatory insurance coverage are borne by the intending parents / ART bank under ART Act 2021. <span className="text-rose-600 font-bold">*</span>
-            </span>
+            <div className="space-y-0.5 text-xs">
+              <span className="font-semibold text-slate-900 group-hover:text-black">
+                I understand that all medical expenses and mandatory insurance coverage are borne by the intending parents / ART bank under ART Act 2021. <span className="text-rose-600 font-bold">*</span>
+              </span>
+              <span className="block text-[11px] text-slate-600 font-normal leading-relaxed">
+                मैं समझती हूँ कि एआरटी अधिनियम 2021 के तहत सभी चिकित्सा खर्च और अनिवार्य बीमा कवरेज इच्छुक माता-पिता / एआरटी बैंक द्वारा वहन किए जाते हैं।
+              </span>
+            </div>
           </label>
           {errors.allowStorage && <p className="text-[11px] text-rose-600 font-medium pl-6">{errors.allowStorage}</p>}
         </div>

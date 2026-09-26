@@ -49,7 +49,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"] as const;
-const EGG_MARITAL_STATUSES = ["Married", "Divorced", "Widowed"] as const;
+const EGG_MARITAL_STATUSES = ["Married", "Divorced", "Widowed", "Separated"] as const;
 const COMPLEXIONS = ["Fair", "Very Fair", "Wheatish", "Medium", "Olive", "Brown", "Dark"] as const;
 const HAIR_COLORS = ["Black", "Dark Brown", "Brown", "Light Brown", "Blonde", "Other"] as const;
 const EYE_COLORS = ["Black", "Dark Brown", "Brown", "Hazel", "Green", "Blue", "Grey", "Other"] as const;
@@ -647,7 +647,6 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
     if (!personalInfo.occupation?.trim()) errs.occupation = "Occupation is required";
     if (!personalInfo.monthlyIncome?.trim()) errs.monthlyIncome = "Monthly income is required";
     if (!personalInfo.religion?.trim()) errs.religion = "Religion is required";
-    if (!personalInfo.hobby?.trim()) errs.hobby = "Hobby / Interests is required";
     if (!personalInfo.height?.trim()) errs.height = "Height is required";
     if (!personalInfo.weight?.trim()) errs.weight = "Weight is required";
     if (!personalInfo.complexion?.trim()) errs.complexion = "Skin colour / complexion is required";
@@ -665,16 +664,17 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
       }
     }
 
-    if (personalInfo.maritalStatus === "Married") {
-      if (!personalInfo.husbandName?.trim() && !personalInfo.spouseName?.trim()) {
-        errs.husbandName = "Husband's name is mandatory for married egg donors under ART Act 2021";
-      }
-      if (!personalInfo.husbandOccupation?.trim() && !personalInfo.spouseOccupation?.trim()) {
-        errs.husbandOccupation = "Husband's occupation is mandatory under ART Act 2021";
-      }
-      if (!personalInfo.husbandEducation?.trim() && !personalInfo.spouseEducation?.trim()) {
-        errs.husbandEducation = "Husband's education is required under ART Act 2021";
-      }
+    // Husband details are mandatory for all egg donors under ART Act 2021 (Married, Widowed, Divorced, Separated)
+    if (!personalInfo.husbandName?.trim() && !personalInfo.spouseName?.trim()) {
+      errs.husbandName = personalInfo.maritalStatus === "Widowed" 
+        ? "Late husband's name is required under ART Act 2021" 
+        : "Husband's name is required under ART Act 2021";
+    }
+    if (!personalInfo.husbandOccupation?.trim() && !personalInfo.spouseOccupation?.trim()) {
+      errs.husbandOccupation = "Husband's occupation is required under ART Act 2021";
+    }
+    if (!personalInfo.husbandEducation?.trim() && !personalInfo.spouseEducation?.trim()) {
+      errs.husbandEducation = "Husband's education / qualification is required under ART Act 2021";
     }
 
     if (!contactInfo.permanentAddress?.trim()) errs.permanentAddress = "Residential address (as per Aadhaar Card) is required";
@@ -702,13 +702,70 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
 
   const validateStep2 = () => {
     const errs: Record<string, string> = {};
-    const deliveries = parseInt(donorInfo.numberOfDeliveries || "0", 10);
-    if (isNaN(deliveries) || deliveries < 1) {
-      errs.numberOfDeliveries = "Under ART Act 2021, an egg donor must have at least one living child of her own (minimum 3 years of age).";
+
+    // 1. Obstetric History
+    if (!donorInfo.numberOfDeliveries) {
+      errs.numberOfDeliveries = "Please select number of deliveries";
+    } else {
+      const deliveries = parseInt(donorInfo.numberOfDeliveries, 10);
+      if (isNaN(deliveries) || deliveries < 1) {
+        errs.numberOfDeliveries = "Under ART Act 2021, an egg donor must have at least one living child of her own (minimum 3 years of age).";
+      }
     }
 
-    if (donorInfo.previousEggDonation === "Yes") {
+    if (!donorInfo.numberOfAbortions?.trim()) {
+      errs.numberOfAbortions = "Please select number of abortions";
+    }
+
+    if (!donorInfo.otherPointsOfNote?.trim()) {
+      errs.otherPointsOfNote = "Please select other points of note";
+    }
+
+    // 2. Medical & Clinical History
+    if (!donorInfo.menstrualCycleDetails?.trim()) {
+      errs.menstrualCycleDetails = "Please select menstrual history";
+    }
+
+    if (!donorInfo.contraceptiveHistory?.trim()) {
+      errs.contraceptiveHistory = "Please select contraceptive history";
+    }
+
+    if (!medicalInfo.medicalHistory?.trim()) {
+      errs.medicalHistory = "Please select medical history";
+    }
+
+    if (!medicalInfo.familyMedicalHistory?.trim()) {
+      errs.familyMedicalHistory = "Please select family medical history";
+    }
+
+    if (!medicalInfo.childAbnormalityHistory?.trim() && !medicalInfo.geneticDisorders?.trim()) {
+      errs.childAbnormalityHistory = "Please select child abnormality history";
+    }
+
+    if (!donorInfo.bloodTransfusionHistory?.trim()) {
+      errs.bloodTransfusionHistory = "Please select blood transfusion history";
+    }
+
+    if (!donorInfo.substanceAbuseHistory?.trim()) {
+      errs.substanceAbuseHistory = "Please select substance abuse history";
+    }
+
+    if (!donorInfo.pregnancyHistory?.trim()) {
+      errs.pregnancyHistory = "Please select age of youngest living child";
+    }
+
+    if (!donorInfo.previousEggDonation?.trim()) {
+      errs.previousEggDonation = "Please select if you have ever donated eggs before";
+    } else if (donorInfo.previousEggDonation === "Yes") {
       errs.previousEggDonation = "Under Section 27(3) of ART Act 2021, an oocyte donor can donate only ONCE in her entire lifetime.";
+    }
+
+    if (!medicalInfo.diabetes?.trim()) {
+      errs.diabetes = "Please select diabetes status";
+    }
+
+    if (!medicalInfo.hypertension?.trim()) {
+      errs.hypertension = "Please select hypertension status";
     }
 
     setErrors(errs);
@@ -764,9 +821,20 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
         return;
       }
     }
-    if (currentStep === 2 && !validateStep2()) {
-      toast.error("Please resolve statutory obstetric & donation eligibility criteria.");
-      return;
+    if (currentStep === 2) {
+      if (!validateStep2()) {
+        toast.error("Please fill in and select all required Medical & Clinical History fields.");
+        setTimeout(() => {
+          const firstErrEl = document.querySelector(".border-rose-500, [aria-invalid='true']");
+          if (firstErrEl) {
+            firstErrEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            if (firstErrEl instanceof HTMLElement && typeof firstErrEl.focus === "function") {
+              firstErrEl.focus();
+            }
+          }
+        }, 50);
+        return;
+      }
     }
     if (currentStep === 3 && !validateStep3()) {
       toast.error("Please upload all required identity documents & signature.");
@@ -1588,20 +1656,7 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                     {errors.religion && <p className="text-[11px] text-rose-500">{errors.religion}</p>}
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-700">Hobby / Interests <span className="text-rose-500">*</span></label>
-                    <Input
-                      data-field="hobby"
-                      placeholder="e.g. Reading, Music, Cooking, Gardening"
-                      value={personalInfo.hobby || ""}
-                      onChange={(e) => {
-                        updatePersonalInfo({ hobby: e.target.value });
-                        clearError("hobby");
-                      }}
-                      className={errors.hobby ? "border-rose-500" : ""}
-                    />
-                    {errors.hobby && <p className="text-[11px] text-rose-500">{errors.hobby}</p>}
-                  </div>
+
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">Height (Feet) <span className="text-rose-500">*</span></label>
@@ -1729,87 +1784,80 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                     {errors.maritalStatus && <p className="text-[11px] text-rose-500">{errors.maritalStatus}</p>}
                   </div>
 
-                  {/* Husband fields (Mandatory if Married) */}
-                  {personalInfo.maritalStatus === "Married" && (
-                    <>
-                      <div className="space-y-1">
-                        <label className="text-xs font-semibold text-slate-700">Husband&apos;s Full Name <span className="text-rose-500">*</span></label>
-                        <Input
-                          data-field="husbandName"
-                          placeholder="Husband's Legal Name"
-                          value={personalInfo.husbandName || personalInfo.spouseName || ""}
-                          onChange={(e) => {
-                            updatePersonalInfo({ husbandName: e.target.value, spouseName: e.target.value });
-                            clearError("husbandName");
-                          }}
-                          className={errors.husbandName ? "border-rose-500" : ""}
-                        />
-                        {errors.husbandName && <p className="text-[11px] text-rose-500">{errors.husbandName}</p>}
-                      </div>
-
-                      <div className="space-y-1">
-                        <label className="text-xs font-semibold text-slate-700">Husband&apos;s Education / Qualification <span className="text-rose-500">*</span></label>
-                        <Input
-                          data-field="husbandEducation"
-                          placeholder="e.g. Graduate, 12th Pass, Post-Graduate"
-                          value={personalInfo.husbandEducation || personalInfo.spouseEducation || ""}
-                          onChange={(e) => {
-                            updatePersonalInfo({ husbandEducation: e.target.value, spouseEducation: e.target.value });
-                            clearError("husbandEducation");
-                          }}
-                          className={errors.husbandEducation ? "border-rose-500" : ""}
-                        />
-                        {errors.husbandEducation && <p className="text-[11px] text-rose-500">{errors.husbandEducation}</p>}
-                      </div>
-
-                      <div className="space-y-1">
-                        <label className="text-xs font-semibold text-slate-700">Husband&apos;s Occupation <span className="text-rose-500">*</span></label>
-                        <Input
-                          data-field="husbandOccupation"
-                          placeholder="e.g. Business, Engineer, Farmer"
-                          value={personalInfo.husbandOccupation || personalInfo.spouseOccupation || ""}
-                          onChange={(e) => {
-                            updatePersonalInfo({ husbandOccupation: e.target.value, spouseOccupation: e.target.value });
-                            clearError("husbandOccupation");
-                          }}
-                          className={errors.husbandOccupation ? "border-rose-500" : ""}
-                        />
-                        {errors.husbandOccupation && <p className="text-[11px] text-rose-500">{errors.husbandOccupation}</p>}
-                      </div>
-                    </>
-                  )}
-
-                  {/* Children / Living Child Details */}
+                  {/* Husband fields (Mandatory for Married, Widowed, Divorced, Separated) */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-700">Number of Deliveries / Living Children <span className="text-rose-500">*</span></label>
+                    <label className="text-xs font-semibold text-slate-700">
+                      {personalInfo.maritalStatus === "Widowed" 
+                        ? "Late Husband's Full Name" 
+                        : (personalInfo.maritalStatus === "Divorced" || personalInfo.maritalStatus === "Separated")
+                        ? "Husband's / Ex-Husband's Full Name"
+                        : "Husband's Full Name"}{" "}
+                      <span className="text-rose-500">*</span>
+                    </label>
                     <Input
-                      data-field="numberOfDeliveries"
-                      type="number"
-                      min={1}
-                      placeholder="Must be at least 1 (e.g. 1, 2)"
-                      value={donorInfo.numberOfDeliveries || "1"}
+                      data-field="husbandName"
+                      placeholder={
+                        personalInfo.maritalStatus === "Widowed" 
+                          ? "Late Husband's Legal Name" 
+                          : (personalInfo.maritalStatus === "Divorced" || personalInfo.maritalStatus === "Separated")
+                          ? "Husband's / Ex-Husband's Legal Name"
+                          : "Husband's Legal Name"
+                      }
+                      value={personalInfo.husbandName || personalInfo.spouseName || ""}
                       onChange={(e) => {
-                        updateDonorInfo({ numberOfDeliveries: e.target.value });
-                        clearError("numberOfDeliveries");
+                        updatePersonalInfo({ husbandName: e.target.value, spouseName: e.target.value });
+                        clearError("husbandName");
                       }}
-                      className={errors.numberOfDeliveries ? "border-rose-500" : ""}
+                      className={errors.husbandName ? "border-rose-500" : ""}
                     />
-                    {errors.numberOfDeliveries ? (
-                      <p className="text-[11px] text-rose-500">{errors.numberOfDeliveries}</p>
-                    ) : (
-                      <p className="text-[10px] text-slate-400">Under ART Act 2021, donor must have at least 1 living child (age ≥ 3 years)</p>
-                    )}
+                    {errors.husbandName && <p className="text-[11px] text-rose-500">{errors.husbandName}</p>}
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-700">Number of Abortions <span className="text-slate-400 font-normal">(if any)</span></label>
+                    <label className="text-xs font-semibold text-slate-700">
+                      {personalInfo.maritalStatus === "Widowed"
+                        ? "Late Husband's Education / Qualification"
+                        : (personalInfo.maritalStatus === "Divorced" || personalInfo.maritalStatus === "Separated")
+                        ? "Husband's / Ex-Husband's Education"
+                        : "Husband's Education / Qualification"}{" "}
+                      <span className="text-rose-500">*</span>
+                    </label>
                     <Input
-                      data-field="numberOfAbortions"
-                      placeholder="e.g. No, 1, 2"
-                      value={donorInfo.numberOfAbortions || "No"}
-                      onChange={(e) => updateDonorInfo({ numberOfAbortions: e.target.value })}
+                      data-field="husbandEducation"
+                      placeholder="e.g. Graduate, 12th Pass, Post-Graduate"
+                      value={personalInfo.husbandEducation || personalInfo.spouseEducation || ""}
+                      onChange={(e) => {
+                        updatePersonalInfo({ husbandEducation: e.target.value, spouseEducation: e.target.value });
+                        clearError("husbandEducation");
+                      }}
+                      className={errors.husbandEducation ? "border-rose-500" : ""}
                     />
+                    {errors.husbandEducation && <p className="text-[11px] text-rose-500">{errors.husbandEducation}</p>}
                   </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-slate-700">
+                      {personalInfo.maritalStatus === "Widowed"
+                        ? "Late Husband's Occupation (Prior)"
+                        : (personalInfo.maritalStatus === "Divorced" || personalInfo.maritalStatus === "Separated")
+                        ? "Husband's / Ex-Husband's Occupation"
+                        : "Husband's Occupation"}{" "}
+                      <span className="text-rose-500">*</span>
+                    </label>
+                    <Input
+                      data-field="husbandOccupation"
+                      placeholder="e.g. Business, Engineer, Farmer, N/A"
+                      value={personalInfo.husbandOccupation || personalInfo.spouseOccupation || ""}
+                      onChange={(e) => {
+                        updatePersonalInfo({ husbandOccupation: e.target.value, spouseOccupation: e.target.value });
+                        clearError("husbandOccupation");
+                      }}
+                      className={errors.husbandOccupation ? "border-rose-500" : ""}
+                    />
+                    {errors.husbandOccupation && <p className="text-[11px] text-rose-500">{errors.husbandOccupation}</p>}
+                  </div>
+
+
                 </div>
               </div>
 
@@ -2088,18 +2136,23 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                     <label className="text-xs font-semibold text-slate-700">
                       Number of deliveries <span className="text-rose-500">*</span>
                     </label>
-                    <Input
+                    <select
                       data-field="numberOfDeliveries"
-                      type="number"
-                      min={1}
-                      placeholder="Must be at least 1 (e.g. 1, 2, 3)"
-                      value={donorInfo.numberOfDeliveries || "1"}
+                      className={selectFieldClass(Boolean(errors.numberOfDeliveries))}
+                      value={donorInfo.numberOfDeliveries || ""}
                       onChange={(e) => {
                         updateDonorInfo({ numberOfDeliveries: e.target.value });
                         clearError("numberOfDeliveries");
                       }}
-                      className={errors.numberOfDeliveries ? "border-rose-500" : ""}
-                    />
+                    >
+                      <option value="">Select Number of Deliveries</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="5+">5+</option>
+                    </select>
                     {errors.numberOfDeliveries && (
                       <p className="text-[11px] text-rose-500">{errors.numberOfDeliveries}</p>
                     )}
@@ -2107,32 +2160,50 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      Number of abortions
+                      Number of abortions <span className="text-rose-500">*</span>
                     </label>
-                    <Input
+                    <select
                       data-field="numberOfAbortions"
-                      placeholder="e.g. No, 0, or count"
-                      value={donorInfo.numberOfAbortions ?? "No"}
+                      className={selectFieldClass(Boolean(errors.numberOfAbortions))}
+                      value={donorInfo.numberOfAbortions || ""}
                       onChange={(e) => {
                         updateDonorInfo({ numberOfAbortions: e.target.value });
                         clearError("numberOfAbortions");
                       }}
-                    />
+                    >
+                      <option value="">Select Number of Abortions</option>
+                      <option value="No">No / None</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3+">3+</option>
+                    </select>
+                    {errors.numberOfAbortions && (
+                      <p className="text-[11px] text-rose-500">{errors.numberOfAbortions}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      Other points of note
+                      Other points of note <span className="text-rose-500">*</span>
                     </label>
-                    <Input
+                    <select
                       data-field="otherPointsOfNote"
-                      placeholder="e.g. No, Full-term vaginal delivery"
-                      value={donorInfo.otherPointsOfNote ?? "No"}
+                      className={selectFieldClass(Boolean(errors.otherPointsOfNote))}
+                      value={donorInfo.otherPointsOfNote || ""}
                       onChange={(e) => {
                         updateDonorInfo({ otherPointsOfNote: e.target.value });
                         clearError("otherPointsOfNote");
                       }}
-                    />
+                    >
+                      <option value="">Select Other Points of Note</option>
+                      <option value="No">No</option>
+                      <option value="Full-term vaginal delivery">Full-term vaginal delivery</option>
+                      <option value="Full-term caesarean delivery (LSCS)">Full-term caesarean delivery (LSCS)</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    {errors.otherPointsOfNote && (
+                      <p className="text-[11px] text-rose-500">{errors.otherPointsOfNote}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -2149,82 +2220,104 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      Menstrual history
+                      Menstrual history <span className="text-rose-500">*</span>
                     </label>
                     <select
                       data-field="menstrualCycleDetails"
-                      className={selectFieldClass(false)}
-                      value={donorInfo.menstrualCycleDetails || "Regular"}
+                      className={selectFieldClass(Boolean(errors.menstrualCycleDetails))}
+                      value={donorInfo.menstrualCycleDetails || ""}
                       onChange={(e) => {
                         updateDonorInfo({ menstrualCycleDetails: e.target.value });
                         clearError("menstrualCycleDetails");
                       }}
                     >
+                      <option value="">Select Menstrual History</option>
                       <option value="Regular">Regular</option>
-                      <option value="Irregular">Irregular</option>
                       <option value="Regular (28-30 days cycle)">Regular (28-30 days cycle)</option>
+                      <option value="Irregular">Irregular</option>
                       <option value="No">No</option>
                     </select>
+                    {errors.menstrualCycleDetails && (
+                      <p className="text-[11px] text-rose-500">{errors.menstrualCycleDetails}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      History of use of contraceptives
+                      History of use of contraceptives <span className="text-rose-500">*</span>
                     </label>
                     <select
                       data-field="contraceptiveHistory"
-                      className={selectFieldClass(false)}
-                      value={donorInfo.contraceptiveHistory || "No"}
+                      className={selectFieldClass(Boolean(errors.contraceptiveHistory))}
+                      value={donorInfo.contraceptiveHistory || ""}
                       onChange={(e) => {
                         updateDonorInfo({ contraceptiveHistory: e.target.value });
                         clearError("contraceptiveHistory");
                       }}
                     >
+                      <option value="">Select Contraceptive History</option>
                       <option value="No">No</option>
                       <option value="Yes (OCP / Barrier)">Yes (OCP / Barrier)</option>
                       <option value="Yes (IUD / Copper-T)">Yes (IUD / Copper-T)</option>
                       <option value="Yes">Yes</option>
                     </select>
+                    {errors.contraceptiveHistory && (
+                      <p className="text-[11px] text-rose-500">{errors.contraceptiveHistory}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      Medical history
+                      Medical history <span className="text-rose-500">*</span>
                     </label>
-                    <Input
+                    <select
                       data-field="medicalHistory"
-                      placeholder="e.g. No (or enter medical conditions)"
-                      value={medicalInfo.medicalHistory ?? "No"}
+                      className={selectFieldClass(Boolean(errors.medicalHistory))}
+                      value={medicalInfo.medicalHistory || ""}
                       onChange={(e) => {
                         updateMedicalInfo({ medicalHistory: e.target.value });
                         clearError("medicalHistory");
                       }}
-                    />
+                    >
+                      <option value="">Select Medical History</option>
+                      <option value="No">No (Nil Significant Medical History)</option>
+                      <option value="Yes">Yes (Has medical conditions)</option>
+                    </select>
+                    {errors.medicalHistory && (
+                      <p className="text-[11px] text-rose-500">{errors.medicalHistory}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      Family history from the medical point of view
+                      Family history from the medical point of view <span className="text-rose-500">*</span>
                     </label>
-                    <Input
+                    <select
                       data-field="familyMedicalHistory"
-                      placeholder="e.g. No (or enter hereditary conditions)"
-                      value={medicalInfo.familyMedicalHistory ?? "No"}
+                      className={selectFieldClass(Boolean(errors.familyMedicalHistory))}
+                      value={medicalInfo.familyMedicalHistory || ""}
                       onChange={(e) => {
                         updateMedicalInfo({ familyMedicalHistory: e.target.value });
                         clearError("familyMedicalHistory");
                       }}
-                    />
+                    >
+                      <option value="">Select Family Medical History</option>
+                      <option value="No">No (Nil Significant Family Medical History)</option>
+                      <option value="Yes">Yes (Has family medical conditions)</option>
+                    </select>
+                    {errors.familyMedicalHistory && (
+                      <p className="text-[11px] text-rose-500">{errors.familyMedicalHistory}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      History of any abnormality in a child of the donor
+                      History of any abnormality in a child of the donor <span className="text-rose-500">*</span>
                     </label>
                     <select
                       data-field="childAbnormalityHistory"
-                      className={selectFieldClass(false)}
-                      value={medicalInfo.childAbnormalityHistory || medicalInfo.geneticDisorders || "No"}
+                      className={selectFieldClass(Boolean(errors.childAbnormalityHistory))}
+                      value={medicalInfo.childAbnormalityHistory || medicalInfo.geneticDisorders || ""}
                       onChange={(e) => {
                         updateMedicalInfo({
                           childAbnormalityHistory: e.target.value,
@@ -2233,56 +2326,83 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                         clearError("childAbnormalityHistory");
                       }}
                     >
+                      <option value="">Select Option</option>
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
+                    {errors.childAbnormalityHistory && (
+                      <p className="text-[11px] text-rose-500">{errors.childAbnormalityHistory}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      History of blood transfusion
+                      History of blood transfusion <span className="text-rose-500">*</span>
                     </label>
                     <select
                       data-field="bloodTransfusionHistory"
-                      className={selectFieldClass(false)}
-                      value={donorInfo.bloodTransfusionHistory || "No"}
+                      className={selectFieldClass(Boolean(errors.bloodTransfusionHistory))}
+                      value={donorInfo.bloodTransfusionHistory || ""}
                       onChange={(e) => {
                         updateDonorInfo({ bloodTransfusionHistory: e.target.value });
                         clearError("bloodTransfusionHistory");
                       }}
                     >
+                      <option value="">Select Option</option>
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
+                    {errors.bloodTransfusionHistory && (
+                      <p className="text-[11px] text-rose-500">{errors.bloodTransfusionHistory}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1 md:col-span-2">
                     <label className="text-xs font-semibold text-slate-700">
-                      History of substance abuse
+                      History of substance abuse <span className="text-rose-500">*</span>
                     </label>
                     <select
                       data-field="substanceAbuseHistory"
-                      className={selectFieldClass(false)}
-                      value={donorInfo.substanceAbuseHistory || "No"}
+                      className={selectFieldClass(Boolean(errors.substanceAbuseHistory))}
+                      value={donorInfo.substanceAbuseHistory || ""}
                       onChange={(e) => {
                         updateDonorInfo({ substanceAbuseHistory: e.target.value });
                         clearError("substanceAbuseHistory");
                       }}
                     >
+                      <option value="">Select Option</option>
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
+                    {errors.substanceAbuseHistory && (
+                      <p className="text-[11px] text-rose-500">{errors.substanceAbuseHistory}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold text-slate-700">
-                      Age of Youngest Living Child (Years)
+                      Age of Youngest Living Child (Years) <span className="text-rose-500">*</span>
                     </label>
-                    <Input
-                      placeholder="e.g. 4 years (must be at least 3 years)"
+                    <select
+                      data-field="pregnancyHistory"
+                      className={selectFieldClass(Boolean(errors.pregnancyHistory))}
                       value={donorInfo.pregnancyHistory || ""}
-                      onChange={(e) => updateDonorInfo({ pregnancyHistory: e.target.value })}
-                    />
+                      onChange={(e) => {
+                        updateDonorInfo({ pregnancyHistory: e.target.value });
+                        clearError("pregnancyHistory");
+                      }}
+                    >
+                      <option value="">Select Age of Youngest Child</option>
+                      <option value="3 years">3 years</option>
+                      <option value="4 years">4 years</option>
+                      <option value="5 years">5 years</option>
+                      <option value="6 years">6 years</option>
+                      <option value="7 years">7 years</option>
+                      <option value="8+ years">8+ years</option>
+                    </select>
+                    {errors.pregnancyHistory && (
+                      <p className="text-[11px] text-rose-500">{errors.pregnancyHistory}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
@@ -2290,38 +2410,65 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                       Have you ever donated eggs before? <span className="text-rose-500">*</span>
                     </label>
                     <select
+                      data-field="previousEggDonation"
                       className={selectFieldClass(Boolean(errors.previousEggDonation))}
-                      value={donorInfo.previousEggDonation || "No"}
-                      onChange={(e) => updateDonorInfo({ previousEggDonation: e.target.value as "Yes" | "No" })}
+                      value={donorInfo.previousEggDonation || ""}
+                      onChange={(e) => {
+                        updateDonorInfo({ previousEggDonation: e.target.value as "Yes" | "No" });
+                        clearError("previousEggDonation");
+                      }}
                     >
+                      <option value="">Select Option</option>
                       <option value="No">No (Never donated eggs before)</option>
                       <option value="Yes">Yes (Have donated eggs previously)</option>
                     </select>
-                    {errors.previousEggDonation && <p className="text-[11px] text-rose-500">{errors.previousEggDonation}</p>}
+                    {errors.previousEggDonation && (
+                      <p className="text-[11px] text-rose-500">{errors.previousEggDonation}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-700">Diabetes</label>
+                    <label className="text-xs font-semibold text-slate-700">
+                      Diabetes <span className="text-rose-500">*</span>
+                    </label>
                     <select
-                      className={selectFieldClass(false)}
-                      value={medicalInfo.diabetes || "No"}
-                      onChange={(e) => updateMedicalInfo({ diabetes: e.target.value })}
+                      data-field="diabetes"
+                      className={selectFieldClass(Boolean(errors.diabetes))}
+                      value={medicalInfo.diabetes || ""}
+                      onChange={(e) => {
+                        updateMedicalInfo({ diabetes: e.target.value });
+                        clearError("diabetes");
+                      }}
                     >
+                      <option value="">Select Option</option>
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
+                    {errors.diabetes && (
+                      <p className="text-[11px] text-rose-500">{errors.diabetes}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-700">Hypertension</label>
+                    <label className="text-xs font-semibold text-slate-700">
+                      Hypertension <span className="text-rose-500">*</span>
+                    </label>
                     <select
-                      className={selectFieldClass(false)}
-                      value={medicalInfo.hypertension || "No"}
-                      onChange={(e) => updateMedicalInfo({ hypertension: e.target.value })}
+                      data-field="hypertension"
+                      className={selectFieldClass(Boolean(errors.hypertension))}
+                      value={medicalInfo.hypertension || ""}
+                      onChange={(e) => {
+                        updateMedicalInfo({ hypertension: e.target.value });
+                        clearError("hypertension");
+                      }}
                     >
+                      <option value="">Select Option</option>
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
+                    {errors.hypertension && (
+                      <p className="text-[11px] text-rose-500">{errors.hypertension}</p>
+                    )}
                   </div>
                 </div>
               </div>

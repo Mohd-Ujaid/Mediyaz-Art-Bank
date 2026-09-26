@@ -56,37 +56,37 @@ const defaultContactInfo: EggContactInfo = {
 };
 
 const defaultMedicalInfo: EggMedicalInfo = {
-  medicalHistory: "No",
-  familyMedicalHistory: "No",
-  childAbnormalityHistory: "No",
+  medicalHistory: "",
+  familyMedicalHistory: "",
+  childAbnormalityHistory: "",
   previousSurgeries: "",
   allergies: "",
   currentMedications: "",
-  diabetes: "No",
-  hypertension: "No",
+  diabetes: "",
+  hypertension: "",
   smokingStatus: "Never",
   alcoholConsumption: "Never",
   drugUse: "Never",
-  geneticDisorders: "No",
+  geneticDisorders: "",
   psychologicalHistory: "",
   infectiousDiseases: "",
   fertilityHistory: "",
 };
 
 const defaultDonorInfo: EggDonorInfo = {
-  menstrualCycleDetails: "Regular",
+  menstrualCycleDetails: "",
   pregnancyHistory: "",
-  previousEggDonation: "No",
+  previousEggDonation: "",
   ivfHistory: "",
   ovarianReserve: "",
   hormonalTestDetails: "",
-  numberOfDeliveries: "1",
-  numberOfAbortions: "No",
-  obstetricHistory: "No",
-  otherPointsOfNote: "No",
-  contraceptiveHistory: "No",
-  bloodTransfusionHistory: "No",
-  substanceAbuseHistory: "No",
+  numberOfDeliveries: "",
+  numberOfAbortions: "",
+  obstetricHistory: "",
+  otherPointsOfNote: "",
+  contraceptiveHistory: "",
+  bloodTransfusionHistory: "",
+  substanceAbuseHistory: "",
 };
 
 const defaultLabReports: EggLabReports = {

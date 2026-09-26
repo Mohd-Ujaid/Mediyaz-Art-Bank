@@ -167,10 +167,12 @@ export function EggRegistrationDetailsReview({
             <span className="text-gray-900 font-semibold">{personalInfo.religion || "—"}</span>
           </div>
 
-          <div>
-            <span className="text-gray-400 text-[11px] block font-medium">Hobby / Interests</span>
-            <span className="text-gray-900 font-semibold">{personalInfo.hobby || "—"}</span>
-          </div>
+          {personalInfo.hobby ? (
+            <div>
+              <span className="text-gray-400 text-[11px] block font-medium">Hobby / Interests</span>
+              <span className="text-gray-900 font-semibold">{personalInfo.hobby}</span>
+            </div>
+          ) : null}
 
           <div>
             <span className="text-gray-400 text-[11px] block font-medium">Aadhaar Number</span>
