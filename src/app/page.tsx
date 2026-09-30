@@ -33,16 +33,16 @@ const HomePage = () => {
         {/* Subtle overlay for optimal text contrast */}
         <div className="fixed inset-0 z-[-1] bg-gradient-to-b from-white/20 via-transparent to-black/10 pointer-events-none" />
 
-        <div className="relative z-2 max-w-[92.5rem] mx-auto px-6 sm:px-10 pt-32 sm:pt-44 lg:pt-52">
+        <div className="relative z-2 max-w-[92.5rem] mx-auto px-6 sm:px-10 pt-28 sm:pt-36 lg:pt-44">
           <h1
-            className={`mt-6 sm:mt-12 text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#1d3840] tracking-tight ${playfair.className} pl-0 sm:pl-4 drop-shadow-xs`}
+            className={`mt-4 sm:mt-8 text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#1d3840] tracking-tight ${playfair.className} pl-0 sm:pl-4 drop-shadow-xs`}
           >
             The Registered ART Bank
           </h1>
 
           <div className="mt-8 sm:mt-12 flex flex-col md:flex-row items-stretch md:items-start w-full relative gap-8 lg:gap-10">
             {/* First Hero Card: Intending Parent */}
-            <div className="w-full max-w-[24rem] mx-auto md:mx-0 text-center rounded-[1.75rem] bg-white/95 backdrop-blur-xs p-6 sm:p-8 border border-[#ff7664]/60 shadow-lg shadow-black/5 transition duration-300 hover:shadow-xl hover:border-[#ff7664] flex flex-col justify-between">
+            <div className="w-full max-w-[24rem] mx-auto md:mx-0 text-center rounded-[2rem] bg-white/95 backdrop-blur-md p-6 sm:p-8 border border-[#ff7664]/60 shadow-xl shadow-slate-900/5 transition duration-300 hover:shadow-2xl hover:border-[#ff7664] flex flex-col justify-between">
               <div>
                 <h2
                   className={`text-2xl sm:text-[1.95rem] font-normal text-[#2b5860] leading-snug mb-6 tracking-tight ${playfair.className}`}
@@ -68,16 +68,16 @@ const HomePage = () => {
                 </div>
               </div>
 
-              <div className="flex gap-3 items-center justify-center pt-2">
+              <div className="flex gap-2.5 sm:gap-3 items-center justify-center pt-2">
                 <Link
                   href="/aspiring-parents/donors"
-                  className="flex-1 min-w-[120px] py-2.5 px-3 text-white bg-[#ff6b59] text-xs sm:text-sm text-center font-semibold rounded-xl shadow-xs transition duration-200 hover:bg-[#ff5242] hover:shadow-md active:scale-95"
+                  className="flex-1 py-2.5 px-3 text-white bg-[#ff6b59] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:bg-[#ff5242] hover:shadow-md hover:-translate-y-0.5 active:scale-95"
                 >
                   Find Your Donor
                 </Link>
                 <Link
                   href="/aspiring-parents"
-                  className="flex-1 min-w-[120px] py-2.5 px-3 text-white bg-[#ff6b59] text-xs sm:text-sm text-center font-semibold rounded-xl shadow-xs transition duration-200 hover:bg-[#ff5242] hover:shadow-md active:scale-95"
+                  className="flex-1 py-2.5 px-3 text-white bg-[#ff6b59] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:bg-[#ff5242] hover:shadow-md hover:-translate-y-0.5 active:scale-95"
                 >
                   Learn More
                 </Link>
@@ -85,7 +85,7 @@ const HomePage = () => {
             </div>
 
             {/* Second Hero Card: Become a Donor */}
-            <div className="w-full max-w-[24rem] mx-auto md:mx-0 text-center rounded-[1.75rem] bg-white/95 backdrop-blur-xs p-6 sm:p-8 border border-[#e3c582] shadow-lg shadow-black/5 transition duration-300 hover:shadow-xl hover:border-[#d8b870] flex flex-col justify-between">
+            <div className="w-full max-w-[24rem] mx-auto md:mx-0 text-center rounded-[2rem] bg-white/95 backdrop-blur-md p-6 sm:p-8 border border-[#e3c582] shadow-xl shadow-slate-900/5 transition duration-300 hover:shadow-2xl hover:border-[#d8b870] flex flex-col justify-between">
               <div>
                 <h2
                   className={`text-2xl sm:text-[1.95rem] font-normal text-[#2b5860] leading-snug mb-6 tracking-tight ${playfair.className}`}
@@ -111,16 +111,16 @@ const HomePage = () => {
                 </div>
               </div>
 
-              <div className="flex gap-3 items-center justify-center pt-2">
+              <div className="flex gap-2.5 sm:gap-3 items-center justify-center pt-2">
                 <Link
                   href="/inquiry"
-                  className="flex-1 min-w-[120px] py-2.5 px-3 text-[#2a383d] bg-[#e3c582] text-xs sm:text-sm text-center font-semibold rounded-xl shadow-xs transition duration-200 hover:bg-[#d8b870] hover:shadow-md active:scale-95"
+                  className="flex-1 py-2.5 px-3 text-[#2a383d] bg-[#e3c582] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:bg-[#d8b870] hover:shadow-md hover:-translate-y-0.5 active:scale-95"
                 >
                   Become a Donor
                 </Link>
                 <Link
                   href="/for-donors"
-                  className="flex-1 min-w-[120px] py-2.5 px-3 text-[#2a383d] bg-[#e3c582] text-xs sm:text-sm text-center font-semibold rounded-xl shadow-xs transition duration-200 hover:bg-[#d8b870] hover:shadow-md active:scale-95"
+                  className="flex-1 py-2.5 px-3 text-[#2a383d] bg-[#e3c582] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:bg-[#d8b870] hover:shadow-md hover:-translate-y-0.5 active:scale-95"
                 >
                   Learn More
                 </Link>
@@ -137,24 +137,35 @@ const HomePage = () => {
           className="
             bg-[#2b5860]
             relative
-            py-20 sm:py-28 lg:py-36
-            pt-[max(5rem,calc(1147px-100vh))]
+            py-16 sm:py-24 lg:py-28
+            overflow-hidden
           "
         >
           <div className="z-1 relative mx-auto max-w-[92.5rem] px-6 sm:px-10">
             {/* Top right circular decorative image */}
-            <figure className="hidden lg:block overflow-hidden aspect-square w-[26rem] xl:w-[28.125rem] relative rounded-full ml-auto pb-[16.875rem] shadow-2xl ring-4 ring-white/10">
+            <figure className="hidden xl:block overflow-hidden aspect-square w-72 2xl:w-80 absolute -top-8 right-12 rounded-full shadow-2xl ring-4 ring-white/10 opacity-90 transition-transform duration-500 hover:scale-105 pointer-events-none">
               <Image
                 src="/img/about_4.png"
                 alt="ART Bank Standards"
                 width={500}
                 height={500}
-                className="absolute rounded-full w-full h-full object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="w-full h-full object-cover"
+              />
+            </figure>
+
+            {/* Bottom left circular decorative image */}
+            <figure className="hidden xl:block overflow-hidden aspect-square w-72 2xl:w-80 absolute -bottom-8 left-12 rounded-full shadow-2xl ring-4 ring-white/10 opacity-90 transition-transform duration-500 hover:scale-105 pointer-events-none">
+              <Image
+                src="/img/about-2.png"
+                alt="Clinical Safety"
+                width={500}
+                height={500}
+                className="w-full h-full object-cover"
               />
             </figure>
 
             {/* Centered White Welcome Card */}
-            <div className="z-1 relative text-[#222] bg-white max-w-[54rem] border border-gray-200 lg:my-[-12.6875rem] mx-auto py-8 sm:py-14 md:py-16 px-6 sm:px-12 md:px-16 rounded-[1.75rem] flex flex-col justify-center shadow-2xl">
+            <div className="z-10 relative text-[#222] bg-white max-w-[54rem] border border-slate-100 mx-auto py-10 sm:py-14 md:py-16 px-6 sm:px-12 md:px-16 rounded-[2rem] flex flex-col justify-center shadow-2xl">
               <h2
                 className={`mb-6 text-[#ff5242] ${playfair.className} text-2xl sm:text-3xl lg:text-[2.35rem] leading-tight font-semibold tracking-tight`}
               >
@@ -173,22 +184,11 @@ const HomePage = () => {
                 Our mission is to uphold the highest standards of reproductive ethics, medical safety, and statutory compliance. From mandatory infectious disease screening and genetic carrier testing (including Thalassemia panels) to standardized 6-month semen quarantine, strict donor anonymity, and statutory insurance coverage for oocyte donors, we ensure every step of your journey is safe, responsible, and compliant with Indian law.
               </p>
             </div>
-
-            {/* Bottom left circular decorative image */}
-            <figure className="hidden lg:block overflow-hidden aspect-square w-[26rem] xl:w-[28.125rem] relative rounded-full mr-auto pb-[16.875rem] shadow-2xl ring-4 ring-white/10">
-              <Image
-                src="/img/about-2.png"
-                alt="Clinical Safety"
-                width={500}
-                height={500}
-                className="rounded-full w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute object-cover"
-              />
-            </figure>
           </div>
         </section>
 
         {/* ================= SECTION STATS ================= */}
-        <section className="relative text-center bg-[#95e0b9] py-16 sm:py-24 px-6 block border-y border-emerald-300/30">
+        <section className="relative text-center bg-[#95e0b9] py-16 sm:py-20 px-6 block border-y border-emerald-300/40">
           <div className="max-w-[92.5rem] mx-auto">
             <h2
               className={`text-[#2b5860] text-2xl sm:text-4xl lg:text-[2.75rem] leading-tight ${playfair.className} font-semibold tracking-tight`}
@@ -196,7 +196,7 @@ const HomePage = () => {
               A Trusted ART Banking Network Across India
             </h2>
 
-            <ul className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-14 mt-10 sm:mt-14 [&>li]:list-none [&>li]:w-[16rem] sm:[&>li]:w-[18rem] [&>li]:h-[15rem] sm:[&>li]:h-[17rem] [&>li]:flex [&>li]:flex-col [&>li]:justify-center [&>li]:items-center [&>li]:gap-3 sm:[&>li]:gap-5 [&>li]:rounded-2xl [&>li]:bg-white [&>li]:shadow-md [&>li]:border [&>li]:border-emerald-100 [&>li]:transition [&>li]:duration-300 hover:[&>li]:-translate-y-1.5 hover:[&>li]:shadow-xl">
+            <ul className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-12 mt-10 sm:mt-12 [&>li]:list-none [&>li]:w-[16rem] sm:[&>li]:w-[18rem] [&>li]:h-[14rem] sm:[&>li]:h-[16rem] [&>li]:flex [&>li]:flex-col [&>li]:justify-center [&>li]:items-center [&>li]:gap-3 sm:[&>li]:gap-4 [&>li]:rounded-3xl [&>li]:bg-white [&>li]:shadow-md [&>li]:border [&>li]:border-emerald-100/80 [&>li]:transition-all [&>li]:duration-300 hover:[&>li]:-translate-y-2 hover:[&>li]:shadow-xl">
               <li>
                 <p
                   className={`
@@ -205,6 +205,7 @@ const HomePage = () => {
                     leading-none
                     font-bold
                     text-[#ff6b59]
+                    tabular-nums
                   `}
                 >
                   20k+
@@ -222,6 +223,7 @@ const HomePage = () => {
                     leading-none
                     font-bold
                     text-[#ff6b59]
+                    tabular-nums
                   `}
                 >
                   100+
@@ -239,6 +241,7 @@ const HomePage = () => {
                     leading-none
                     font-bold
                     text-[#ff6b59]
+                    tabular-nums
                   `}
                 >
                   25+
@@ -296,7 +299,7 @@ const HomePage = () => {
         </section>
 
         {/* ================= SECTION STORIES ================= */}
-        <section className="relative text-center py-16 sm:py-20 px-6 bg-[linear-gradient(180deg,#e3c582_18.75rem,#fff_0)] block">
+        <section className="relative text-center py-16 sm:py-24 px-6 bg-gradient-to-b from-[#f5ebd2] via-[#fbf7ee] to-white block">
           <div
             className={`z-1 relative mx-auto max-w-[92.5rem] px-2 sm:px-8 text-center text-black ${montserrat.className}`}
           >
@@ -308,7 +311,7 @@ const HomePage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-[80rem] mx-auto mt-10 sm:mt-12">
               {/* Testimonial 1 */}
-              <div className="w-full max-w-[22rem] mx-auto bg-white/75 backdrop-blur-xs p-6 rounded-2xl border border-amber-100 shadow-sm transition hover:shadow-md flex flex-col justify-between">
+              <div className="w-full max-w-[22rem] mx-auto bg-white/95 backdrop-blur-md p-6 sm:p-7 rounded-3xl border border-amber-200/70 shadow-lg shadow-amber-950/5 transition duration-300 hover:shadow-xl hover:-translate-y-1.5 flex flex-col justify-between">
                 <div>
                   <figure className="w-full max-w-[13rem] mx-auto overflow-hidden block relative rounded-full aspect-square ring-4 ring-white shadow-md mb-6">
                     <Image
@@ -316,7 +319,7 @@ const HomePage = () => {
                       alt="Intending Parents Feedback"
                       width={300}
                       height={300}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition duration-500 hover:scale-105"
                     />
                   </figure>
                   <blockquote className="text-left">
@@ -325,13 +328,13 @@ const HomePage = () => {
                     </p>
                   </blockquote>
                 </div>
-                <cite className="mt-5 text-[#2b5860] block font-semibold text-xs sm:text-sm not-italic border-t border-slate-100 pt-3 text-left">
-                  — Ananya &amp; Vikram <span className="font-normal text-slate-500 block text-xs">(Intending Parents, New Delhi)</span>
+                <cite className="mt-5 text-[#2b5860] block font-bold text-xs sm:text-sm not-italic border-t border-slate-100 pt-3 text-left">
+                  — Ananya &amp; Vikram <span className="font-normal text-slate-500 block text-xs mt-0.5">(Intending Parents, New Delhi)</span>
                 </cite>
               </div>
 
               {/* Testimonial 2 */}
-              <div className="w-full max-w-[22rem] mx-auto bg-white/75 backdrop-blur-xs p-6 rounded-2xl border border-amber-100 shadow-sm transition hover:shadow-md flex flex-col justify-between">
+              <div className="w-full max-w-[22rem] mx-auto bg-white/95 backdrop-blur-md p-6 sm:p-7 rounded-3xl border border-amber-200/70 shadow-lg shadow-amber-950/5 transition duration-300 hover:shadow-xl hover:-translate-y-1.5 flex flex-col justify-between">
                 <div>
                   <figure className="w-full max-w-[13rem] mx-auto overflow-hidden block relative rounded-full aspect-square ring-4 ring-white shadow-md mb-6">
                     <Image
@@ -339,7 +342,7 @@ const HomePage = () => {
                       alt="Intending Couple Review"
                       width={300}
                       height={300}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition duration-500 hover:scale-105"
                     />
                   </figure>
                   <blockquote className="text-left">
@@ -348,13 +351,13 @@ const HomePage = () => {
                     </p>
                   </blockquote>
                 </div>
-                <cite className="mt-5 text-[#2b5860] block font-semibold text-xs sm:text-sm not-italic border-t border-slate-100 pt-3 text-left">
-                  — Meera &amp; Rajesh <span className="font-normal text-slate-500 block text-xs">(Intending Parents, Mumbai)</span>
+                <cite className="mt-5 text-[#2b5860] block font-bold text-xs sm:text-sm not-italic border-t border-slate-100 pt-3 text-left">
+                  — Meera &amp; Rajesh <span className="font-normal text-slate-500 block text-xs mt-0.5">(Intending Parents, Mumbai)</span>
                 </cite>
               </div>
 
               {/* Testimonial 3 */}
-              <div className="w-full max-w-[22rem] mx-auto bg-white/75 backdrop-blur-xs p-6 rounded-2xl border border-amber-100 shadow-sm transition hover:shadow-md flex flex-col justify-between">
+              <div className="w-full max-w-[22rem] mx-auto bg-white/95 backdrop-blur-md p-6 sm:p-7 rounded-3xl border border-amber-200/70 shadow-lg shadow-amber-950/5 transition duration-300 hover:shadow-xl hover:-translate-y-1.5 flex flex-col justify-between">
                 <div>
                   <figure className="w-full max-w-[13rem] mx-auto overflow-hidden block relative rounded-full aspect-square ring-4 ring-white shadow-md mb-6">
                     <Image
@@ -362,7 +365,7 @@ const HomePage = () => {
                       alt="Altruistic Egg Donor Experience"
                       width={300}
                       height={300}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition duration-500 hover:scale-105"
                     />
                   </figure>
                   <blockquote className="text-left">
@@ -371,8 +374,8 @@ const HomePage = () => {
                     </p>
                   </blockquote>
                 </div>
-                <cite className="mt-5 text-[#2b5860] block font-semibold text-xs sm:text-sm not-italic border-t border-slate-100 pt-3 text-left">
-                  — Pooja M. <span className="font-normal text-slate-500 block text-xs">(Altruistic Egg Donor, Gurugram)</span>
+                <cite className="mt-5 text-[#2b5860] block font-bold text-xs sm:text-sm not-italic border-t border-slate-100 pt-3 text-left">
+                  — Pooja M. <span className="font-normal text-slate-500 block text-xs mt-0.5">(Altruistic Egg Donor, Gurugram)</span>
                 </cite>
               </div>
             </div>
@@ -380,7 +383,7 @@ const HomePage = () => {
             <div className="flex justify-center md:justify-start pt-12 sm:pt-14 relative max-w-[80rem] mx-auto">
               <Link
                 href="/aspiring-parents"
-                className="text-[#1d3840] font-semibold text-sm sm:text-base underline hover:text-[#ff7468] transition inline-flex items-center gap-1.5"
+                className="text-[#1d3840] font-bold text-sm sm:text-base underline underline-offset-4 hover:text-[#ff7468] transition inline-flex items-center gap-1.5"
               >
                 Learn more about donor gamete access →
               </Link>
@@ -399,9 +402,9 @@ const HomePage = () => {
 
             <div className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
               {/* Article 1 */}
-              <article className="flex flex-col justify-between rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#285d64]/40 group">
+              <article className="flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#285d64]/40 group">
                 <div>
-                  <Link href="/blogs/beta-thalassemia-hemoglobinopathy-screening-art-banking" className="block overflow-hidden rounded-xl bg-slate-100">
+                  <Link href="/blogs/beta-thalassemia-hemoglobinopathy-screening-art-banking" className="block overflow-hidden rounded-2xl bg-slate-100">
                     <div className="relative h-[13.5rem] w-full overflow-hidden">
                       <Image
                         src="/img/aspiring_parent_1.png"
@@ -416,7 +419,7 @@ const HomePage = () => {
                   <div className="mt-5">
                     <p className="text-xs text-slate-500 mb-2 flex items-center justify-between flex-wrap gap-1">
                       <span>August 25th, 2026</span>
-                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2 py-0.5 rounded-full">
+                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2.5 py-0.5 rounded-full text-[11px]">
                         Genetic Safety
                       </span>
                     </p>
@@ -434,16 +437,16 @@ const HomePage = () => {
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100">
-                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition" href="/blogs/beta-thalassemia-hemoglobinopathy-screening-art-banking">
+                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1" href="/blogs/beta-thalassemia-hemoglobinopathy-screening-art-banking">
                     Read article →
                   </Link>
                 </div>
               </article>
 
               {/* Article 2 */}
-              <article className="flex flex-col justify-between rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#285d64]/40 group">
+              <article className="flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#285d64]/40 group">
                 <div>
-                  <Link href="/blogs/understanding-art-regulation-act-2021-india" className="block overflow-hidden rounded-xl bg-slate-100">
+                  <Link href="/blogs/understanding-art-regulation-act-2021-india" className="block overflow-hidden rounded-2xl bg-slate-100">
                     <div className="relative h-[13.5rem] w-full overflow-hidden">
                       <Image
                         src="/img/aspiring_parent_2.png"
@@ -458,7 +461,7 @@ const HomePage = () => {
                   <div className="mt-5">
                     <p className="text-xs text-slate-500 mb-2 flex items-center justify-between flex-wrap gap-1">
                       <span>August 18th, 2026</span>
-                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2 py-0.5 rounded-full">
+                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2.5 py-0.5 rounded-full text-[11px]">
                         Legal &amp; Regulatory
                       </span>
                     </p>
@@ -476,16 +479,16 @@ const HomePage = () => {
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100">
-                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition" href="/blogs/understanding-art-regulation-act-2021-india">
+                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1" href="/blogs/understanding-art-regulation-act-2021-india">
                     Read article →
                   </Link>
                 </div>
               </article>
 
               {/* Article 3 */}
-              <article className="flex flex-col justify-between rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#285d64]/40 group">
+              <article className="flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#285d64]/40 group">
                 <div>
-                  <Link href="/blogs/clinical-journey-oocyte-donor-indian-regulations" className="block overflow-hidden rounded-xl bg-slate-100">
+                  <Link href="/blogs/clinical-journey-oocyte-donor-indian-regulations" className="block overflow-hidden rounded-2xl bg-slate-100">
                     <div className="relative h-[13.5rem] w-full overflow-hidden">
                       <Image
                         src="/img/aspiring_parent_3.1.png"
@@ -500,7 +503,7 @@ const HomePage = () => {
                   <div className="mt-5">
                     <p className="text-xs text-slate-500 mb-2 flex items-center justify-between flex-wrap gap-1">
                       <span>July 30th, 2026</span>
-                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2 py-0.5 rounded-full">
+                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2.5 py-0.5 rounded-full text-[11px]">
                         Donor Care &amp; Health
                       </span>
                     </p>
@@ -518,7 +521,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100">
-                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition" href="/blogs/clinical-journey-oocyte-donor-indian-regulations">
+                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1" href="/blogs/clinical-journey-oocyte-donor-indian-regulations">
                     Read article →
                   </Link>
                 </div>
@@ -528,7 +531,7 @@ const HomePage = () => {
             <div className="mt-12 text-center">
               <Link
                 href="/blogs"
-                className="inline-flex items-center justify-center rounded-lg border border-[#2b5860]/30 bg-white px-6 py-3.5 text-sm font-semibold text-[#1d3840] hover:border-[#ff7468] hover:text-[#ff7468] transition shadow-2xs"
+                className="inline-flex items-center justify-center rounded-xl border border-[#2b5860]/30 bg-white px-7 py-3.5 text-sm font-bold text-[#1d3840] hover:border-[#ff7468] hover:text-[#ff7468] hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 shadow-2xs"
               >
                 View all articles &amp; clinical resources →
               </Link>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { ChevronDown, Menu, X, ShieldCheck } from "lucide-react";
 
 const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -92,73 +93,73 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header ref={navRef} className="sticky top-0 left-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-xs transition-all border-b border-gray-100">
+    <header ref={navRef} className="sticky top-0 left-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-xs transition-all border-b border-slate-100">
       {/* Top Announcement Bar */}
-      <div className="bg-[#1b4c54] text-white py-2 px-4 text-xs sm:text-sm text-center font-medium tracking-wide">
-        <p>Mediyaz ART Bank — Registered ART Bank under the Assisted Reproductive Technology (Regulation) Act, 2021 | Certified Sperm & Egg Bank</p>
+      <div className="bg-[#1b4c54] text-white py-2 px-4 text-xs sm:text-sm text-center font-medium tracking-wide flex items-center justify-center gap-2">
+        <ShieldCheck className="w-4 h-4 text-emerald-300 shrink-0" />
+        <p className="truncate sm:overflow-visible">Mediyaz ART Bank — Registered ART Bank under the Assisted Reproductive Technology (Regulation) Act, 2021</p>
       </div>
 
       <nav className="mx-auto flex max-w-[1920px] items-center lg:items-start justify-between px-6 lg:px-12 py-3 lg:py-4">
         {/* Logo */}
-        <Link href="/" className="shrink-0 flex items-center">
+        <Link href="/" className="shrink-0 flex items-center group">
           <Image
             src="/img/logo.webp"
             alt="Mediyaz ART Bank"
             width={320}
             height={95}
             priority
-            className="h-14 sm:h-18 lg:h-20 w-auto object-contain"
+            className="h-12 sm:h-16 lg:h-18 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
           />
         </Link>
 
         {/* Mobile menu toggle */}
-        <div className="flex items-center gap-3 lg:hidden">
+        <div className="flex items-center gap-2.5 lg:hidden">
           <Link
             href="/aspiring-parents/donors"
-            className="rounded-full bg-[#ff7468] px-4 py-1.5 text-xs font-bold text-white shadow-xs"
+            className="rounded-full bg-[#ff7468] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#ff5d50] transition-colors"
           >
             Find A Donor
           </Link>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#173d45]/20 bg-white text-[#173d45] focus-visible:ring-2 focus-visible:ring-[#285b63] focus-visible:outline-none cursor-pointer"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#173d45] hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-[#285b63] focus-visible:outline-none transition-colors cursor-pointer"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? "✕" : "☰"}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#ff7468]" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
         {/* Right Side */}
-        <div className="hidden lg:flex flex-col items-end gap-6">
+        <div className="hidden lg:flex flex-col items-end gap-5">
           {/* Top CTA Pill Buttons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link
               href="/aspiring-parents/donors"
-              className="rounded-full bg-[#ff7468] px-6 py-1.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#ff5d50] hover:shadow-md active:scale-[0.98]"
+              className="rounded-full bg-[#ff7468] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#ff5d50] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-xs"
             >
               Find A Donor
             </Link>
 
             <Link
               href="/inquiry"
-              className="rounded-full bg-[#1b4c54] px-6 py-1.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#153e45] hover:shadow-md active:scale-[0.98]"
+              className="rounded-full bg-[#1b4c54] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#153e45] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-xs"
             >
               Donor Application
             </Link>
 
-
             <Link
               href="/register"
-              className="rounded-full bg-[#ff7468] px-6 py-1.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#ff5d50] hover:shadow-md active:scale-[0.98]"
+              className="rounded-full bg-[#ff7468] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#ff5d50] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-xs"
             >
               Register
             </Link>
           </div>
 
           {/* Navigation Menu */}
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-8 xl:gap-10">
             {navLinks.map((link) => (
               <div key={link.name} className="relative">
                 {/* Main Navigation */}
@@ -167,14 +168,19 @@ const Navbar = () => {
                     type="button"
                     onClick={() => handleDropdownClick(link.name)}
                     aria-expanded={openDropdown === link.name}
-                    className="text-base font-semibold text-[#173d45] transition hover:text-[#ff7468] cursor-pointer flex items-center gap-1"
+                    className="text-[15px] font-semibold text-[#173d45] transition-colors duration-150 hover:text-[#ff7468] cursor-pointer flex items-center gap-1.5 py-1"
                   >
                     <span>{link.name}</span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        openDropdown === link.name ? "rotate-180 text-[#ff7468]" : "text-[#173d45]/60"
+                      }`}
+                    />
                   </button>
                 ) : (
                   <Link
                     href={link.href}
-                    className="text-base font-semibold text-[#173d45] transition hover:text-[#ff7468]"
+                    className="text-[15px] font-semibold text-[#173d45] transition-colors duration-150 hover:text-[#ff7468] py-1 inline-block"
                   >
                     {link.name}
                   </Link>
@@ -184,19 +190,19 @@ const Navbar = () => {
                 {link.dropdown && openDropdown === link.name && (
                   <div
                     className="
-                      absolute right-0 top-full mt-3
-                      min-w-[240px]
-                      bg-white/95
-                      px-4 py-3
-                      shadow-xl
-                      backdrop-blur-md
-                      border border-gray-100
-                      rounded-xl
+                      absolute right-0 top-full mt-2
+                      min-w-[260px]
+                      bg-white/98
+                      p-2
+                      shadow-xl shadow-slate-900/10
+                      backdrop-blur-xl
+                      border border-slate-100
+                      rounded-2xl
                       animate-slide-down
                       z-50
                     "
                   >
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-0.5">
                       {link.dropdown.map((item) => (
                         <Link
                           key={item.name}
@@ -204,14 +210,14 @@ const Navbar = () => {
                           onClick={() => setOpenDropdown(null)}
                           className="
                             whitespace-nowrap
-                            px-3 py-2
-                            text-sm
+                            px-3.5 py-2.5
+                            text-xs sm:text-sm
                             font-medium
                             text-[#173d45]
-                            transition
+                            transition-colors duration-150
                             hover:text-[#ff7468]
-                            hover:bg-[#173d45]/5
-                            rounded-lg
+                            hover:bg-slate-50
+                            rounded-xl
                           "
                         >
                           {item.name}
@@ -228,54 +234,56 @@ const Navbar = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-full bg-white border-t border-gray-100 shadow-xl px-6 py-6 max-h-[85vh] overflow-y-auto animate-fade-in">
-          <div className="flex flex-col gap-3 pb-6 border-b border-gray-100">
+        <div className="lg:hidden fixed inset-x-0 top-full bg-white border-t border-slate-100 shadow-2xl px-6 py-6 max-h-[85vh] overflow-y-auto animate-fade-in z-50">
+          <div className="flex flex-col gap-2.5 pb-6 border-b border-slate-100">
             <Link
               href="/aspiring-parents/donors"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center rounded-full bg-[#ff7468] py-2.5 text-sm font-bold text-white shadow-xs"
+              className="w-full text-center rounded-xl bg-[#ff7468] py-3 text-sm font-bold text-white shadow-xs hover:bg-[#ff5d50] transition-colors"
             >
               Find A Donor
             </Link>
             <Link
               href="/inquiry"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center rounded-full bg-[#1b4c54] py-2.5 text-sm font-bold text-white shadow-xs"
+              className="w-full text-center rounded-xl bg-[#1b4c54] py-3 text-sm font-bold text-white shadow-xs hover:bg-[#153e45] transition-colors"
             >
               Donor Application
             </Link>
             <Link
               href="/register"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center rounded-full bg-[#ff7468] py-2.5 text-sm font-bold text-white shadow-xs"
+              className="w-full text-center rounded-xl bg-[#ff7468] py-3 text-sm font-bold text-white shadow-xs hover:bg-[#ff5d50] transition-colors"
             >
               Register
             </Link>
           </div>
 
-          <div className="flex flex-col gap-4 mt-6">
+          <div className="flex flex-col gap-1 mt-5">
             {navLinks.map((link) => (
-              <div key={link.name} className="border-b border-gray-100 pb-3">
+              <div key={link.name} className="border-b border-slate-100/70 pb-2 mb-2 last:border-b-0">
                 {link.dropdown ? (
                   <div>
                     <button
                       type="button"
                       onClick={() => handleDropdownClick(link.name)}
-                      className="flex w-full items-center justify-between text-base font-bold text-[#173d45]"
+                      className="flex w-full items-center justify-between py-2 text-sm sm:text-base font-bold text-[#173d45] hover:text-[#ff7468] transition-colors cursor-pointer"
                     >
                       <span>{link.name}</span>
-                      <span className="text-xl text-[#1b4c54]">
-                        {openDropdown === link.name ? "−" : "+"}
-                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-[#1b4c54] transition-transform duration-200 ${
+                          openDropdown === link.name ? "rotate-180 text-[#ff7468]" : ""
+                        }`}
+                      />
                     </button>
                     {openDropdown === link.name && (
-                      <div className="flex flex-col gap-2 pl-4 pt-3 pb-1 animate-fade-in">
+                      <div className="flex flex-col gap-1 pl-3 pt-1 pb-2 animate-fade-in border-l-2 border-[#1b4c54]/20 ml-2 mt-1">
                         {link.dropdown.map((item) => (
                           <Link
                             key={item.name}
                             href={item.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="py-1 text-sm font-medium text-[#285d64] hover:text-[#ff7468]"
+                            className="py-1.5 px-2 text-xs sm:text-sm font-medium text-[#285d64] hover:text-[#ff7468] hover:bg-slate-50 rounded-lg transition-colors"
                           >
                             {item.name}
                           </Link>
@@ -287,7 +295,7 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block text-base font-bold text-[#173d45] hover:text-[#ff7468]"
+                    className="block py-2 text-sm sm:text-base font-bold text-[#173d45] hover:text-[#ff7468] transition-colors"
                   >
                     {link.name}
                   </Link>

@@ -180,12 +180,6 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
       setOtpError("Mobile Number must be at least 10 digits.");
       return;
     }
-    const cleanEmail = emailInput.trim().toLowerCase();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
-      setOtpError("Please enter a valid Email address to receive your OTP.");
-      return;
-    }
 
     setOtpLoading(true);
     setOtpError("");
@@ -197,7 +191,6 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
           action: "send",
           phone: phoneInput,
           aadhaar: aadhaarInput,
-          email: cleanEmail,
           donorType: donorType === "egg" ? "Egg Donor" : "Sperm Donor",
           registrationId: draftId || undefined
         })
@@ -206,10 +199,12 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
       if (res.ok) {
         setOtpSent(true);
         setResendCountdown(30);
-        toast.success(`Verification OTP sent to ${cleanEmail}! Please check your inbox.`);
+        toast.success(`Verification OTP sent via WhatsApp to +91 ${phoneInput}!`);
       } else {
-        setOtpError(data.error || "Failed to send OTP.");
-        toast.error(data.error || "Failed to send OTP.");
+        setOtpSent(false);
+        const errMsg = data.error || `There is an error sending OTP to this number (+91 ${phoneInput}). Please try again in some time.`;
+        setOtpError(errMsg);
+        toast.error(errMsg);
       }
     } catch (err) {
       setOtpError("Network error. Please try again.");
@@ -220,9 +215,8 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
   };
 
   const handleVerifyOtp = async () => {
-    const cleanEmail = emailInput.trim().toLowerCase();
     if (!otpInput || otpInput.length < 4) {
-      setOtpError("Please enter the 6-digit OTP sent to your email.");
+      setOtpError("Please enter the 6-digit OTP sent to your WhatsApp.");
       return;
     }
 
@@ -234,30 +228,29 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "verify",
-          email: cleanEmail,
           phone: phoneInput,
           otp: otpInput
         })
       });
       const data = await res.json();
       if (res.ok) {
-        toast.success("Email OTP verified successfully!");
+        toast.success("WhatsApp OTP verified successfully!");
 
         const cleanAgent = donorType === "egg"
           ? ((agentCodeInput || store.agentCode || "").trim().toUpperCase() || undefined)
           : undefined;
 
-        // Direct registration: create or load a draft registration using Aadhaar + phone + email + optional agentCode
+        // Direct registration: create or load a draft registration using Aadhaar + phone + optional agentCode
         const createRes = (await createDraftRegistrationAction(donorType, {
           personalInfo: { aadhaarNumber: aadhaarInput },
-          contactInfo: { mobileNumber: phoneInput, emailAddress: cleanEmail },
+          contactInfo: { mobileNumber: phoneInput },
           agentCode: cleanAgent,
           registrationSource: "walk_in"
         })) as any;
         if (createRes.success && createRes.registration) {
           const regId = createRes.registrationId;
 
-          // Merge verified Aadhaar, Phone, Email, and Agent Code
+          // Merge verified Aadhaar, Phone, and Agent Code
           const mergedRegistration = {
             ...createRes.registration,
             personalInfo: {
@@ -267,7 +260,6 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
             contactInfo: {
               ...(createRes.registration.contactInfo || {}),
               mobileNumber: phoneInput,
-              emailAddress: cleanEmail,
             },
             agentCode: cleanAgent || createRes.registration.agentCode || undefined
           };
@@ -278,7 +270,7 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
           loadFromServer(mergedRegistration);
           if (cleanAgent) store.setAgentCode(cleanAgent);
           setRegistrationId(regId);
-          setOtpSession({ registrationId: regId, aadhaar: aadhaarInput, phone: phoneInput, email: cleanEmail });
+          setOtpSession({ registrationId: regId, aadhaar: aadhaarInput, phone: phoneInput });
           setIsOtpVerified(true);
         } else {
           setOtpError(createRes.error || "Failed to initialize registration.");
@@ -762,7 +754,18 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
 
               {/* Phone */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700">Mobile Number *</label>
+                <div className="flex justify-between items-center">
+                  <label className="text-xs font-bold text-slate-700">WhatsApp Mobile Number *</label>
+                  {otpSent && (
+                    <button
+                      type="button"
+                      onClick={() => { setOtpSent(false); setOtpInput(""); setOtpError(""); }}
+                      className="text-[11px] font-bold text-teal-600 hover:underline cursor-pointer"
+                    >
+                      Change Number
+                    </button>
+                  )}
+                </div>
                 <input
                   type="text"
                   placeholder="Enter 10-digit mobile number"
@@ -772,30 +775,24 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
                   onChange={(e) => setPhoneInput(e.target.value.replace(/[^0-9]/g, ""))}
                   className="w-full h-10 px-3 rounded-xl border border-slate-200 bg-white text-xs font-mono tracking-wider focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 text-slate-900"
                 />
-              </div>
-
-              {/* Email Address */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold text-slate-700">Email Address *</label>
-                  <span className="text-[10px] text-teal-600 font-medium">OTP will be sent here</span>
-                </div>
-                <input
-                  type="email"
-                  placeholder="donor@example.com"
-                  disabled={otpSent || otpLoading}
-                  value={emailInput}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  className="w-full h-10 px-3 rounded-xl border border-slate-200 bg-white text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 text-slate-900"
-                />
+                <p className="text-[10px] text-slate-400">A 6-digit verification code will be sent to your WhatsApp number.</p>
               </div>
 
               {/* OTP Input */}
               {otpSent && (
                 <div className="space-y-1.5 animate-in fade-in slide-in-from-bottom-2 duration-200">
                   <div className="flex justify-between items-center">
-                    <label className="text-xs font-bold text-slate-700">6-Digit Verification OTP *</label>
-                    <span className="text-[10px] text-slate-500 truncate max-w-[180px]">Sent to {emailInput}</span>
+                    <label className="text-xs font-bold text-slate-700">6-Digit WhatsApp OTP *</label>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] text-teal-600 font-semibold truncate max-w-[140px]">Sent to +91 {phoneInput}</span>
+                      <button
+                        type="button"
+                        onClick={() => { setOtpSent(false); setOtpInput(""); setOtpError(""); }}
+                        className="text-[10px] font-bold text-teal-600 underline cursor-pointer"
+                      >
+                        Edit
+                      </button>
+                    </div>
                   </div>
                   <input
                      type="text"
@@ -817,7 +814,7 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
                   disabled={otpLoading || !canSendOtp}
                   className="w-full rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs h-10 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  {otpLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : "Verify & Send OTP"}
+                  {otpLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : "Verify & Send WhatsApp OTP"}
                 </Button>
               ) : (
                 <div className="space-y-3">

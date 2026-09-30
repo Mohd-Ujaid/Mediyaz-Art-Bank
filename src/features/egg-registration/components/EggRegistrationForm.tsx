@@ -43,6 +43,8 @@ import {
   ExternalLink,
   LogOut,
   Mail,
+  MessageSquare,
+  Pencil,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -516,12 +518,6 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
       setOtpError("Mobile Number must be at least 10 digits.");
       return;
     }
-    const cleanEmail = emailInput.trim().toLowerCase();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
-      setOtpError("Please enter a valid Email address to receive your OTP.");
-      return;
-    }
 
     setOtpLoading(true);
     setOtpError("");
@@ -533,7 +529,6 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
           action: "send",
           phone: phoneInput,
           aadhaar: aadhaarInput,
-          email: cleanEmail,
           donorType: "Egg Donor",
           registrationId: registrationId || undefined,
         }),
@@ -542,10 +537,12 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
       if (res.ok) {
         setOtpSent(true);
         setResendCountdown(30);
-        toast.success(`Verification OTP sent to ${cleanEmail}! Please check your inbox.`);
+        toast.success(`Verification OTP sent via WhatsApp to +91 ${phoneInput}!`);
       } else {
-        setOtpError(data.error || "Failed to send OTP.");
-        toast.error(data.error || "Failed to send OTP.");
+        setOtpSent(false);
+        const errMsg = data.error || `There is an error sending OTP to this number (+91 ${phoneInput}). Please try again in some time.`;
+        setOtpError(errMsg);
+        toast.error(errMsg);
       }
     } catch {
       setOtpError("Network error. Please try again.");
@@ -556,9 +553,8 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
   };
 
   const handleVerifyOtp = async () => {
-    const cleanEmail = emailInput.trim().toLowerCase();
     if (!otpInput || otpInput.length < 4) {
-      setOtpError("Please enter the 6-digit OTP sent to your email.");
+      setOtpError("Please enter the 6-digit OTP sent to your WhatsApp.");
       return;
     }
 
@@ -570,19 +566,18 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "verify",
-          email: cleanEmail,
           phone: phoneInput,
           otp: otpInput,
         }),
       });
       const data = await res.json();
       if (res.ok) {
-        toast.success("Email OTP verified successfully!");
+        toast.success("WhatsApp OTP verified successfully!");
 
         // Create or load draft egg registration
         const createRes = await createDraftEggRegistrationAction({
           personalInfo: { aadhaarNumber: aadhaarInput, gender: "Female" },
-          contactInfo: { mobileNumber: phoneInput, emailAddress: cleanEmail },
+          contactInfo: { mobileNumber: phoneInput },
           agentCode: agentCode || undefined,
         });
 
@@ -593,7 +588,7 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
           const resumeStep = createRes.registration.currentStep || 1;
           setCurrentStep(resumeStep);
           updatePersonalInfo({ aadhaarNumber: aadhaarInput, gender: "Female" });
-          updateContactInfo({ mobileNumber: phoneInput, emailAddress: cleanEmail });
+          updateContactInfo({ mobileNumber: phoneInput });
 
           // Persist session to survive browser refresh
           saveActiveSession({
@@ -601,7 +596,7 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
             isOtpVerified: true,
             aadhaarInput,
             phoneInput,
-            emailInput: cleanEmail,
+            emailInput: "",
             currentStep: resumeStep,
           });
 
@@ -1187,15 +1182,30 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
               <p className="text-[11px] text-slate-400">Enter your 12-digit UIDAI Aadhaar number without spaces.</p>
             </div>
 
-            {/* Mobile Number Input */}
+            {/* Mobile / WhatsApp Number Input */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold text-slate-700">
-                  Mobile Number <span className="text-rose-500">*</span>
+                  WhatsApp Mobile Number <span className="text-rose-500">*</span>
                 </label>
-                <span className="text-[10px] text-slate-400 font-medium flex items-center gap-1">
-                  <Smartphone className="w-3 h-3 text-slate-400" /> Linked with Aadhaar
-                </span>
+                <div className="flex items-center gap-2">
+                  {otpSent && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOtpSent(false);
+                        setOtpInput("");
+                        setOtpError("");
+                      }}
+                      className="text-[11px] font-bold text-[#285b63] hover:underline cursor-pointer flex items-center gap-1 bg-white border border-[#285b63]/30 px-2 py-0.5 rounded-lg shadow-2xs hover:bg-[#edf3f1] transition"
+                    >
+                      <Pencil className="w-3 h-3" /> Change
+                    </button>
+                  )}
+                  <span className="text-[10px] text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200 font-semibold flex items-center gap-1">
+                    <MessageSquare className="w-3 h-3 text-[#285b63]" /> OTP via WhatsApp
+                  </span>
+                </div>
               </div>
               <div className="relative flex items-center">
                 <span className="absolute left-3 text-xs font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
@@ -1210,30 +1220,7 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                   className="font-mono text-sm pl-14 h-11 border-slate-300 focus:border-[#285b63] focus:ring-2 focus:ring-[#285b63]/20 rounded-xl"
                 />
               </div>
-              <p className="text-[11px] text-slate-400">Enter your 10-digit UIDAI registered mobile number.</p>
-            </div>
-
-            {/* Email Address Input (Mandatory, Receives OTP) */}
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-slate-700">
-                  Email Address <span className="text-rose-500">*</span>
-                </label>
-                <span className="text-[10px] text-slate-400 font-medium flex items-center gap-1">
-                  <Mail className="w-3 h-3 text-[#285b63]" /> OTP Destination
-                </span>
-              </div>
-              <div className="relative flex items-center">
-                <Input
-                  type="email"
-                  placeholder="donor@example.com"
-                  value={emailInput}
-                  disabled={otpSent}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  className="text-sm pl-3 h-11 border-slate-300 focus:border-[#285b63] focus:ring-2 focus:ring-[#285b63]/20 rounded-xl"
-                />
-              </div>
-              <p className="text-[11px] text-slate-400">A 6-digit verification OTP will be sent to this email address.</p>
+              <p className="text-[11px] text-slate-400">A 6-digit verification code will be sent to your WhatsApp number.</p>
             </div>
 
             {/* Agent / Referral Code pill */}
@@ -1252,11 +1239,24 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                     <Lock className="w-3.5 h-3.5 text-[#285b63]" />
-                    Enter 6-Digit OTP <span className="text-rose-500">*</span>
+                    Enter 6-Digit WhatsApp OTP <span className="text-rose-500">*</span>
                   </label>
-                  <span className="text-[10px] text-slate-600 font-medium truncate max-w-[200px]" title={emailInput}>
-                    Sent to {emailInput}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] text-teal-700 font-semibold truncate max-w-[140px]" title={phoneInput}>
+                      Sent to +91 {phoneInput}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOtpSent(false);
+                        setOtpInput("");
+                        setOtpError("");
+                      }}
+                      className="text-[10px] font-bold text-[#285b63] underline cursor-pointer hover:text-[#1d464d]"
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
                 <Input
                   placeholder="• • • • • •"
@@ -1282,11 +1282,11 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
               {!otpSent ? (
                 <Button
                   onClick={handleSendOtp}
-                  disabled={otpLoading || aadhaarInput.length !== 12 || phoneInput.length < 10 || !emailInput || !emailInput.includes("@")}
+                  disabled={otpLoading || aadhaarInput.length !== 12 || phoneInput.length < 10}
                   className="w-full bg-[#285b63] hover:bg-[#1d464d] text-white font-bold h-12 rounded-xl shadow-md shadow-[#285b63]/20 transition-all text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  {otpLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Mail className="w-4 h-4 mr-1" />}
-                  Send Verification OTP to Email
+                  {otpLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <MessageSquare className="w-4 h-4 mr-1" />}
+                  Send Verification OTP via WhatsApp
                 </Button>
               ) : (
                 <div className="space-y-2.5">
@@ -1298,14 +1298,27 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                     {otpLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <CheckCircle2 className="w-4 h-4 mr-1" />}
                     Verify OTP & Proceed
                   </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={handleSendOtp}
-                    disabled={resendCountdown > 0 || otpLoading}
-                    className="w-full text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg h-9"
-                  >
-                    {resendCountdown > 0 ? `Resend OTP to Email in ${resendCountdown}s` : "Resend OTP to Email"}
-                  </Button>
+                  <div className="flex items-center justify-between pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOtpSent(false);
+                        setOtpInput("");
+                        setOtpError("");
+                      }}
+                      className="text-xs font-semibold text-slate-600 hover:text-slate-900 hover:underline flex items-center gap-1 cursor-pointer py-1.5"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" /> Change Phone Number
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSendOtp}
+                      disabled={resendCountdown > 0 || otpLoading}
+                      className="text-xs font-semibold text-[#285b63] hover:underline disabled:text-slate-400 disabled:no-underline cursor-pointer py-1.5"
+                    >
+                      {resendCountdown > 0 ? `Resend in ${resendCountdown}s` : "Resend OTP"}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

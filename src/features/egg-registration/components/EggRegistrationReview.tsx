@@ -700,15 +700,11 @@ export function EggRegistrationReview({
             <h4 className="text-sm font-bold text-rose-900">
               Mandatory Legal Declarations under Assisted Reproductive Technology (Regulation) Act, 2021
             </h4>
-            <p className="text-xs font-semibold text-rose-800/90 mt-0.5">
-              सहायक प्रजनन प्रौद्योगिकी (विनियमन) अधिनियम, 2021 के तहत अनिवार्य कानूनी घोषणाएं
-            </p>
+            
             <p className="text-xs text-rose-800/80 mt-1">
               Please mark each declaration below to confirm your understanding and execute formal electronic submission.
             </p>
-            <p className="text-[11px] text-rose-700/85 mt-0.5">
-              अपनी समझ की पुष्टि करने और औपचारिक इलेक्ट्रॉनिक प्रस्तुति निष्पादित करने के लिए कृपया नीचे दी गई प्रत्येक घोषणा को चिह्नित करें।
-            </p>
+            
           </div>
         </div>
 

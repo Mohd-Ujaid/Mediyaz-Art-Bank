@@ -39,30 +39,3 @@ export async function sendTwilioWhatsApp(to: string, message: string) {
   }
 }
 
-export async function sendTwilioSMS(to: string, message: string) {
-  if (!twilioClient) {
-    console.log(`[SIMULATED SMS] To: ${to} | Message: ${message}`);
-    return;
-  }
-
-  const fromNumber = process.env.TWILIO_SMS_NUMBER || '';
-  if (!fromNumber) {
-    console.warn('TWILIO_SMS_NUMBER is not set');
-    return;
-  }
-
-  const formattedTo = to.startsWith('+') ? to : '+' + to;
-
-  try {
-    const response = await twilioClient.messages.create({
-      body: message,
-      from: fromNumber,
-      to: formattedTo,
-    });
-    console.log(`SMS sent successfully. SID: ${response.sid}`);
-    return response;
-  } catch (error: any) {
-    console.warn('[TWILIO SMS WARNING] (Non-fatal):', error?.message || error);
-    return null;
-  }
-}
