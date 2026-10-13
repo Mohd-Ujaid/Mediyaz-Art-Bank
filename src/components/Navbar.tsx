@@ -16,7 +16,7 @@ const Navbar = () => {
       href: "/aspiring-parents",
       dropdown: [
         { name: "For Aspiring Parents", href: "/aspiring-parents" },
-        { name: "Our Donors", href: "/aspiring-parents/donors" },
+        { name: "Our Donors", href: "/aspiring-parents/our-donors" },
         { name: "Assurance Programs", href: "/aspiring-parents/assurance-programs" },
         { name: "Financing", href: "/aspiring-parents/financing" },
         { name: "FAQs", href: "/aspiring-parents/faqs" },
@@ -116,10 +116,10 @@ const Navbar = () => {
         {/* Mobile menu toggle */}
         <div className="flex items-center gap-2.5 lg:hidden">
           <Link
-            href="/aspiring-parents/donors"
+            href="/donors"
             className="rounded-full bg-[#ff7468] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#ff5d50] transition-colors"
           >
-            Find A Donor
+            Donors
           </Link>
           <button
             type="button"
@@ -137,10 +137,10 @@ const Navbar = () => {
           {/* Top CTA Pill Buttons */}
           <div className="flex items-center gap-3">
             <Link
-              href="/aspiring-parents/donors"
+              href="/donors"
               className="rounded-full bg-[#ff7468] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#ff5d50] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-xs"
             >
-              Find A Donor
+              Donors
             </Link>
 
             <Link
@@ -237,11 +237,11 @@ const Navbar = () => {
         <div className="lg:hidden fixed inset-x-0 top-full bg-white border-t border-slate-100 shadow-2xl px-6 py-6 max-h-[85vh] overflow-y-auto animate-fade-in z-50">
           <div className="flex flex-col gap-2.5 pb-6 border-b border-slate-100">
             <Link
-              href="/aspiring-parents/donors"
+              href="/donors"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center rounded-xl bg-[#ff7468] py-3 text-sm font-bold text-white shadow-xs hover:bg-[#ff5d50] transition-colors"
             >
-              Find A Donor
+              Donors
             </Link>
             <Link
               href="/inquiry"

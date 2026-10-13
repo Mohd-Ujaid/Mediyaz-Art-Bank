@@ -43,3 +43,8 @@ next-env.d.ts
 # uploads
 /public/uploads/*
 !/public/uploads/.gitkeep
+
+# IDE, agent and scratch files
+.gemini/
+.agents/
+scratch/

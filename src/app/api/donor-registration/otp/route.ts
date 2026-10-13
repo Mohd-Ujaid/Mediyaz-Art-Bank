@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 
 import { EggDonorRegistration } from "@/models/EggDonorRegistration";
 import { SpermDonorRegistration } from "@/models/SpermDonorRegistration";
+import { PreviousDonor } from "@/models/PreviousDonor";
 import { VerificationOtp } from "@/models/VerificationOtp";
 import { sendTwilioWhatsApp } from "@/features/twilio/services/twilio.service";
 
@@ -43,6 +44,26 @@ export async function POST(req: Request) {
           error: "A valid 10-digit mobile phone number is mandatory to receive WhatsApp OTP."
         }, { status: 400 });
       }
+
+      // --- CHECK PREVIOUS / HISTORICAL DATA REGISTRY ---
+      const previousDonorMatch = await PreviousDonor.findOne({
+        $or: [
+          { "personalInfo.aadhaarNumber": cleanAadhaar },
+          ...(cleanPhone ? [{ "contactInfo.mobileNumber": cleanPhone }] : []),
+        ],
+      });
+      if (previousDonorMatch) {
+        const isAadhaarMatch = previousDonorMatch.personalInfo?.aadhaarNumber === cleanAadhaar;
+        const matchedField = isAadhaarMatch ? `Aadhaar number (${cleanAadhaar})` : `Mobile number (+91 ${cleanPhone})`;
+        const donorTypeLabel = previousDonorMatch.donorType === "sperm" ? "Sperm Donor" : "Egg Donor";
+        const recordId = previousDonorMatch.recordCode || previousDonorMatch.legacyId || "Historical File";
+        return NextResponse.json({
+          success: false,
+          error: `This ${matchedField} is already registered in our Previous Donor Database (${donorTypeLabel}, Record: ${recordId}). Under ART Act regulations, repeat/duplicate registrations are strictly prohibited.`
+        }, { status: 400 });
+      }
+
+      // --- NEXT.JS RATE LIMITING: Max 3 OTP sends per phone per 10 minutes ---
 
       // --- NEXT.JS RATE LIMITING: Max 3 OTP sends per phone per 10 minutes ---
       const existingOtp = await VerificationOtp.findOne({ phone: cleanPhone });

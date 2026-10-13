@@ -3,6 +3,7 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import { EggDonorRegistration } from "@/models/EggDonorRegistration";
 import { SpermDonorRegistration } from "@/models/SpermDonorRegistration";
+import { PreviousDonor } from "@/models/PreviousDonor";
 
 import { Notification } from "@/models/Notification";
 
@@ -24,6 +25,28 @@ export async function createDraftEggRegistrationAction(bodyData: any) {
     const email = contactInfo?.emailAddress?.toString().trim().toLowerCase();
 
     if (aadhaar || phone || email) {
+      // 0. Check Historical / Previous Donor Records
+      if (aadhaar || phone) {
+        const prevMatch = await PreviousDonor.findOne({
+          $or: [
+            ...(aadhaar ? [{ "personalInfo.aadhaarNumber": aadhaar }] : []),
+            ...(phone ? [{ "contactInfo.mobileNumber": phone }] : []),
+          ],
+        });
+        if (prevMatch) {
+          const isAadhaarMatch = prevMatch.personalInfo?.aadhaarNumber === aadhaar;
+          const matchedField = isAadhaarMatch ? `Aadhaar number (${aadhaar})` : `Mobile number (+91 ${phone})`;
+          const dType = prevMatch.donorType === "sperm" ? "Sperm Donor" : "Egg Donor";
+          const recId = prevMatch.recordCode || prevMatch.legacyId || "Historical Archive";
+          return {
+            success: false,
+            isSubmitted: true,
+            error: `This ${matchedField} is already registered in our Previous Donor Database (${dType}, ID: ${recId}). Under ART Act regulations, repeat registrations are not permitted.`,
+            registrationId: recId,
+          };
+        }
+      }
+
       const orQuery: any[] = [];
       if (aadhaar) orQuery.push({ "personalInfo.aadhaarNumber": aadhaar });
       if (phone) orQuery.push({ "contactInfo.mobileNumber": phone });
