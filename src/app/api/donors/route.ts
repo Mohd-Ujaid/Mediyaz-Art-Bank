@@ -3,7 +3,10 @@ import { connectToDatabase } from "@/lib/mongodb";
 import { ArtDonor } from "@/models/ArtDonor";
 import { VERIFIED_DONOR_CATALOG } from "@/lib/donor-catalog";
 
+let isCatalogChecked = false;
+
 async function ensureSeedData() {
+  if (isCatalogChecked) return;
   try {
     const count = await ArtDonor.countDocuments();
     if (count === 0 && VERIFIED_DONOR_CATALOG && VERIFIED_DONOR_CATALOG.length > 0) {
@@ -53,6 +56,7 @@ async function ensureSeedData() {
       await ArtDonor.insertMany(seedItems);
       console.log(`Successfully seeded ${seedItems.length} donor profiles!`);
     }
+    isCatalogChecked = true;
   } catch (err) {
     console.error("Error during donor catalog seed check:", err);
   }
@@ -124,7 +128,15 @@ export async function GET(request: NextRequest) {
     else if (sortBy === "age-asc") sortObj = { age: 1 };
     else if (sortBy === "age-desc") sortObj = { age: -1 };
 
-    const rawDonors = await ArtDonor.find(query).sort(sortObj).lean();
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
+    const rawLimit = searchParams.get("limit");
+    const limit = rawLimit ? Math.min(100, Math.max(1, parseInt(rawLimit, 10))) : 60;
+    const skip = (page - 1) * limit;
+
+    const [rawDonors, total] = await Promise.all([
+      ArtDonor.find(query).sort(sortObj).skip(skip).limit(limit).lean(),
+      ArtDonor.countDocuments(query),
+    ]);
 
     const donors = rawDonors.map((d: any) => ({
       ...d,
@@ -160,14 +172,21 @@ export async function GET(request: NextRequest) {
       },
     }));
 
-    const total = await ArtDonor.countDocuments();
-
-    return NextResponse.json({
-      success: true,
-      count: donors.length,
-      total,
-      donors,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        count: donors.length,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+        donors,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        },
+      }
+    );
   } catch (error: any) {
     console.error("Error fetching donor catalog:", error);
     return NextResponse.json(

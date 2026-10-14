@@ -7,15 +7,20 @@ import Footer from "@/components/Footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mediyazartbank.com"),
+  alternates: {
+    canonical: "https://mediyazartbank.com",
+  },
   title: {
     default: "Mediyaz ART Bank | Registered ART Bank in India | Sperm & Egg Donation",
     template: "%s | Mediyaz ART Bank",
@@ -44,12 +49,21 @@ export const metadata: Metadata = {
     siteName: "Mediyaz ART Bank",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/img/logo.webp",
+        width: 1200,
+        height: 630,
+        alt: "Mediyaz ART Bank - Registered ART Bank under ART Regulation Act 2021",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Mediyaz ART Bank | Registered ART Bank in India",
     description:
       "Ethical, medically screened donor sperm and donor oocytes supplied exclusively to registered ART clinics in compliance with the ART (Regulation) Act, 2021.",
+    images: ["/img/logo.webp"],
   },
   icons: {
     icon: "/img/logo.webp",
@@ -64,6 +78,47 @@ export const viewport = {
   initialScale: 1,
 };
 
+const jsonLdSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalBusiness",
+      "@id": "https://mediyazartbank.com/#organization",
+      "name": "Mediyaz ART Bank",
+      "url": "https://mediyazartbank.com",
+      "logo": "https://mediyazartbank.com/img/logo.webp",
+      "image": "https://mediyazartbank.com/img/hero.jpg",
+      "description":
+        "Mediyaz ART Bank is a registered Assisted Reproductive Technology (ART) bank in India under the ART (Regulation) Act, 2021, providing medically screened donor sperm and donor oocytes exclusively to registered fertility clinics.",
+      "telephone": "+91-9667780807",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN",
+      },
+      "medicalSpecialty": [
+        "Obstetric",
+        "Gynecologic",
+        "ReproductiveEndocrinology",
+      ],
+      "availableService": [
+        {
+          "@type": "MedicalTherapy",
+          "name": "Donor Semen Banking & Cryopreservation",
+        },
+        {
+          "@type": "MedicalTherapy",
+          "name": "Altruistic Donor Oocyte Vitrification",
+        },
+        {
+          "@type": "MedicalTest",
+          "name": "Beta-Thalassemia HPLC & Genetic Carrier Screening",
+        },
+      ],
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -74,6 +129,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-white text-[#222]">
         <a
           href="#main-content"

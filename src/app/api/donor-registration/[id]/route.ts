@@ -101,13 +101,18 @@ export async function PATCH(
     const updatedRegistration = await found.model.findOneAndUpdate(
       { registrationId: id },
       { $set: update },
-      { new: true }
+      { new: true, select: "registrationId donorType status currentStep updatedAt" }
     );
 
     return NextResponse.json({
       success: true,
       message: "Registration updated successfully.",
-      registration: updatedRegistration,
+      registration: {
+        registrationId: updatedRegistration?.registrationId,
+        donorType: updatedRegistration?.donorType,
+        status: updatedRegistration?.status,
+        currentStep: updatedRegistration?.currentStep,
+      },
     });
   } catch (error: any) {
     console.error("Update donor registration error:", error);
@@ -249,7 +254,12 @@ export async function PUT(
     return NextResponse.json({
       success: true,
       message: "Registration submitted successfully!",
-      registration,
+      registration: {
+        registrationId: registration.registrationId,
+        donorType: registration.donorType,
+        status: registration.status,
+        currentStep: registration.currentStep,
+      },
     });
   } catch (error: any) {
     console.error("Submit donor registration error:", error);

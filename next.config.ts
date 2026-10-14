@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 80],
     remotePatterns: [
       {
         protocol: "https",
@@ -34,10 +35,26 @@ const nextConfig: NextConfig = {
   },
 
   async headers() {
+    const cspHeader = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "img-src 'self' blob: data: https://mediyazartbank.com https://ik.imagekit.io https://images.unsplash.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "connect-src 'self' https://mediyazartbank.com https://ik.imagekit.io https://*.imagekit.io",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; ");
+
     return [
       {
         source: "/(.*)",
         headers: [
+          {
+            key: "Content-Security-Policy",
+            value: cspHeader,
+          },
           {
             key: "X-DNS-Prefetch-Control",
             value: "on",
@@ -48,7 +65,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "X-Frame-Options",
-            value: "SAMEORIGIN",
+            value: "DENY",
           },
           {
             key: "X-Content-Type-Options",

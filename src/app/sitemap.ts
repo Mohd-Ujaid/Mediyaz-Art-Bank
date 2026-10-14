@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { INITIAL_BLOG_POSTS } from "@/lib/blogs-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://mediyazartbank.com";
@@ -30,10 +31,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/blogs", changeFrequency: "daily" as const, priority: 0.8 },
   ];
 
-  return routes.map((route) => ({
+  const staticEntries: MetadataRoute.Sitemap = routes.map((route) => ({
     url: `${baseUrl}${route.url}`,
     lastModified: currentDate,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
+
+  const blogEntries: MetadataRoute.Sitemap = INITIAL_BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blogs/${post.slug}`,
+    lastModified: new Date(post.publishedAt || currentDate),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...blogEntries];
 }

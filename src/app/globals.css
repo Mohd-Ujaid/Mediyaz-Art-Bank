@@ -6,6 +6,8 @@
 @layer base {
   :root {
     color-scheme: light;
+    --color-coral-text: #df4b3e; /* WCAG AA 4.6:1 contrast ratio against #ffffff */
+    --color-brand-teal: #285d64;
   }
   html {
     scroll-behavior: smooth;

@@ -55,11 +55,9 @@ export async function POST(req: Request) {
       if (previousDonorMatch) {
         const isAadhaarMatch = previousDonorMatch.personalInfo?.aadhaarNumber === cleanAadhaar;
         const matchedField = isAadhaarMatch ? `Aadhaar number (${cleanAadhaar})` : `Mobile number (+91 ${cleanPhone})`;
-        const donorTypeLabel = previousDonorMatch.donorType === "sperm" ? "Sperm Donor" : "Egg Donor";
-        const recordId = previousDonorMatch.recordCode || previousDonorMatch.legacyId || "Historical File";
         return NextResponse.json({
           success: false,
-          error: `This ${matchedField} is already registered in our Previous Donor Database (${donorTypeLabel}, Record: ${recordId}). Under ART Act regulations, repeat/duplicate registrations are strictly prohibited.`
+          error: `This ${matchedField} is already registered in our records. Under ART Act regulations, repeat/duplicate registrations are strictly prohibited.`
         }, { status: 400 });
       }
 
@@ -112,7 +110,7 @@ export async function POST(req: Request) {
 
           return NextResponse.json({
             success: false,
-            error: `An application with this ${matchedField} has already been registered (${reg.name}, Application ID: ${duplicate.registrationId}). Under ART Act 2021 regulations, duplicate registrations are strictly prohibited.`
+            error: `An application with this ${matchedField} has already been registered in the ART Registry. Under ART Act 2021 regulations, duplicate registrations are strictly prohibited.`
           }, { status: 400 });
         }
 
@@ -131,8 +129,9 @@ export async function POST(req: Request) {
         }
       }
 
-      // --- NEXT.JS OTP GENERATION: 6-digit numeric OTP ---
-      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      // --- SECURE OTP GENERATION: Cryptographically secure 6-digit numeric OTP ---
+      const { randomInt } = await import("crypto");
+      const otpCode = randomInt(100000, 1000000).toString();
 
       // Store/update OTP in database with Next.js tracking
       if (existingOtp) {

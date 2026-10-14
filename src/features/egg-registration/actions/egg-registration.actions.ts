@@ -78,20 +78,13 @@ export async function createDraftEggRegistrationAction(bodyData: any) {
         }
       }
 
-      // 2. Draft Resume: If incomplete draft exists, load and resume it automatically
+      // 2. Draft Resume: Both Aadhaar AND Mobile Phone must match to resume an existing draft
+      // Prevents PII exposure where an attacker with only a target's phone number could extract their draft
       let existingDraft = null;
-      if (aadhaar) {
+      if (aadhaar && phone) {
         existingDraft = await EggDonorRegistration.findOne({
           "personalInfo.aadhaarNumber": aadhaar,
-          status: "DRAFT",
-        }).sort({ updatedAt: -1 });
-      }
-      if (!existingDraft && (phone || email)) {
-        existingDraft = await EggDonorRegistration.findOne({
-          $or: [
-            ...(phone ? [{ "contactInfo.mobileNumber": phone }] : []),
-            ...(email ? [{ "contactInfo.emailAddress": email }] : []),
-          ],
+          "contactInfo.mobileNumber": phone,
           status: "DRAFT",
         }).sort({ updatedAt: -1 });
       }
@@ -367,7 +360,8 @@ export async function updateEggRegistrationStepAction(id: string, stepData: any)
 
     return {
       success: true,
-      registration: JSON.parse(JSON.stringify(updated)),
+      registrationId: updated.registrationId,
+      currentStep: updated.currentStep,
     };
   } catch (error: any) {
     return { success: false, error: error.message };

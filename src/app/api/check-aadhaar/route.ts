@@ -19,13 +19,10 @@ export async function POST(req: Request) {
       "personalInfo.aadhaarNumber": cleanAadhaar,
     });
     if (prevMatch) {
-      const typeLabel = prevMatch.donorType === "sperm" ? "Sperm Donor" : "Egg Donor";
-      const code = prevMatch.recordCode || prevMatch.legacyId || "Archived File";
       return NextResponse.json({
         exists: true,
-        source: "previous",
-        donorType: prevMatch.donorType,
-        message: `This Aadhaar (${cleanAadhaar}) is already registered in our Previous Donor Database (${typeLabel}, Record ID: ${code}). Under ART Act regulations, repeat registrations are not permitted.`,
+        eligible: false,
+        message: "An existing donor registration under these statutory credentials already exists in the records. Under the ART (Regulation) Act, 2021, duplicate registrations are not permitted.",
       });
     }
 
@@ -37,9 +34,8 @@ export async function POST(req: Request) {
     if (eggMatch) {
       return NextResponse.json({
         exists: true,
-        source: "active",
-        donorType: "egg",
-        message: `This Aadhaar is already registered in the Egg Donor Registry (Application ID: ${eggMatch.registrationId}).`,
+        eligible: false,
+        message: "An existing registration is already active in the ART Registry. Under statutory guidelines, duplicate registrations cannot be initiated.",
       });
     }
 
@@ -50,13 +46,12 @@ export async function POST(req: Request) {
     if (spermMatch) {
       return NextResponse.json({
         exists: true,
-        source: "active",
-        donorType: "sperm",
-        message: `This Aadhaar is already registered in the Sperm Donor Registry (Application ID: ${spermMatch.registrationId}).`,
+        eligible: false,
+        message: "An existing registration is already active in the ART Registry. Under statutory guidelines, duplicate registrations cannot be initiated.",
       });
     }
 
-    return NextResponse.json({ exists: false });
+    return NextResponse.json({ exists: false, eligible: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message || "Failed to check Aadhaar" }, { status: 500 });
   }

@@ -336,9 +336,12 @@ const EggDonorRegistrationSchema = new Schema<IEggDonorRegistration>(
   }
 );
 
+EggDonorRegistrationSchema.index({ registrationId: 1 }, { unique: true });
 EggDonorRegistrationSchema.index({ "personalInfo.aadhaarNumber": 1 });
+EggDonorRegistrationSchema.index({ "contactInfo.mobileNumber": 1 });
 EggDonorRegistrationSchema.index({ status: 1 });
 EggDonorRegistrationSchema.index({ "contactInfo.emailAddress": 1 });
+EggDonorRegistrationSchema.index({ createdAt: -1 });
 
 export const EggDonorRegistration =
   mongoose.models?.EggDonorRegistration ||

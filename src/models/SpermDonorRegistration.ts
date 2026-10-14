@@ -377,9 +377,12 @@ const SpermDonorRegistrationSchema = new Schema<ISpermDonorRegistration>(
   }
 );
 
+SpermDonorRegistrationSchema.index({ registrationId: 1 }, { unique: true });
 SpermDonorRegistrationSchema.index({ "personalInfo.aadhaarNumber": 1 });
+SpermDonorRegistrationSchema.index({ "contactInfo.mobileNumber": 1 });
 SpermDonorRegistrationSchema.index({ status: 1 });
 SpermDonorRegistrationSchema.index({ "contactInfo.emailAddress": 1 });
+SpermDonorRegistrationSchema.index({ createdAt: -1 });
 
 export const SpermDonorRegistration =
   mongoose.models?.SpermDonorRegistration ||

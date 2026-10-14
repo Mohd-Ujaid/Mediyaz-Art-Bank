@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Playfair_Display, Montserrat, PT_Serif } from "next/font/google";
+import { Playfair_Display, Montserrat } from "next/font/google";
 import Image from "next/image";
 import { ShieldCheck, ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -8,18 +8,14 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-montserrat",
+  display: "swap",
 });
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-playfair",
-});
-
-const ptSerif = PT_Serif({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-pt-serif",
+  display: "swap",
 });
 
 export default function HomePage() {
@@ -27,11 +23,18 @@ export default function HomePage() {
     <>
       {/* ================= HERO SECTION ================= */}
       <section className="min-h-screen relative top-0 pb-20 sm:pb-24">
-        {/* Fixed Hero Photography Background */}
-        <div
-          className="w-full h-full min-h-[100vh] bg-cover bg-center bg-no-repeat fixed inset-0 z-[-1]"
-          style={{ backgroundImage: "url('/img/hero.jpg')" }}
-        />
+        {/* Optimized Next.js Prioritized Hero Photography */}
+        <div className="w-full h-full min-h-[100vh] fixed inset-0 z-[-1] overflow-hidden">
+          <Image
+            src="/img/hero.jpg"
+            alt="Mediyaz ART Bank - Intended Parents and Altruistic Donor Gamete Support"
+            fill
+            priority
+            quality={75}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
         
         {/* Refined gradient scrim for optimal contrast and warmth */}
         <div className="fixed inset-0 z-[-1] bg-gradient-to-b from-white/40 via-white/10 to-black/25 pointer-events-none" />
