@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Recipient } from "@/models/Recipient";
-import { Donor } from "@/models/Donor";
+import { EggDonorRegistration } from "@/models/EggDonorRegistration";
+import { SpermDonorRegistration } from "@/models/SpermDonorRegistration";
 import { Employee } from "@/models/Employee";
 
 function escapeRegex(str: string): string {
@@ -57,22 +58,30 @@ export async function GET(req: Request) {
           };
         });
     } else if (type === "donor") {
-      const donors = await Donor.find({
-        donorId: { $regex: safeRegex },
-      })
-        .populate({
-          path: "user",
-          select: "name phone",
-        })
-        .limit(10);
+      const [eggDonors, spermDonors] = await Promise.all([
+        EggDonorRegistration.find({
+          $or: [
+            { registrationId: { $regex: safeRegex } },
+            { "personalInfo.fullName": { $regex: safeRegex } },
+            { "contactInfo.mobileNumber": { $regex: safeRegex } },
+          ],
+        }).limit(5).lean(),
+        SpermDonorRegistration.find({
+          $or: [
+            { registrationId: { $regex: safeRegex } },
+            { "personalInfo.fullName": { $regex: safeRegex } },
+            { "contactInfo.mobileNumber": { $regex: safeRegex } },
+          ],
+        }).limit(5).lean(),
+      ]);
 
-      results = donors.map((d: any) => {
-        const masked = maskPhone(d.user?.phone || "");
+      results = [...eggDonors, ...spermDonors].map((d: any) => {
+        const masked = maskPhone(d.contactInfo?.mobileNumber || "");
         return {
-          id: d.donorId,
-          name: d.user?.name || "Altruistic Donor",
+          id: d.registrationId,
+          name: d.personalInfo?.fullName || "Altruistic Donor",
           mobile: masked,
-          label: `${d.user?.name || "Donor"} (ID: ${d.donorId})`,
+          label: `${d.personalInfo?.fullName || "Donor"} (ID: ${d.registrationId})`,
         };
       });
     } else if (type === "doctor") {

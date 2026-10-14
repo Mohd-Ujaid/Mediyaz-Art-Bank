@@ -671,7 +671,6 @@ export async function updateAdminRegistrationStatus(bodyData: any, session: any)
 
   if (status === "APPROVED") {
     const { User, UserRole } = await import("@/models/User");
-    const { Donor } = await import("@/models/Donor");
     
     let user = await User.findOne({ email: registration.contactInfo.emailAddress.toLowerCase() });
     if (!user) {
@@ -688,56 +687,14 @@ export async function updateAdminRegistrationStatus(bodyData: any, session: any)
       await user.save();
     }
 
-    const count = await Donor.countDocuments();
+    const targetModel: any = donorType === "egg"
+      ? (await import("@/models/EggDonorRegistration")).EggDonorRegistration
+      : (await import("@/models/SpermDonorRegistration")).SpermDonorRegistration;
+    const count = await targetModel.countDocuments({ donorId: { $exists: true, $ne: "" } });
     const prefix = donorType === "egg" ? "MED-ED" : "MED-SD";
     const resolvedDonorId = registration.donorId || `${prefix}-${new Date().getFullYear()}-${String(count + 1001).padStart(4, "0")}`;
 
-    let donorRecord = await Donor.findOne({ user: user._id });
-    if (!donorRecord) {
-      donorRecord = await Donor.create({
-        user: user._id,
-        donorId: resolvedDonorId,
-        personalInformation: {
-          dateOfBirth: registration.personalInfo.dateOfBirth ? new Date(registration.personalInfo.dateOfBirth) : new Date(),
-          gender: registration.personalInfo.gender || (donorType === "egg" ? "Female" : "Male"),
-          bloodGroup: registration.personalInfo.bloodGroup || "O+",
-          nationality: registration.personalInfo.nationality || "Indian",
-          address: registration.contactInfo.currentAddress || "Not Provided",
-          maritalStatus: registration.personalInfo.maritalStatus || "Single",
-        },
-        physicalAttributes: {
-          height: Number(registration.personalInfo.height?.replace(/\D/g, "")) || 170,
-          weight: Number(registration.personalInfo.weight?.replace(/\D/g, "")) || 65,
-          eyeColor: registration.personalInfo.eyeColor || "Brown",
-          hairColor: registration.personalInfo.hairColor || "Black",
-          skinTone: registration.personalInfo.complexion || "Medium",
-        },
-        contactInformation: {
-          emergencyContactName: registration.emergencyContact?.contactPersonName || "",
-          emergencyContactPhone: registration.emergencyContact?.phoneNumber || "",
-          city: registration.contactInfo.city || "",
-          state: registration.contactInfo.state || "",
-          country: registration.personalInfo.nationality || "India",
-          pinCode: registration.contactInfo.pincode || "",
-        },
-        medicalInformation: {
-          eligibility: true,
-          hemoglobin: 14.5,
-          bloodPressure: "120/80",
-          allergies: registration.medicalInfo?.allergies || "None",
-          diseases: registration.medicalInfo?.medicalHistory || "None",
-          medications: registration.medicalInfo?.currentMedications || "None",
-          medicalNotes: adminNotes || "",
-        },
-        donationInformation: {
-          totalDonations: 0,
-          certificates: [],
-        },
-        donationStatus: "ACTIVE",
-        approvalStatus: "APPROVED",
-        createdBy: session.user.name || "Admin Console",
-      });
-    }
+    registration.donorId = resolvedDonorId;
 
     const Referral = (await import("@/models/Referral")).Referral;
     const ref = await Referral.findOneAndUpdate(

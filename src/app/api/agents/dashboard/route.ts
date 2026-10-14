@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Agent } from "@/models/Agent";
 import { EggDonorRegistration } from "@/models/EggDonorRegistration";
-import { DonorRegistration } from "@/models/DonorRegistration";
+import { SpermDonorRegistration } from "@/models/SpermDonorRegistration";
 import { getVerifiedPartner } from "@/lib/partner-auth";
 
 function escapeRegex(str: string): string {
@@ -55,15 +55,15 @@ export async function GET(req: Request) {
 
     const selectFields = "registrationId donorType status personalInfo.fullName personalInfo.bloodGroup contactInfo.city createdAt updatedAt agentPayout";
 
-    // Query both EggDonorRegistration and legacy DonorRegistration (egg only)
-    const [eggDonors, legacyDonors] = await Promise.all([
+    // Query both EggDonorRegistration and SpermDonorRegistration
+    const [eggDonors, spermDonors] = await Promise.all([
       EggDonorRegistration.find(agentFilter).sort({ createdAt: -1 }).select(selectFields).lean(),
-      DonorRegistration.find({ ...agentFilter, donorType: "egg" }).sort({ createdAt: -1 }).select(selectFields).lean(),
+      SpermDonorRegistration.find(agentFilter).sort({ createdAt: -1 }).select(selectFields).lean(),
     ]);
 
     // Deduplicate by registrationId
     const donorMap = new Map<string, any>();
-    [...eggDonors, ...legacyDonors].forEach((d: any) => {
+    [...eggDonors, ...spermDonors].forEach((d: any) => {
       const key = d.registrationId || String(d._id);
       if (!donorMap.has(key)) {
         donorMap.set(key, d);

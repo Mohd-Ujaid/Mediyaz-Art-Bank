@@ -1,13 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { VERIFIED_DONOR_CATALOG, DonorProfile } from "@/lib/donor-catalog";
 import Image from "next/image";
 
-export default function FindDonorPage() {
+function FindDonorPageInner({ initialGameteType }: { initialGameteType?: "all" | "egg" | "sperm" }) {
+  const searchParams = useSearchParams();
+  const paramType = searchParams?.get("type") || searchParams?.get("gameteType");
+  const defaultGamete = initialGameteType || (paramType === "egg" ? "egg" : paramType === "sperm" ? "sperm" : "all");
+
   // ================= STATE =================
-  const [gameteType, setGameteType] = useState<"all" | "egg" | "sperm">("all");
+  const [gameteType, setGameteType] = useState<"all" | "egg" | "sperm">(defaultGamete);
   const [availability, setAvailability] = useState<string>("all");
   const [bloodType, setBloodType] = useState<string>("all");
   const [eyeColor, setEyeColor] = useState<string>("all");
@@ -644,9 +649,9 @@ export default function FindDonorPage() {
                       <div>
                         <div className="p-5 pb-4 border-b border-gray-100 flex items-start justify-between gap-3">
                           <div className="flex items-center gap-3">
-                            {/* Stylized Avatar with initials */}
+                            {/* Stylized Avatar */}
                             <div
-                              className="w-25 h-25 rounded-2xl flex items-center justify-center text-white font-serif font-bold text-lg shadow-inner shrink-0"
+                              className="w-20 h-20 rounded-2xl flex items-center justify-center text-white font-serif font-bold text-lg shadow-inner shrink-0 overflow-hidden"
                               style={{
                                 background:
                                   donor.gameteType === "egg"
@@ -654,29 +659,31 @@ export default function FindDonorPage() {
                                     : "linear-gradient(135deg, #285b63 0%, #173037 100%)",
                               }}
                             >
-                              {donor.gameteType === "egg"?<Image
-  src="/img/woman.png"
-  alt="Man"
-  width={200}
-  height={200}
-  className="object-cover"
-/>:<Image
-  src="/img/man.png"
-  alt="Man"
-  width={200}
-  height={200}
-/>}
-
-
-
+                              {donor.gameteType === "egg" ? (
+                                <Image
+                                  src="/img/woman.png"
+                                  alt="Oocyte Donor Profile"
+                                  width={160}
+                                  height={160}
+                                  className="object-cover w-full h-full"
+                                />
+                              ) : (
+                                <Image
+                                  src="/img/man.png"
+                                  alt="Semen Donor Profile"
+                                  width={160}
+                                  height={160}
+                                  className="object-cover w-full h-full"
+                                />
+                              )}
                             </div>
                             <div>
-                              <div className="flex items-center gap-2">
-                                {/* <span className="font-mono text-sm font-bold text-[#1d3840]">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="font-mono text-xs font-bold text-[#1d3840] bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
                                   {donor.donorCode}
-                                </span> */}
+                                </span>
                                 <span
-                                  className={`text-[16px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                                  className={`text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
                                     donor.gameteType === "egg"
                                       ? "bg-rose-50 text-rose-700 border border-rose-200"
                                       : "bg-teal-50 text-[#285b63] border border-teal-200"
@@ -685,7 +692,7 @@ export default function FindDonorPage() {
                                   {donor.gameteType === "egg" ? "Oocyte Donor" : "Semen Donor"}
                                 </span>
                               </div>
-                              <div className="flex items-center gap-1.5 mt-1 text-[11px] text-gray-500">
+                              <div className="flex items-center gap-1.5 mt-1.5 text-[11px] text-gray-500">
                                 <span
                                   className={`w-2 h-2 rounded-full ${
                                     donor.availability === "available"
@@ -694,8 +701,8 @@ export default function FindDonorPage() {
                                   }`}
                                 />
                                 {donor.availability === "available"
-                                  ? "Fresh Cycle"
-                                  : "Not avalable"}
+                                  ? "Fresh Cycle Allocation"
+                                  : "Cryo-Quarantined"}
                               </div>
                             </div>
                           </div>
@@ -704,7 +711,7 @@ export default function FindDonorPage() {
                           <button
                             type="button"
                             onClick={() => toggleCompare(donor.id)}
-                            className={`p-1.5 rounded-lg border text-[11px] font-bold flex items-center gap-1 transition ${
+                            className={`p-1.5 px-2.5 rounded-lg border text-[11px] font-bold flex items-center gap-1 transition ${
                               isCompared
                                 ? "bg-[#ff7468] text-white border-[#ff7468]"
                                 : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
@@ -719,7 +726,7 @@ export default function FindDonorPage() {
                         </div>
 
                         {/* Physical Phenotype Grid */}
-                        <div className="p-5 py-4 bg-[#fbfdfc] border-b border-gray-100 grid grid-cols-4 gap-2 text-center">
+                        <div className="p-4 py-3 bg-[#fbfdfc] border-b border-gray-100 grid grid-cols-4 gap-2 text-center">
                           <div className="bg-white p-2 rounded-xl border border-gray-100">
                             <div className="text-[10px] text-gray-400 uppercase font-semibold">Height</div>
                             <div className="text-xs font-bold text-[#285b63] mt-0.5">{donor.heightFormatted}</div>
@@ -739,45 +746,25 @@ export default function FindDonorPage() {
                         </div>
 
                         {/* Key Background & Education */}
-
-                        {/* <div className="p-5 space-y-3">
-                          <div>
-                            <div className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
-                              Education &amp; Profession
-                            </div>
-                            <div className="text-xs font-bold text-gray-800 mt-0.5">
-                              {donor.degree}
-                            </div>
-                            <div className="text-xs text-gray-600">
-                              {donor.profession}
-                            </div>
+                        <div className="p-4 space-y-2 border-b border-gray-100 text-xs">
+                          <div className="flex items-baseline justify-between gap-2">
+                            <span className="text-[11px] text-gray-400 uppercase font-semibold shrink-0">Career</span>
+                            <span className="font-medium text-gray-800 text-right truncate">{donor.profession} ({donor.degree})</span>
                           </div>
-
-                          <div>
-                            <div className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
-                              Heritage &amp; Ancestry
-                            </div>
-                            <div className="text-xs text-gray-700 mt-0.5">
-                              {donor.ethnicity} • {donor.ancestryRegion} (Mother Tongue: {donor.motherTongue})
-                            </div>
+                          <div className="flex items-baseline justify-between gap-2">
+                            <span className="text-[11px] text-gray-400 uppercase font-semibold shrink-0">Heritage</span>
+                            <span className="text-gray-700 text-right">{donor.ethnicity} • {donor.ancestryRegion}</span>
                           </div>
-
-                          
-                          <div className="bg-[#edf3f1] rounded-xl p-2.5 space-y-1">
-                            <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#285b63]">
+                          <div className="bg-[#edf3f1]/80 rounded-xl px-2.5 py-1.5 flex items-center justify-between text-[11px] border border-[#285b63]/10 mt-1">
+                            <span className="font-semibold text-[#285b63] flex items-center gap-1.5">
                               <svg className="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                               </svg>
-                              <span>HPLC Thalassemia: {donor.geneticScreenings.thalassemia.status} ({donor.geneticScreenings.thalassemia.hba2Fraction})</span>
-                            </div>
-                            <div className="flex items-center gap-1.5 text-[11px] font-medium text-gray-600">
-                              <svg className="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                              <span>Karyotype: {donor.geneticScreenings.karyotype.result} ({donor.geneticScreenings.karyotype.bands})</span>
-                            </div>
+                              HPLC Thalassemia: {donor.geneticScreenings.thalassemia.status}
+                            </span>
+                            <span className="font-mono text-gray-500 font-medium">{donor.geneticScreenings.karyotype.result}</span>
                           </div>
-                        </div> */}
+                        </div>
                       </div>
 
                       {/* Card Action Buttons */}
@@ -1177,8 +1164,11 @@ export default function FindDonorPage() {
       
       <div>
 
-        {/* Donor Type */}
-        <div className="flex items-center gap-2 flex-wrap">
+        {/* Donor Type & Statutory Code */}
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <span className="font-mono text-xs sm:text-sm font-bold bg-white/15 px-2.5 py-0.5 rounded-md text-white border border-white/20">
+            {activeDonorProfile.donorCode}
+          </span>
           <span
             className={`text-sm sm:text-lg lg:text-xl font-bold px-2 sm:px-2.5 py-1 sm:py-0.5 rounded-full uppercase tracking-wider ${
               activeDonorProfile.gameteType === "egg"
@@ -1944,5 +1934,19 @@ export default function FindDonorPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function FindDonorPage(props: { initialGameteType?: "all" | "egg" | "sperm" }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#edf3f1]/30 flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-t-[#285b63] border-slate-200 rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <FindDonorPageInner {...props} />
+    </Suspense>
   );
 }

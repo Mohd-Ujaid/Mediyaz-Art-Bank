@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IDonorFileRef } from "./DonorRegistration";
+import { IDonorFileRef } from "./types";
 
 export interface IEggDonorRegistration extends Document {
   registrationId: string;

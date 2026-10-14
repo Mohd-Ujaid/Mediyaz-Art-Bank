@@ -1,13 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { VERIFIED_DONOR_CATALOG, DonorProfile } from "@/lib/donor-catalog";
 import Image from "next/image";
 
-export default function FindDonorPage() {
+function FindDonorPageInner({ initialGameteType }: { initialGameteType?: "all" | "egg" | "sperm" }) {
+  const searchParams = useSearchParams();
+  const paramType = searchParams?.get("type") || searchParams?.get("gameteType");
+  const defaultGamete = initialGameteType || (paramType === "egg" ? "egg" : paramType === "sperm" ? "sperm" : "all");
+
   // ================= STATE =================
-  const [gameteType, setGameteType] = useState<"all" | "egg" | "sperm">("all");
+  const [gameteType, setGameteType] = useState<"all" | "egg" | "sperm">(defaultGamete);
   const [availability, setAvailability] = useState<string>("all");
   const [bloodType, setBloodType] = useState<string>("all");
   const [eyeColor, setEyeColor] = useState<string>("all");
@@ -1944,5 +1949,19 @@ export default function FindDonorPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function FindDonorPage(props: { initialGameteType?: "all" | "egg" | "sperm" }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#edf3f1]/30 flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-t-[#285b63] border-slate-200 rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <FindDonorPageInner {...props} />
+    </Suspense>
   );
 }
