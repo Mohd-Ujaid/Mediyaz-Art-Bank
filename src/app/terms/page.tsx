@@ -11,8 +11,7 @@ import {
   Ban, 
   FileText,
   HeartHandshake,
-  Clock,
-  Sparkles
+  Clock
 } from "lucide-react";
 
 export const metadata: Metadata = {

@@ -13,7 +13,6 @@ import {
   UserCheck,
   Award,
   Globe2,
-  Sparkles,
 } from "lucide-react";
 
 export const metadata = {

@@ -39,7 +39,6 @@ import {
   Smartphone,
   Search,
   RotateCcw,
-  Sparkles,
   ExternalLink,
   LogOut,
   Mail,

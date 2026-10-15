@@ -7,24 +7,38 @@ export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
 
-    // Check if collection is empty, auto-seed if needed
-    const count = await Blog.countDocuments();
-    if (count === 0) {
-      console.log("No blogs found in database. Auto-seeding initial clinical blogs...");
-      await Blog.insertMany(
-        INITIAL_BLOG_POSTS.map((post) => ({
-          ...post,
-          published: true,
-          publishedAt: new Date(post.publishedAt),
-        }))
-      );
+    // One-time initial seed if the database collection is completely empty
+    const existingCount = await Blog.countDocuments();
+    if (existingCount === 0) {
+      const bulkOps = INITIAL_BLOG_POSTS.map((post) => ({
+        updateOne: {
+          filter: { slug: post.slug },
+          update: {
+            $set: {
+              ...post,
+              image: post.coverImage,
+              status: "PUBLISHED",
+              published: true,
+              publishedAt: new Date(post.publishedAt),
+            },
+          },
+          upsert: true,
+        },
+      }));
+      await Blog.bulkWrite(bulkOps);
     }
 
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
     const search = searchParams.get("search");
 
-    const query: any = { published: true };
+    const query: any = {
+      $or: [
+        { published: true },
+        { status: "PUBLISHED" },
+        { status: { $exists: false } },
+      ],
+    };
 
     if (category && category !== "All") {
       query.category = category;
@@ -33,16 +47,49 @@ export async function GET(request: NextRequest) {
     const escapeRegex = (s: string) => s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     if (search && search.trim()) {
       const searchRegex = new RegExp(escapeRegex(search.trim()), "i");
-      query.$or = [
-        { title: searchRegex },
-        { excerpt: searchRegex },
-        { tags: searchRegex },
+      query.$and = [
+        {
+          $or: [
+            { title: searchRegex },
+            { excerpt: searchRegex },
+            { tags: searchRegex },
+          ],
+        },
       ];
     }
 
-    const blogs = await Blog.find(query)
-      .sort({ publishedAt: -1 })
+    const rawBlogs = await Blog.find(query)
+      .sort({ publishedAt: -1, createdAt: -1 })
       .lean();
+
+    // Normalize article data so whether created in Admin or seed, it renders consistently
+    const blogs = rawBlogs.map((b: any) => {
+      const plainContent = (b.content || "").replace(/<[^>]+>/g, " ").replace(/[\r\n]+/g, " ").trim();
+      const excerpt =
+        b.excerpt ||
+        (plainContent.length > 170 ? plainContent.slice(0, 170) + "..." : plainContent) ||
+        "Clinical guidance and regulatory information.";
+      const wordCount = plainContent ? plainContent.split(/\s+/).length : 0;
+      const readTime = b.readTime || `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
+      const coverImage = b.coverImage || b.image || "/img/home.jpg";
+
+      return {
+        ...b,
+        _id: b._id.toString(),
+        coverImage,
+        excerpt,
+        readTime,
+        publishedAt: b.publishedAt || b.createdAt || new Date().toISOString(),
+        author:
+          typeof b.author === "object" && b.author?.name
+            ? b.author
+            : {
+                name: "Mediyaz Clinical Editorial Board",
+                role: "ART Clinical & Embryology Specialists",
+                avatar: "/img/logo.webp",
+              },
+      };
+    });
 
     return NextResponse.json({
       success: true,
@@ -52,10 +99,7 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error("Error fetching blogs from DB:", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: error.message || "Failed to fetch blogs from database",
-      },
+      { success: false, error: "Failed to fetch articles from database" },
       { status: 500 }
     );
   }

@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
-import { INITIAL_BLOG_POSTS } from "@/lib/blogs-data";
+import { connectToDatabase } from "@/lib/mongodb";
+import { Blog } from "@/models/Blog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://mediyazartbank.com";
   const currentDate = new Date();
 
@@ -38,12 +39,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }));
 
-  const blogEntries: MetadataRoute.Sitemap = INITIAL_BLOG_POSTS.map((post) => ({
-    url: `${baseUrl}/blogs/${post.slug}`,
-    lastModified: new Date(post.publishedAt || currentDate),
-    changeFrequency: "weekly" as const,
-    priority: 0.7,
-  }));
+  let blogEntries: MetadataRoute.Sitemap = [];
+  try {
+    await connectToDatabase();
+    const dbBlogs = await Blog.find({
+      $or: [{ published: true }, { status: "PUBLISHED" }],
+    })
+      .select("slug publishedAt updatedAt createdAt")
+      .lean();
+
+    blogEntries = dbBlogs.map((b: any) => ({
+      url: `${baseUrl}/blogs/${b.slug}`,
+      lastModified: new Date(b.publishedAt || b.updatedAt || b.createdAt || currentDate),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+  } catch (err) {
+    console.error("Error generating blog sitemap from DB:", err);
+  }
 
   return [...staticEntries, ...blogEntries];
 }

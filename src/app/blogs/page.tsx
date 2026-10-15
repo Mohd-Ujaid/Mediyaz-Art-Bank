@@ -24,11 +24,12 @@ interface BlogPost {
 
 const categories = [
   "All",
+  "Egg Donation Guide",
   "Legal & Regulatory",
-  "Genetic Health",
-  "Intending Parents",
-  "Donor Care & Insurance",
-  "Clinical Quality",
+  "Clinical Procedures",
+  "Embryo & Cryopreservation",
+  "Donor Care & Health",
+  "Clinical Quality & Screening",
 ];
 
 export default function BlogsPage() {
@@ -203,61 +204,120 @@ export default function BlogsPage() {
           </div>
         )}
 
-        {/* Article Cards Grid */}
+        {/* Article Cards Grid & Featured Spotlight */}
         {!loading && !error && filteredPosts.length > 0 && (
-          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blogs/${post.slug}`}
-                className="group flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white overflow-hidden shadow-xs transition duration-300 hover:-translate-y-1.5 hover:border-[#285b63]/40 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#285b63]/20"
-              >
-                <div>
-                  {/* Article Thumbnail */}
-                  <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-100">
-                    <Image
-                      src={post.coverImage || "/img/home.jpg"}
-                      alt={post.title}
-                      fill
-                      className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute top-3.5 left-3.5 z-1">
-                      <span className="rounded-full bg-white/95 backdrop-blur-md px-3 py-1 font-bold text-xs text-[#285b63] shadow-xs border border-slate-200/50">
-                        {post.category}
+          <div className="mt-8 space-y-10">
+            {/* Featured Article Spotlight (when viewing 'All' and no search filter) */}
+            {selectedCategory === "All" && !searchQuery && filteredPosts.length > 0 && (
+              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#1d3840] via-[#285b63] to-[#1d3840] text-white p-6 sm:p-10 lg:p-12 shadow-xl border border-[#285b63]/30">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  <div className="lg:col-span-7 space-y-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="rounded-full bg-[#e3c582] px-3.5 py-1 text-xs font-black text-[#1d3840] uppercase tracking-wider">
+                        Featured Publication
+                      </span>
+                      <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white/90">
+                        {filteredPosts[0].category}
+                      </span>
+                      <span className="text-white/60 text-xs flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5" /> {filteredPosts[0].readTime}
+                      </span>
+                    </div>
+
+                    <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-white tracking-tight">
+                      <Link href={`/blogs/${filteredPosts[0].slug}`} className="hover:text-[#e3c582] transition">
+                        {filteredPosts[0].title}
+                      </Link>
+                    </h2>
+
+                    <p className="text-sm sm:text-base text-slate-200 line-clamp-3 leading-relaxed">
+                      {filteredPosts[0].excerpt}
+                    </p>
+
+                    <div className="pt-2 flex items-center gap-4 flex-wrap">
+                      <Link
+                        href={`/blogs/${filteredPosts[0].slug}`}
+                        className="inline-flex items-center gap-2 rounded-xl bg-[#e3c582] hover:bg-[#d8b870] text-[#1d3840] text-xs font-bold py-3 px-6 transition duration-150 shadow-md hover:-translate-y-0.5"
+                      >
+                        Read Full Guide <ArrowRight className="w-4 h-4" />
+                      </Link>
+                      <span className="text-xs text-slate-300">
+                        Updated {formatDate(filteredPosts[0].publishedAt)}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-6">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-2.5">
-                      <Clock className="w-3.5 h-3.5" />
-                      <span>{post.readTime}</span>
-                      <span>•</span>
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>{formatDate(post.publishedAt)}</span>
+                  <div className="lg:col-span-5">
+                    <div className="relative w-full h-60 sm:h-72 rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+                      <Image
+                        src={filteredPosts[0].coverImage || "/img/home.jpg"}
+                        alt={filteredPosts[0].title}
+                        fill
+                        priority
+                        className="object-cover object-center"
+                        sizes="(max-width: 1024px) 100vw, 450px"
+                      />
                     </div>
-
-                    <h2 className="font-serif text-lg sm:text-xl font-bold leading-snug text-[#285b63] transition group-hover:text-[#ff7468]">
-                      {post.title}
-                    </h2>
-
-                    <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-3">
-                      {post.excerpt}
-                    </p>
                   </div>
                 </div>
+              </div>
+            )}
 
-                <div className="px-6 pb-6 pt-0 flex items-center justify-between text-xs border-t border-slate-100 pt-4 mt-2">
-                  <span className="text-slate-500 text-[11px] font-medium">
-                    {post.author?.name ? post.author.name.split("&")[0].trim() : "Mediyaz Clinical"}
-                  </span>
-                  <span className="font-bold text-[#ff7468] group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                    Read Article <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </Link>
-            ))}
+            {/* Grid of articles */}
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {(selectedCategory === "All" && !searchQuery ? filteredPosts.slice(1) : filteredPosts).map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blogs/${post.slug}`}
+                  className="group flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white overflow-hidden shadow-xs transition duration-300 hover:-translate-y-1.5 hover:border-[#285b63]/50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#285b63]/20"
+                >
+                  <div>
+                    {/* Article Thumbnail */}
+                    <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-100">
+                      <Image
+                        src={post.coverImage || "/img/home.jpg"}
+                        alt={post.title}
+                        fill
+                        className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute top-3.5 left-3.5 z-1">
+                        <span className="rounded-full bg-white/95 backdrop-blur-md px-3 py-1 font-bold text-xs text-[#285b63] shadow-xs border border-slate-200/50">
+                          {post.category}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="p-6">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-2.5">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>{post.readTime}</span>
+                        <span>•</span>
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>{formatDate(post.publishedAt)}</span>
+                      </div>
+
+                      <h3 className="font-serif text-lg sm:text-xl font-bold leading-snug text-[#1d3840] transition group-hover:text-[#ff7468]">
+                        {post.title}
+                      </h3>
+
+                      <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="px-6 pb-6 pt-0 flex items-center justify-between text-xs border-t border-slate-100 pt-4 mt-2">
+                    <span className="text-slate-500 text-[11px] font-medium">
+                      {post.author?.name ? post.author.name.split("&")[0].trim() : "Mediyaz Clinical"}
+                    </span>
+                    <span className="font-bold text-[#ff7468] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                      Read Article <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </section>

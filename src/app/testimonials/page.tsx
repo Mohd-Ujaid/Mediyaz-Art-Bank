@@ -11,7 +11,6 @@ import {
   Heart, 
   Building2, 
   Users, 
-  Sparkles, 
   ArrowRight,
   Filter
 } from "lucide-react";
@@ -143,7 +142,7 @@ export default function TestimonialsPage() {
         <div className="relative z-1 mx-auto w-full max-w-[1440px] px-6 pt-8 pb-14 sm:px-8 sm:pt-12 sm:pb-16 md:px-10 md:pt-16 md:pb-20 lg:px-16">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full bg-[#fff2f0] px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#ff7468]">
-              <Sparkles className="h-3.5 w-3.5" />
+              <CheckCircle2 className="h-3.5 w-3.5" />
               Verified Experiences
             </span>
             <h1 className="mt-4 font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-tight text-[#1d3840]">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Phone, Mail, Clock, ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
@@ -404,15 +405,8 @@ const Footer = () => {
           </li>
         </ul>
 
-        {/* ================= OVERSIZED EDITORIAL BRAND WORDMARK ================= */}
-        <div className="relative my-8 select-none overflow-hidden border-y border-white/10 py-6 sm:py-8 text-center pointer-events-none">
-          <span className="block font-sans font-black tracking-tighter text-[9.5vw] xl:text-[130px] leading-none text-white/[0.07] select-none whitespace-nowrap">
-            Mediyaz ART Bank
-          </span>
-        </div>
-
         {/* ================= BOTTOM LEGAL & COPYRIGHT ROW ================= */}
-        <div className="flex flex-col gap-4 pt-2 text-[12px] text-white/70 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 border-t border-white/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[12px] text-white/70">
           <p>
             <span>
               <Link href="/terms" className="hover:text-white transition-colors">
@@ -429,17 +423,47 @@ const Footer = () => {
             </span>
           </p>
 
-          <Link
-            className="all-languages-button hover:text-white transition-colors"
-            href="/contacts"
-          >
-            Translate
-          </Link>
+          <p className="text-[12px] text-white/60">
+            © 2026 Mediyaz ART Bank. All rights reserved.
+          </p>
         </div>
 
-        <p className="mt-4 text-[12px] text-white/60">
-          © 2026 Mediyaz ART Bank. All rights reserved.
-        </p>
+        {/* Big Wordmark with Top-to-Bottom Fade Effect (Always Fits, Never Cuts Off) */}
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mt-8 pt-4 select-none text-center pointer-events-none flex justify-center w-full"
+        >
+          <svg
+            viewBox="0 0 1200 135"
+            className="w-full h-auto max-w-full select-none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="footerBrandFadeDesktop" x1="0" y1="0" x2="0" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.38" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.14" />
+                <stop offset="96%" stopColor="#ffffff" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <text
+              x="50%"
+              y="105"
+              textAnchor="middle"
+              fill="url(#footerBrandFadeDesktop)"
+              className="font-sans font-black tracking-tight"
+              style={{
+                fontSize: "116px",
+                fontWeight: 900,
+                letterSpacing: "-0.035em",
+              }}
+            >
+              Mediyaz ART Bank
+            </text>
+          </svg>
+        </motion.div>
       </div>
 
       {/* ================= MOBILE FOOTER ================= */}
@@ -746,15 +770,8 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Mobile Oversized Brand Wordmark */}
-        <div className="relative my-8 select-none overflow-hidden border-y border-white/10 py-5 text-center pointer-events-none">
-          <span className="block font-sans font-black tracking-tighter text-[10vw] leading-none text-white/[0.07] select-none whitespace-nowrap">
-            Mediyaz ART Bank
-          </span>
-        </div>
-
         {/* Mobile Bottom */}
-        <div className="pt-2">
+        <div className="mt-8 border-t border-white/15 pt-6">
           <p className="text-[11px] leading-6 text-white/70">
             <span>
               <Link href="/terms" className="hover:text-white">
@@ -774,6 +791,43 @@ const Footer = () => {
           <p className="mt-4 text-[11px] text-white/60">
             © 2026 Mediyaz ART Bank. All rights reserved. | Registered under ART (Regulation) Act, 2021.
           </p>
+
+          {/* Big Wordmark with Top-to-Bottom Fade Effect (Mobile - Always Fits) */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+            className="relative mt-8 pt-2 select-none text-center pointer-events-none flex justify-center w-full"
+          >
+            <svg
+              viewBox="0 0 1200 135"
+              className="w-full h-auto max-w-full select-none"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="footerBrandFadeMobile" x1="0" y1="0" x2="0" y2="100%">
+                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0.38" />
+                  <stop offset="50%" stopColor="#ffffff" stopOpacity="0.14" />
+                  <stop offset="96%" stopColor="#ffffff" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <text
+                x="50%"
+                y="105"
+                textAnchor="middle"
+                fill="url(#footerBrandFadeMobile)"
+                className="font-sans font-black tracking-tight"
+                style={{
+                  fontSize: "116px",
+                  fontWeight: 900,
+                  letterSpacing: "-0.035em",
+                }}
+              >
+                Mediyaz ART Bank
+              </text>
+            </svg>
+          </motion.div>
         </div>
       </div>
     </footer>

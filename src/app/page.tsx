@@ -1,8 +1,14 @@
 import React from "react";
 import Link from "next/link";
-import { Playfair_Display, Montserrat } from "next/font/google";
 import Image from "next/image";
-import { ShieldCheck, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Playfair_Display, Montserrat } from "next/font/google";
+import { ShieldCheck, ArrowRight, Clock } from "lucide-react";
+import { connectToDatabase } from "@/lib/mongodb";
+import { Blog } from "@/models/Blog";
+
+// Enable Incremental Static Regeneration (ISR) - caches page for 5 minutes
+// Eliminates cold database roundtrips on slow mobile connections
+export const revalidate = 300;
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -18,19 +24,78 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-export default function HomePage() {
+async function getHomepageBlogs() {
+  try {
+    await connectToDatabase();
+    // Projection: fetch only necessary lightweight fields for homepage cards
+    const rawBlogs = await Blog.find({
+      $or: [{ published: true }, { status: "PUBLISHED" }, { status: { $exists: false } }],
+    })
+      .select("title slug category coverImage image excerpt readTime publishedAt createdAt author")
+      .sort({ publishedAt: -1, createdAt: -1 })
+      .limit(3)
+      .lean();
+
+    if (rawBlogs && rawBlogs.length > 0) {
+      return rawBlogs.map((b: any) => {
+        const plainContent = (b.content || "").replace(/<[^>]+>/g, " ").replace(/[\r\n]+/g, " ").trim();
+        const excerpt =
+          b.excerpt ||
+          (plainContent.length > 170 ? plainContent.slice(0, 170) + "..." : plainContent) ||
+          "Clinical guidance and regulatory information.";
+        const wordCount = plainContent ? plainContent.split(/\s+/).length : 0;
+        const readTime = b.readTime || `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
+        const coverImage = b.coverImage || b.image || "/img/home.webp";
+
+        return {
+          title: b.title,
+          slug: b.slug,
+          category: b.category,
+          coverImage,
+          excerpt,
+          readTime,
+          publishedAt: b.publishedAt || b.createdAt || new Date().toISOString(),
+          author:
+            typeof b.author === "object" && b.author?.name
+              ? b.author
+              : { name: "Mediyaz Clinical Editorial Board" },
+        };
+      });
+    }
+    return [];
+  } catch (err) {
+    console.error("Error loading homepage blogs from DB:", err);
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const formatDate = (dateStr: string) => {
+    try {
+      return new Date(dateStr).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+    } catch {
+      return dateStr;
+    }
+  };
+
+  const featuredArticles = await getHomepageBlogs();
+
   return (
     <>
       {/* ================= HERO SECTION ================= */}
       <section className="min-h-screen relative top-0 pb-20 sm:pb-24">
-        {/* Optimized Next.js Prioritized Hero Photography */}
+        {/* Fixed Hero Background Image - Content scrolls over fixed image */}
         <div className="w-full h-full min-h-[100vh] fixed inset-0 z-[-1] overflow-hidden">
           <Image
-            src="/img/hero.jpg"
+            src="/img/hero.webp"
             alt="Mediyaz ART Bank - Intended Parents and Altruistic Donor Gamete Support"
             fill
             priority
-            quality={75}
+            quality={85}
             sizes="100vw"
             className="object-cover object-center"
           />
@@ -42,43 +107,47 @@ export default function HomePage() {
         <div className="relative z-2 max-w-[92.5rem] mx-auto px-6 sm:px-10 pt-28 sm:pt-36 lg:pt-44">
           
           {/* Statutory Credential Badge */}
-          <div className="pl-0 sm:pl-4 mb-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-[#285b63]/20 text-[#285b63] text-xs font-semibold tracking-wide shadow-2xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#285b63]" />
+          <div className="mb-3">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#285b63]/25 text-[#285b63] text-xs font-bold tracking-wide shadow-xs">
+              <ShieldCheck className="w-4 h-4 text-[#285b63]" />
               Assisted Reproductive Technology (Regulation) Act, 2021
             </span>
           </div>
 
           <h1
-            className={`mt-2 sm:mt-4 text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#1d3840] tracking-tight ${playfair.className} pl-0 sm:pl-4 drop-shadow-xs`}
+            className={`mt-2 text-3xl sm:text-5xl lg:text-[4rem] font-semibold text-[#1d3840] tracking-tight leading-[1.1] ${playfair.className} drop-shadow-xs max-w-3xl`}
           >
             The Registered ART Bank
           </h1>
 
-          <div className="mt-8 sm:mt-12 flex flex-col md:flex-row items-stretch md:items-start w-full relative gap-8 lg:gap-10">
+          <p className="mt-4 text-slate-700 text-sm sm:text-base max-w-2xl leading-relaxed">
+            Pioneering ethical, confidential, and fully compliant gamete banking services across India for intended parents, registered fertility clinics, and altruistic donors.
+          </p>
+
+          <div className="mt-8 sm:mt-10 flex flex-col md:flex-row items-stretch md:items-start w-full relative gap-6 sm:gap-8 lg:gap-10">
             
             {/* First Hero Card: Intending Parent */}
-            <div className="w-full max-w-[24.5rem] mx-auto md:mx-0 text-center rounded-[2rem] bg-white/95 backdrop-blur-md p-6 sm:p-8 border border-slate-200/90 shadow-xl shadow-slate-900/5 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-[#ff7664]/80 flex flex-col justify-between group">
+            <div className="w-full max-w-[24.5rem] mx-auto md:mx-0 text-center rounded-3xl bg-white/95 backdrop-blur-md p-6 sm:p-7 border border-slate-200/90 shadow-xl shadow-slate-900/5 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-[#ff7664]/60 flex flex-col justify-between group">
               <div>
                 <h2
-                  className={`text-2xl sm:text-[1.95rem] font-medium text-[#1d3840] leading-snug mb-6 tracking-tight ${playfair.className}`}
+                  className={`text-2xl sm:text-[1.85rem] font-medium text-[#1d3840] leading-snug mb-5 tracking-tight ${playfair.className}`}
                 >
                   I am an Intending Parent
                 </h2>
 
-                <div className="max-w-[15rem] mx-auto">
-                  <figure className="mx-auto mt-0 mb-6 w-full overflow-hidden rounded-full relative aspect-square ring-4 ring-[#ff7664]/20 shadow-md">
+                <div className="max-w-[14.5rem] mx-auto">
+                  <figure className="mx-auto mt-0 mb-5 w-full overflow-hidden rounded-full relative aspect-square ring-4 ring-[#ff7664]/20 shadow-md">
                     <Image
-                      src="/img/aspiring_parent_3.3.png"
+                      src="/img/aspiring_parent_3.3.webp"
                       alt="Intending Parent Support"
-                      width={500}
-                      height={500}
-                      priority
+                      width={240}
+                      height={240}
+                      sizes="(max-width: 640px) 232px, 240px"
                       className="rounded-full w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </figure>
 
-                  <p className="text-slate-700 mb-6 text-center text-xs sm:text-sm leading-relaxed">
+                  <p className="text-slate-700 mb-5 text-center text-xs sm:text-sm leading-relaxed">
                     Whether you are starting your assisted reproduction journey or exploring donor gametes, <strong className="font-semibold text-[#1d3840]">Mediyaz ART Bank</strong> supports intending couples and women in full compliance with the ART (Regulation) Act, 2021. In partnership with your registered fertility clinic, we provide ethically screened donor sperm and donor oocytes with complete statutory anonymity and verified medical records.
                   </p>
                 </div>
@@ -87,7 +156,7 @@ export default function HomePage() {
               <div className="flex gap-2.5 sm:gap-3 items-center justify-center pt-2">
                 <Link
                   href="/aspiring-parents/donors"
-                  className="flex-1 py-2.5 px-3 text-white bg-[#ff6b59] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:bg-[#ff5242] hover:shadow-md hover:-translate-y-0.5 active:scale-95"
+                  className="flex-1 py-2.5 px-3 text-white bg-[#ff6b59] hover:bg-[#ff5242] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-95"
                 >
                   Find Your Donor
                 </Link>
@@ -101,27 +170,27 @@ export default function HomePage() {
             </div>
 
             {/* Second Hero Card: Become a Donor */}
-            <div className="w-full max-w-[24.5rem] mx-auto md:mx-0 text-center rounded-[2rem] bg-white/95 backdrop-blur-md p-6 sm:p-8 border border-slate-200/90 shadow-xl shadow-slate-900/5 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-[#d8b870] flex flex-col justify-between group">
+            <div className="w-full max-w-[24.5rem] mx-auto md:mx-0 text-center rounded-3xl bg-white/95 backdrop-blur-md p-6 sm:p-7 border border-slate-200/90 shadow-xl shadow-slate-900/5 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-[#d8b870] flex flex-col justify-between group">
               <div>
                 <h2
-                  className={`text-2xl sm:text-[1.95rem] font-medium text-[#1d3840] leading-snug mb-6 tracking-tight ${playfair.className}`}
+                  className={`text-2xl sm:text-[1.85rem] font-medium text-[#1d3840] leading-snug mb-5 tracking-tight ${playfair.className}`}
                 >
                   I Want to Become a Donor
                 </h2>
 
-                <div className="max-w-[15rem] mx-auto">
-                  <figure className="mx-auto mt-0 mb-6 w-full overflow-hidden rounded-full relative aspect-square ring-4 ring-[#e3c582]/30 shadow-md">
+                <div className="max-w-[14.5rem] mx-auto">
+                  <figure className="mx-auto mt-0 mb-5 w-full overflow-hidden rounded-full relative aspect-square ring-4 ring-[#e3c582]/35 shadow-md">
                     <Image
-                      src="/img/find_donor_1.png"
+                      src="/img/find_donor_1.webp"
                       alt="Become an Altruistic Donor"
-                      width={500}
-                      height={500}
-                      priority
+                      width={240}
+                      height={240}
+                      sizes="(max-width: 640px) 232px, 240px"
                       className="rounded-full w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </figure>
 
-                  <p className="text-slate-700 mb-6 text-center text-xs sm:text-sm leading-relaxed">
+                  <p className="text-slate-700 mb-5 text-center text-xs sm:text-sm leading-relaxed">
                     Bring hope to couples facing involuntary infertility. <strong className="font-semibold text-[#1d3840]">Mediyaz ART Bank</strong> welcomes eligible, healthy individuals for altruistic sperm and egg donation under the Assisted Reproductive Technology (Regulation) Act, 2021. Experience a structured, confidential, and medically supervised process with health screenings, statutory insurance coverage, and ethical care.
                   </p>
                 </div>
@@ -130,7 +199,7 @@ export default function HomePage() {
               <div className="flex gap-2.5 sm:gap-3 items-center justify-center pt-2">
                 <Link
                   href="/register"
-                  className="flex-1 py-2.5 px-3 text-[#1d3840] bg-[#e3c582] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:bg-[#d8b870] hover:shadow-md hover:-translate-y-0.5 active:scale-95"
+                  className="flex-1 py-2.5 px-3 text-[#1d3840] bg-[#e3c582] hover:bg-[#d8b870] text-xs sm:text-sm text-center font-bold rounded-xl shadow-xs transition duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-95"
                 >
                   Become a Donor
                 </Link>
@@ -157,16 +226,19 @@ export default function HomePage() {
             relative
             py-16 sm:py-24 lg:py-28
             overflow-hidden
+            content-auto
           "
         >
           <div className="z-1 relative mx-auto max-w-[92.5rem] px-6 sm:px-10">
             {/* Top right circular decorative image */}
             <figure className="hidden xl:block overflow-hidden aspect-square w-72 2xl:w-80 absolute -top-8 right-12 rounded-full shadow-2xl ring-4 ring-white/10 opacity-90 transition-transform duration-500 hover:scale-105 pointer-events-none">
               <Image
-                src="/img/about_4.png"
+                src="/img/about_4.webp"
                 alt="ART Bank Standards"
-                width={500}
-                height={500}
+                width={320}
+                height={320}
+                loading="lazy"
+                sizes="320px"
                 className="w-full h-full object-cover"
               />
             </figure>
@@ -174,10 +246,12 @@ export default function HomePage() {
             {/* Bottom left circular decorative image */}
             <figure className="hidden xl:block overflow-hidden aspect-square w-72 2xl:w-80 absolute -bottom-8 left-12 rounded-full shadow-2xl ring-4 ring-white/10 opacity-90 transition-transform duration-500 hover:scale-105 pointer-events-none">
               <Image
-                src="/img/about-2.png"
+                src="/img/about-2.webp"
                 alt="Clinical Safety"
-                width={500}
-                height={500}
+                width={320}
+                height={320}
+                loading="lazy"
+                sizes="320px"
                 className="w-full h-full object-cover"
               />
             </figure>
@@ -209,7 +283,7 @@ export default function HomePage() {
         </section>
 
         {/* ================= SECTION STATS (TRUSTED NETWORK) ================= */}
-        <section className="relative text-center bg-[#edf5f2] py-16 sm:py-20 px-6 block border-y border-slate-200/80">
+        <section className="relative text-center bg-[#edf5f2] py-16 sm:py-20 px-6 block border-y border-slate-200/80 content-auto">
           <div className="max-w-[92.5rem] mx-auto">
             <span className="text-xs font-bold text-[#285b63] uppercase tracking-wider block mb-2">
               Pan-India Clinical Footprint
@@ -279,7 +353,7 @@ export default function HomePage() {
         </section>
 
         {/* ================= SECTION CLINICAL GUIDANCE ================= */}
-        <section className="py-16 sm:py-24 lg:py-28 px-6 bg-white block">
+        <section className="py-16 sm:py-24 lg:py-28 px-6 bg-white block content-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between z-1 relative mx-auto max-w-[92.5rem] px-2 sm:px-8 gap-12 lg:gap-16">
             <div className="w-full lg:max-w-[34rem]">
               <span className="text-xs font-bold text-[#285b63] uppercase tracking-wider block mb-2">
@@ -321,10 +395,12 @@ export default function HomePage() {
 
             <figure className="w-full lg:flex-1 rounded-2xl overflow-hidden shadow-xl border border-slate-100 relative">
               <Image
-                src="/img/home1.png"
+                src="/img/home1.webp"
                 alt="Clinical Guidance & Quality Protocols"
-                width={800}
-                height={500}
+                width={720}
+                height={450}
+                loading="lazy"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 720px"
                 className="w-full h-auto object-cover"
               />
             </figure>
@@ -332,7 +408,7 @@ export default function HomePage() {
         </section>
 
         {/* ================= SECTION EXPERIENCES & CLINICAL JOURNEYS ================= */}
-        <section className="relative text-center py-16 sm:py-24 px-6 bg-gradient-to-b from-[#fbf8f2] via-[#faf7f0] to-white block border-t border-slate-200/60">
+        <section className="relative text-center py-16 sm:py-24 px-6 bg-gradient-to-b from-[#fbf8f2] via-[#faf7f0] to-white block border-t border-slate-200/60 content-auto">
           <div
             className={`z-1 relative mx-auto max-w-[92.5rem] px-2 sm:px-8 text-center text-black ${montserrat.className}`}
           >
@@ -352,10 +428,12 @@ export default function HomePage() {
                 <div>
                   <figure className="w-full max-w-[13rem] mx-auto overflow-hidden block relative rounded-full aspect-square ring-4 ring-slate-100 shadow-md mb-6">
                     <Image
-                      src="/img/t1.jpg"
+                      src="/img/t1.webp"
                       alt="Intending Parents Feedback"
-                      width={300}
-                      height={300}
+                      width={208}
+                      height={208}
+                      loading="lazy"
+                      sizes="(max-width: 640px) 180px, 208px"
                       className="w-full h-full object-cover transition duration-500 hover:scale-105"
                     />
                   </figure>
@@ -375,10 +453,12 @@ export default function HomePage() {
                 <div>
                   <figure className="w-full max-w-[13rem] mx-auto overflow-hidden block relative rounded-full aspect-square ring-4 ring-slate-100 shadow-md mb-6">
                     <Image
-                      src="/img/t2.jpg"
+                      src="/img/t2.webp"
                       alt="Intending Couple Review"
-                      width={300}
-                      height={300}
+                      width={208}
+                      height={208}
+                      loading="lazy"
+                      sizes="(max-width: 640px) 180px, 208px"
                       className="w-full h-full object-cover transition duration-500 hover:scale-105"
                     />
                   </figure>
@@ -398,10 +478,12 @@ export default function HomePage() {
                 <div>
                   <figure className="w-full max-w-[13rem] mx-auto overflow-hidden block relative rounded-full aspect-square ring-4 ring-slate-100 shadow-md mb-6">
                     <Image
-                      src="/img/t3.jpg"
+                      src="/img/t3.webp"
                       alt="Altruistic Egg Donor Experience"
-                      width={300}
-                      height={300}
+                      width={208}
+                      height={208}
+                      loading="lazy"
+                      sizes="(max-width: 640px) 180px, 208px"
                       className="w-full h-full object-cover transition duration-500 hover:scale-105"
                     />
                   </figure>
@@ -430,7 +512,7 @@ export default function HomePage() {
         </section>
 
         {/* ================= SECTION ARTICLES & RESOURCES ================= */}
-        <section className="relative pt-16 sm:pt-24 pb-20 sm:pb-28 px-6 bg-white block text-slate-900 border-t border-slate-200/60">
+        <section className="relative pt-16 sm:pt-24 pb-20 sm:pb-28 px-6 bg-white block text-slate-900 border-t border-slate-200/60 content-auto">
           <div className="relative z-1 mx-auto max-w-[92.5rem] px-2 sm:px-8">
             <span className="text-xs font-bold text-[#285b63] uppercase tracking-wider block mb-2">
               Clinical Insights
@@ -442,133 +524,65 @@ export default function HomePage() {
             </h2>
 
             <div className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
-              
-              {/* Article 1 */}
-              <article className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#285d64]/40 group">
-                <div>
-                  <Link href="/blogs/beta-thalassemia-hemoglobinopathy-screening-art-banking" className="block overflow-hidden rounded-2xl bg-slate-100">
-                    <div className="relative h-[13.5rem] w-full overflow-hidden">
-                      <Image
-                        src="/img/aspiring_parent_1.png"
-                        alt="Beta-Thalassemia & Hemoglobinopathy Screening"
-                        width={600}
-                        height={400}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+              {featuredArticles.map((article) => (
+                <article
+                  key={article.slug}
+                  className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#285d64]/40 group"
+                >
+                  <div>
+                    <Link href={`/blogs/${article.slug}`} className="block overflow-hidden rounded-2xl bg-slate-100">
+                      <div className="relative h-[13.5rem] w-full overflow-hidden">
+                        <Image
+                          src={article.coverImage || "/img/home.webp"}
+                          alt={article.title}
+                          width={480}
+                          height={320}
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute top-3 left-3">
+                          <span className="font-bold text-[#285b63] bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[11px] shadow-2xs border border-slate-200/50">
+                            {article.category}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+
+                    <div className="mt-5">
+                      <p className="text-xs text-slate-500 mb-2 flex items-center justify-between flex-wrap gap-1">
+                        <span>{formatDate(article.publishedAt)}</span>
+                        <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-400">
+                          <Clock className="w-3 h-3 text-slate-400" />
+                          {article.readTime}
+                        </span>
+                      </p>
+
+                      <h3 className={`text-lg sm:text-xl font-bold text-[#1d3840] leading-snug group-hover:text-[#ff7468] transition ${playfair.className}`}>
+                        <Link href={`/blogs/${article.slug}`}>
+                          {article.title}
+                        </Link>
+                      </h3>
+
+                      <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
+                        {article.excerpt}
+                      </p>
                     </div>
-                  </Link>
-
-                  <div className="mt-5">
-                    <p className="text-xs text-slate-500 mb-2 flex items-center justify-between flex-wrap gap-1">
-                      <span>August 25th, 2026</span>
-                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2.5 py-0.5 rounded-full text-[11px]">
-                        Genetic Safety
-                      </span>
-                    </p>
-
-                    <h3 className={`text-lg sm:text-xl font-bold text-[#1d3840] leading-snug group-hover:text-[#ff7468] transition ${playfair.className}`}>
-                      <Link href="/blogs/beta-thalassemia-hemoglobinopathy-screening-art-banking">
-                        Why Universal Thalassemia HPLC Screening is Vital for Donor Oocytes &amp; Semen
-                      </Link>
-                    </h3>
-
-                    <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
-                      Beta-thalassemia is one of the most prevalent inherited hemoglobin disorders in India. Learn why automated high-performance liquid chromatography (HPLC) is mandatory.
-                    </p>
                   </div>
-                </div>
 
-                <div className="mt-5 pt-4 border-t border-slate-100">
-                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1" href="/blogs/beta-thalassemia-hemoglobinopathy-screening-art-banking">
-                    Read article &rarr;
-                  </Link>
-                </div>
-              </article>
-
-              {/* Article 2 */}
-              <article className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#285d64]/40 group">
-                <div>
-                  <Link href="/blogs/understanding-art-regulation-act-2021-india" className="block overflow-hidden rounded-2xl bg-slate-100">
-                    <div className="relative h-[13.5rem] w-full overflow-hidden">
-                      <Image
-                        src="/img/aspiring_parent_2.png"
-                        alt="Understanding the ART Regulation Act 2021"
-                        width={600}
-                        height={400}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  </Link>
-
-                  <div className="mt-5">
-                    <p className="text-xs text-slate-500 mb-2 flex items-center justify-between flex-wrap gap-1">
-                      <span>August 18th, 2026</span>
-                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2.5 py-0.5 rounded-full text-[11px]">
-                        Legal &amp; Regulatory
-                      </span>
-                    </p>
-
-                    <h3 className={`text-lg sm:text-xl font-bold text-[#1d3840] leading-snug group-hover:text-[#ff7468] transition ${playfair.className}`}>
-                      <Link href="/blogs/understanding-art-regulation-act-2021-india">
-                        A Complete Clinical Guide to the Indian ART Regulation Act 2021 for Patients
-                      </Link>
-                    </h3>
-
-                    <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
-                      Understand your legal rights, statutory anonymity protections under Section 28, and single-lifetime oocyte donation safeguards under Indian law.
-                    </p>
+                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-[11px] text-slate-400 font-medium truncate max-w-[60%]">
+                      {article.author?.name ? article.author.name.split("&")[0].trim() : "Mediyaz Clinical"}
+                    </span>
+                    <Link
+                      className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1 group-hover:translate-x-1 duration-200"
+                      href={`/blogs/${article.slug}`}
+                    >
+                      Read article <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
-                </div>
-
-                <div className="mt-5 pt-4 border-t border-slate-100">
-                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1" href="/blogs/understanding-art-regulation-act-2021-india">
-                    Read article &rarr;
-                  </Link>
-                </div>
-              </article>
-
-              {/* Article 3 */}
-              <article className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs transition duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-[#285d64]/40 group">
-                <div>
-                  <Link href="/blogs/clinical-journey-oocyte-donor-indian-regulations" className="block overflow-hidden rounded-2xl bg-slate-100">
-                    <div className="relative h-[13.5rem] w-full overflow-hidden">
-                      <Image
-                        src="/img/aspiring_parent_3.1.png"
-                        alt="Clinical Journey of an Oocyte Donor"
-                        width={600}
-                        height={400}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  </Link>
-
-                  <div className="mt-5">
-                    <p className="text-xs text-slate-500 mb-2 flex items-center justify-between flex-wrap gap-1">
-                      <span>July 30th, 2026</span>
-                      <span className="font-bold text-[#ff7664] bg-[#fff2f0] px-2.5 py-0.5 rounded-full text-[11px]">
-                        Donor Care &amp; Health
-                      </span>
-                    </p>
-
-                    <h3 className={`text-lg sm:text-xl font-bold text-[#1d3840] leading-snug group-hover:text-[#ff7468] transition ${playfair.className}`}>
-                      <Link href="/blogs/clinical-journey-oocyte-donor-indian-regulations">
-                        The Altruistic Egg Donor Clinical Protocol: Preparation, Safety &amp; Rule 13 Coverage
-                      </Link>
-                    </h3>
-
-                    <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
-                      A step-by-step walkthrough of medical evaluations, hormonal stimulation monitoring, egg retrieval under anesthesia, and post-procedure medical insurance.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-5 pt-4 border-t border-slate-100">
-                  <Link className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1" href="/blogs/clinical-journey-oocyte-donor-indian-regulations">
-                    Read article &rarr;
-                  </Link>
-                </div>
-              </article>
-
+                </article>
+              ))}
             </div>
 
             <div className="mt-12 text-center">
@@ -576,7 +590,7 @@ export default function HomePage() {
                 href="/blogs"
                 className="inline-flex items-center justify-center rounded-xl border border-[#2b5860]/30 bg-white px-7 py-3.5 text-sm font-bold text-[#1d3840] hover:border-[#ff7468] hover:text-[#ff7468] hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 shadow-2xs"
               >
-                View all articles &amp; clinical resources →
+                View all 13 clinical articles &amp; regulatory guides →
               </Link>
             </div>
           </div>

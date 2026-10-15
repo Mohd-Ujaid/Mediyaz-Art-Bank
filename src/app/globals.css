@@ -73,6 +73,12 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Content visibility optimization for mobile scroll and rendering performance */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
 /* Smooth micro-interactions and animations */
 @keyframes fadeIn {
   from {
