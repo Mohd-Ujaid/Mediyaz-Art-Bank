@@ -38,7 +38,7 @@ export async function GET(req: Request) {
       const safeSearch = escapeRegex(search);
       query.$or = [
         { name: { $regex: safeSearch, $options: "i" } },
-        { code: { $regex: safeSearch, $options: "i" } },
+        { shortName: { $regex: safeSearch, $options: "i" } },
         { contactPerson: { $regex: safeSearch, $options: "i" } },
       ];
     }
@@ -54,11 +54,12 @@ export async function GET(req: Request) {
       const obj: any = h.toObject();
       if (!isFullAdmin) {
         delete obj.donorDealPrice;
+        delete obj.profiledonorDealPrice;
+        delete obj.eggDonorDealPrice;
+        delete obj.eggProfileDonorDealPrice;
+        delete obj.spermDonorDealPrice;
+        delete obj.spermProfileDonorDealPrice;
         delete obj.serviceCharge;
-        delete obj.processingFee;
-        delete obj.registrationFee;
-        delete obj.commission;
-        delete obj.additionalCharges;
         delete obj.currency;
         delete obj.pricingHistory;
       }
