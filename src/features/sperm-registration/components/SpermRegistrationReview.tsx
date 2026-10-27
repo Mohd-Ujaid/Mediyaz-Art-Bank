@@ -373,8 +373,16 @@ export function SpermRegistrationReview({
                 <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                   <span className="text-slate-400 text-[10px]">Referral / Channel Source:</span>
                   <span className="font-semibold text-slate-800">
-                    {referral.sourceReferralType}{" "}
-                    {referral.patientOrDonorId ? `(${referral.patientOrDonorId})` : ""}
+                    {referral.sourceReferralType}
+                    {referral.sourceReferralType === "Our Staff" && (referral.referrerName || referral.patientOrDonorId) && (
+                      <> • Staff: {referral.referrerName || referral.patientOrDonorId}</>
+                    )}
+                    {referral.sourceReferralType === "Refer" && (
+                      <>
+                        {(referral.referrerName || referral.patientOrDonorId) && <> • Refer: {referral.referrerName || referral.patientOrDonorId}</>}
+                        {referral.mobileNumber && <> • Phone: {referral.mobileNumber}</>}
+                      </>
+                    )}
                   </span>
                 </div>
               )}

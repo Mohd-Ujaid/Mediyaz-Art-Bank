@@ -44,7 +44,7 @@ export const eggPersonalInfoSchema = z.object({
 export const eggContactInfoSchema = z.object({
   mobileNumber: z.string().min(10, "Mobile number must be at least 10 digits"),
   alternateMobile: z.string().optional().default(""),
-  emailAddress: z.string().min(1, "Email address is required").email("Invalid email address"),
+  emailAddress: z.string().email("Invalid email address").optional().or(z.literal("")),
   currentAddress: z.string().min(3, "Current address is required"),
   permanentAddress: z.string().optional().default(""),
   country: z.string().default("India"),

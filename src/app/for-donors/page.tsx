@@ -73,33 +73,10 @@ export default function ForDonorsPage() {
 
             {/* Donor Programs Overview */}
             <h2 className="mt-12 font-serif text-2xl sm:text-3xl font-normal text-[#285b63]">
-              Sperm &amp; Egg Donation Pathways
+              Egg &amp; Sperm Donation Pathways
             </h2>
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Sperm Donation Card */}
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xs flex flex-col justify-between">
-                <div>
-                  <h3 className="font-serif text-xl font-bold text-[#285b63] mb-2">
-                    Sperm Donation
-                  </h3>
-                  <ul className="text-sm text-[#555] space-y-2 leading-relaxed">
-                    <li><strong>Eligibility:</strong> Healthy male aged 21 to 55 years.</li>
-                    <li><strong>Screening:</strong> Semen analysis, Hb HPLC Thalassemia screening, karyotyping (46,XY), dual serology (HIV, HBsAg, HCV, VDRL).</li>
-                    <li><strong>Quarantine:</strong> Mandatory 180-day cryo-quarantine with post-quarantine repeat infectious disease clearance.</li>
-                    <li><strong>Single Couple Limit:</strong> Gametes are allocated to a single commissioning couple or individual only.</li>
-                  </ul>
-                </div>
-                <div className="mt-6 pt-4 border-t border-gray-100">
-                  <Link
-                    href="/for-donors/become-a-sperm-donor"
-                    className="inline-block rounded-xl bg-[#285b63] hover:bg-[#1d464d] text-white text-xs font-bold py-2.5 px-5 transition"
-                  >
-                    Become a Sperm Donor →
-                  </Link>
-                </div>
-              </div>
-
               {/* Egg Donation Card */}
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xs flex flex-col justify-between">
                 <div>
@@ -119,6 +96,29 @@ export default function ForDonorsPage() {
                     className="inline-block rounded-xl bg-[#285b63] hover:bg-[#1d464d] text-white text-xs font-bold py-2.5 px-5 transition"
                   >
                     Become an Egg Donor →
+                  </Link>
+                </div>
+              </div>
+
+              {/* Sperm Donation Card */}
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xs flex flex-col justify-between">
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-[#285b63] mb-2">
+                    Sperm Donation
+                  </h3>
+                  <ul className="text-sm text-[#555] space-y-2 leading-relaxed">
+                    <li><strong>Eligibility:</strong> Healthy male aged 21 to 55 years.</li>
+                    <li><strong>Screening:</strong> Semen analysis, Hb HPLC Thalassemia screening, karyotyping (46,XY), dual serology (HIV, HBsAg, HCV, VDRL).</li>
+                    <li><strong>Quarantine:</strong> Mandatory 180-day cryo-quarantine with post-quarantine repeat infectious disease clearance.</li>
+                    <li><strong>Single Couple Limit:</strong> Gametes are allocated to a single commissioning couple or individual only.</li>
+                  </ul>
+                </div>
+                <div className="mt-6 pt-4 border-t border-gray-100">
+                  <Link
+                    href="/for-donors/become-a-sperm-donor"
+                    className="inline-block rounded-xl bg-[#285b63] hover:bg-[#1d464d] text-white text-xs font-bold py-2.5 px-5 transition"
+                  >
+                    Become a Sperm Donor →
                   </Link>
                 </div>
               </div>

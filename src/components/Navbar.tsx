@@ -31,8 +31,8 @@ const Navbar = () => {
         { name: "Donor Overview", href: "/for-donors" },
         { name: "Become an Egg Donor", href: "/for-donors/become-an-egg-donor" },
         { name: "Become a Sperm Donor", href: "/for-donors/become-a-sperm-donor" },
-        { name: "Sperm Donor Registration", href: "/register/sperm" },
         { name: "Egg Donor Registration", href: "/register/egg" },
+        { name: "Sperm Donor Registration", href: "/register/sperm" },
         { name: "How to Donate Eggs", href: "/for-donors/how-to-donate-eggs" },
         {
           name: "Insurance & Reimbursement",

@@ -682,11 +682,22 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
       errs.emailAddress = "Please enter a valid email address";
     }
 
-    // Referral validation: Refer Name is mandatory only when "Refer" is selected
-    if (referral.sourceReferralType === "Refer") {
-      const refId = (referral.patientOrDonorId || agentCode || "").trim();
+    // Referral validation
+    if (referral.sourceReferralType === "Our Staff") {
+      const staffName = (referral.referrerName || "").trim();
+      if (!staffName) {
+        errs.staffName = "Staff member name is required";
+      }
+    } else if (referral.sourceReferralType === "Refer") {
+      const refId = (referral.referrerName || referral.patientOrDonorId || agentCode || "").trim();
       if (!refId) {
         errs.referId = "Enter Refer Name is required when Refer is selected";
+      }
+      const refMobile = (referral.mobileNumber || "").trim();
+      if (!refMobile) {
+        errs.referMobile = "Enter Refer Mobile Number is required";
+      } else if (!/^[6-9]\d{9}$/.test(refMobile)) {
+        errs.referMobile = "Enter a valid 10-digit mobile number";
       }
     }
 
@@ -1904,18 +1915,22 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                   </div>
 
                   <div className="space-y-1 md:col-span-2">
-                    <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                      <span>Email Address (Verified via OTP)</span>
-                      <span className="text-rose-500">*</span>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 inline" />
+                    <label className="text-xs font-semibold text-slate-700">
+                      Email Address <span className="text-slate-400 font-normal">(Optional)</span>
                     </label>
                     <Input
                       data-field="emailAddress"
                       type="email"
-                      value={contactInfo.emailAddress || emailInput}
-                      disabled
-                      className="bg-slate-50 font-mono text-slate-700 cursor-not-allowed text-xs h-10 border-emerald-300"
+                      placeholder="Enter email address (optional)"
+                      value={contactInfo.emailAddress || ""}
+                      onChange={(e) => {
+                        updateContactInfo({ emailAddress: e.target.value });
+                        setEmailInput(e.target.value);
+                        if (errors.emailAddress) clearError("emailAddress");
+                      }}
+                      className={errors.emailAddress ? "border-rose-500" : ""}
                     />
+                    {errors.emailAddress && <p className="text-[11px] text-rose-500">{errors.emailAddress}</p>}
                   </div>
 
                   {/* Residential Address (as per Aadhaar Card) */}
@@ -2074,7 +2089,7 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                 <p className="text-[11px] text-slate-500">Please let us know how you discovered Mediyaz ART Bank.</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-slate-700">
                     Where did you hear from us? <span className="text-rose-500">*</span>
@@ -2088,6 +2103,10 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                       updateReferral({ sourceReferralType: val });
                       if (val !== "Refer") {
                         clearError("referId");
+                        clearError("referMobile");
+                      }
+                      if (val !== "Our Staff") {
+                        clearError("staffName");
                       }
                     }}
                   >
@@ -2097,27 +2116,73 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
                   </select>
                 </div>
 
-                {referral.sourceReferralType === "Refer" && (
+                {referral.sourceReferralType === "Our Staff" && (
                   <div className="space-y-1 animate-in fade-in">
                     <label className="text-xs font-semibold text-slate-700">
-                      Refer Name <span className="text-rose-500">*</span>
+                      Staff Name <span className="text-rose-500">*</span>
                     </label>
                     <Input
-                      data-field="referId"
-                      placeholder="Enter Refer Name"
-                      value={referral.patientOrDonorId || agentCode || ""}
+                      data-field="staffName"
+                      placeholder="Enter Staff Name"
+                      value={referral.referrerName || ""}
                       onChange={(e) => {
                         const val = e.target.value;
-                        updateReferral({ patientOrDonorId: val });
-                        setAgentCode(val);
+                        updateReferral({ referrerName: val, patientOrDonorId: val });
                         if (val.trim()) {
-                          clearError("referId");
+                          clearError("staffName");
                         }
                       }}
-                      className={`text-xs font-medium ${errors.referId ? "border-rose-500" : ""}`}
+                      className={`text-xs font-medium ${errors.staffName ? "border-rose-500" : ""}`}
                     />
-                    {errors.referId && <p className="text-[11px] text-rose-500">{errors.referId}</p>}
+                    {errors.staffName && <p className="text-[11px] text-rose-500">{errors.staffName}</p>}
                   </div>
+                )}
+
+                {referral.sourceReferralType === "Refer" && (
+                  <>
+                    <div className="space-y-1 animate-in fade-in">
+                      <label className="text-xs font-semibold text-slate-700">
+                        Refer Name <span className="text-rose-500">*</span>
+                      </label>
+                      <Input
+                        data-field="referId"
+                        placeholder="Enter Refer Name"
+                        value={referral.referrerName || referral.patientOrDonorId || agentCode || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          updateReferral({ referrerName: val, patientOrDonorId: val });
+                          setAgentCode(val);
+                          if (val.trim()) {
+                            clearError("referId");
+                          }
+                        }}
+                        className={`text-xs font-medium ${errors.referId ? "border-rose-500" : ""}`}
+                      />
+                      {errors.referId && <p className="text-[11px] text-rose-500">{errors.referId}</p>}
+                    </div>
+
+                    <div className="space-y-1 animate-in fade-in">
+                      <label className="text-xs font-semibold text-slate-700">
+                        Refer Mobile Number <span className="text-rose-500">*</span>
+                      </label>
+                      <Input
+                        data-field="referMobile"
+                        type="tel"
+                        maxLength={10}
+                        placeholder="10-digit mobile number"
+                        value={referral.mobileNumber || ""}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, "");
+                          updateReferral({ mobileNumber: val });
+                          if (val.length === 10) {
+                            clearError("referMobile");
+                          }
+                        }}
+                        className={`text-xs font-medium font-mono ${errors.referMobile ? "border-rose-500" : ""}`}
+                      />
+                      {errors.referMobile && <p className="text-[11px] text-rose-500">{errors.referMobile}</p>}
+                    </div>
+                  </>
                 )}
               </div>
             </div>

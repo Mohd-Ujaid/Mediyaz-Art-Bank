@@ -66,46 +66,6 @@ function RegisterContent() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Sperm Donor Option */}
-        <div className="rounded-2xl border border-teal-200 bg-white p-8 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-          <div className="space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-[#285b63]/10 text-[#285b63] flex items-center justify-center">
-              <Dna className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#285b63] bg-[#285b63]/10 px-2 py-0.5 rounded">Male Donor</span>
-              <h2 className="text-xl font-bold text-[#1d3840] mt-1.5">Sperm Donor Registration</h2>
-              <p className="text-xs text-gray-600 mt-1">
-                For voluntary male semen donors registering for ART bank cryopreservation and statutory 180-day quarantine.
-              </p>
-            </div>
-
-            <div className="space-y-2 pt-2 border-t border-gray-100 text-xs text-gray-600">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-                <span>Age eligibility: <strong>21 to 55 years</strong></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-                <span>Comprehensive semen analysis & viral screening</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-                <span>Statutory cryogenic preservation protocol</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-6">
-            <Link
-              href="/register/sperm"
-              className="w-full flex items-center justify-center gap-2 bg-[#285b63] hover:bg-[#1d464d] text-white font-bold text-xs py-3 px-6 rounded-xl transition"
-            >
-              Start Sperm Donor Registration <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-
         {/* Egg Donor Option */}
         <div className="rounded-2xl border border-rose-200 bg-white p-8 shadow-sm hover:shadow-md transition flex flex-col justify-between">
           <div className="space-y-4">
@@ -142,6 +102,46 @@ function RegisterContent() {
               className="w-full flex items-center justify-center gap-2 bg-rose-700 hover:bg-rose-800 text-white font-bold text-xs py-3 px-6 rounded-xl transition shadow-sm"
             >
               Start Egg Donor Registration <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Sperm Donor Option */}
+        <div className="rounded-2xl border border-teal-200 bg-white p-8 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="w-12 h-12 rounded-xl bg-[#285b63]/10 text-[#285b63] flex items-center justify-center">
+              <Dna className="w-6 h-6" />
+            </div>
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#285b63] bg-[#285b63]/10 px-2 py-0.5 rounded">Male Donor</span>
+              <h2 className="text-xl font-bold text-[#1d3840] mt-1.5">Sperm Donor Registration</h2>
+              <p className="text-xs text-gray-600 mt-1">
+                For voluntary male semen donors registering for ART bank cryopreservation and statutory 180-day quarantine.
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-gray-100 text-xs text-gray-600">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                <span>Age eligibility: <strong>21 to 55 years</strong></span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                <span>Comprehensive semen analysis & viral screening</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                <span>Statutory cryogenic preservation protocol</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-6">
+            <Link
+              href="/register/sperm"
+              className="w-full flex items-center justify-center gap-2 bg-[#285b63] hover:bg-[#1d464d] text-white font-bold text-xs py-3 px-6 rounded-xl transition"
+            >
+              Start Sperm Donor Registration <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

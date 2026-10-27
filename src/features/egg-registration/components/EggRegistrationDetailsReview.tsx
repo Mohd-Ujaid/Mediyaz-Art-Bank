@@ -348,8 +348,16 @@ export function EggRegistrationDetailsReview({
             <div>
               <span className="text-gray-400 text-[11px] block font-medium">Referral / Channel Source</span>
               <span className="text-gray-900 font-semibold">
-                {referral.sourceReferralType}{" "}
-                {referral.patientOrDonorId ? `(${referral.patientOrDonorId})` : ""}
+                {referral.sourceReferralType}
+                {referral.sourceReferralType === "Our Staff" && (referral.referrerName || referral.patientOrDonorId) && (
+                  <> • Staff: {referral.referrerName || referral.patientOrDonorId}</>
+                )}
+                {referral.sourceReferralType === "Refer" && (
+                  <>
+                    {(referral.referrerName || referral.patientOrDonorId) && <> • Refer: {referral.referrerName || referral.patientOrDonorId}</>}
+                    {referral.mobileNumber && <> • Phone: {referral.mobileNumber}</>}
+                  </>
+                )}
               </span>
             </div>
           )}
