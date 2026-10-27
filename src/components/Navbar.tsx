@@ -70,31 +70,59 @@ const Navbar = () => {
     },
   ];
 
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const handleMouseEnter = (name: string) => {
+    clearCloseTimeout();
+    setOpenDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    clearCloseTimeout();
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 220);
+  };
+
+  const closeDropdownImmediately = () => {
+    clearCloseTimeout();
+    setOpenDropdown(null);
+  };
+
   const handleDropdownClick = (name: string) => {
+    clearCloseTimeout();
     setOpenDropdown((current) => (current === name ? null : name));
   };
 
   useEffect(() => {
     // Automatically close dropdown & mobile drawer whenever route changes (e.g. back/forward navigation or clicking links)
-    setOpenDropdown(null);
+    closeDropdownImmediately();
     setMobileMenuOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setOpenDropdown(null);
+        closeDropdownImmediately();
       }
     };
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setOpenDropdown(null);
+        closeDropdownImmediately();
         setMobileMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleKeyDown);
     return () => {
+      clearCloseTimeout();
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -183,15 +211,15 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <div
                 key={link.name}
-                className="relative"
+                className="relative py-2"
                 onMouseEnter={() => {
                   if (link.dropdown) {
-                    setOpenDropdown(link.name);
+                    handleMouseEnter(link.name);
                   }
                 }}
                 onMouseLeave={() => {
                   if (link.dropdown) {
-                    setOpenDropdown(null);
+                    handleMouseLeave();
                   }
                 }}
               >
@@ -201,7 +229,9 @@ const Navbar = () => {
                     type="button"
                     onClick={() => handleDropdownClick(link.name)}
                     aria-expanded={openDropdown === link.name}
-                    className="text-[15px] font-semibold text-[#173d45] transition-colors duration-150 hover:text-[#ff7468] cursor-pointer flex items-center gap-1.5 py-1"
+                    className={`text-[15px] font-semibold transition-colors duration-150 hover:text-[#ff7468] cursor-pointer flex items-center gap-1.5 py-1 ${
+                      openDropdown === link.name ? "text-[#ff7468]" : "text-[#173d45]"
+                    }`}
                   >
                     <span>{link.name}</span>
                     <ChevronDown
@@ -213,7 +243,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     href={link.href}
-                    onClick={() => setOpenDropdown(null)}
+                    onClick={closeDropdownImmediately}
                     className="text-[15px] font-semibold text-[#173d45] transition-colors duration-150 hover:text-[#ff7468] py-1 inline-block"
                   >
                     {link.name}
@@ -224,39 +254,46 @@ const Navbar = () => {
                 {link.dropdown && openDropdown === link.name && (
                   <div
                     className="
-                      absolute right-0 top-full mt-2
-                      min-w-[260px]
-                      bg-white/98
-                      p-2
-                      shadow-xl shadow-slate-900/10
-                      backdrop-blur-xl
-                      border border-slate-100
-                      rounded-2xl
-                      animate-slide-down
+                      absolute right-0 top-full pt-1.5
                       z-50
                     "
+                    onMouseEnter={() => handleMouseEnter(link.name)}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    <div className="flex flex-col gap-0.5">
-                      {link.dropdown.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          onClick={() => setOpenDropdown(null)}
-                          className="
-                            whitespace-nowrap
-                            px-3.5 py-2.5
-                            text-xs sm:text-sm
-                            font-medium
-                            text-[#173d45]
-                            transition-colors duration-150
-                            hover:text-[#ff7468]
-                            hover:bg-slate-50
-                            rounded-xl
-                          "
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
+                    <div
+                      className="
+                        min-w-[260px]
+                        bg-white/98
+                        p-2
+                        shadow-xl shadow-slate-900/10
+                        backdrop-blur-xl
+                        border border-slate-100
+                        rounded-2xl
+                        animate-slide-down
+                      "
+                    >
+                      <div className="flex flex-col gap-0.5">
+                        {link.dropdown.map((item) => (
+                          <Link
+                            key={item.name}
+                            href={item.href}
+                            onClick={closeDropdownImmediately}
+                            className="
+                              whitespace-nowrap
+                              px-3.5 py-2.5
+                              text-xs sm:text-sm
+                              font-medium
+                              text-[#173d45]
+                              transition-colors duration-150
+                              hover:text-[#ff7468]
+                              hover:bg-slate-50
+                              rounded-xl
+                            "
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
