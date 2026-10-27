@@ -10,12 +10,12 @@ export const metadata = {
 
 const AssuranceProgramsPage = () => {
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/find_donor.jpg"
+            src="/img/find_donor.webp"
             alt="Clinical Assurance - Mediyaz ART Bank"
             fill
             priority
@@ -37,9 +37,9 @@ const AssuranceProgramsPage = () => {
         <div className="grid grid-cols-1 gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
           {/* LEFT MAIN ARTICLE */}
           <article className="min-w-0">
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
               Quality Assurance &amp; Cryo-Viability Standards
-            </h1>
+            </h2>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-[#555]">
               Assisted reproduction represents both an emotional and financial commitment for intending parents. While biological processes such as fertilization and pregnancy can never be ethically guaranteed by any responsible medical institution, Mediyaz ART Bank provides stringent <b>laboratory quality assurance</b>, validated cryopreservation protocols, and continuous cold-chain governance in compliance with the <b>Assisted Reproductive Technology (Regulation) Act, 2021</b>.
@@ -49,7 +49,7 @@ const AssuranceProgramsPage = () => {
             <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-[#edf3f1] p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
               <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
                 <Image
-                  src="/img/aspiring_parent_3.3.png"
+                  src="/img/aspiring_parent_3.3.webp"
                   alt="Assurance Consultation"
                   fill
                   className="object-cover"
@@ -227,7 +227,7 @@ const AssuranceProgramsPage = () => {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

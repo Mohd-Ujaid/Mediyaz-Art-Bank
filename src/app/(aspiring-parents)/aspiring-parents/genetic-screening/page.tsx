@@ -10,12 +10,12 @@ export const metadata = {
 
 const GeneticScreeningPage = () => {
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/about_1.png"
+            src="/img/about_4.webp"
             alt="Genetic Screening - Mediyaz ART Bank India"
             fill
             priority
@@ -37,9 +37,9 @@ const GeneticScreeningPage = () => {
         <div className="grid grid-cols-1 gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
           {/* LEFT MAIN ARTICLE */}
           <article className="min-w-0">
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
               Advanced Clinical &amp; Genetic Safety in India
-            </h1>
+            </h2>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-[#555]">
               At Mediyaz ART Bank, genetic safety is the cornerstone of our clinical standards. In accordance with the Assisted Reproductive Technology (Regulation) Act, 2021 and ICMR guidelines, every prospective sperm and egg donor undergoes multi-tier diagnostic evaluations at NABL-accredited laboratories. Our testing protocols are specifically calibrated for Indian population genetics to ensure the utmost safety for intending parents.
@@ -49,7 +49,7 @@ const GeneticScreeningPage = () => {
             <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-[#edf3f1] p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
               <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
                 <Image
-                  src="/img/aspiring_parent_1.png"
+                  src="/img/aspiring_parent_1.webp"
                   alt="Clinical Genetic Counseling"
                   fill
                   className="object-cover"
@@ -218,7 +218,7 @@ const GeneticScreeningPage = () => {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

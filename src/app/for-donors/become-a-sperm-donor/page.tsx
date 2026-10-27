@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function BecomeASpermDonorPage() {
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
@@ -37,9 +37,9 @@ export default function BecomeASpermDonorPage() {
         <div className="grid grid-cols-1 gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
           {/* LEFT MAIN ARTICLE */}
           <article className="min-w-0">
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
               Clinical Evaluation &amp; Statutory Guidelines in India
-            </h1>
+            </h2>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-[#555]">
               Becoming a sperm donor is a noble contribution that helps infertile couples and intending parents achieve their dream of having a child. At Mediyaz ART Bank, our donor program operates in rigorous adherence to the Assisted Reproductive Technology (Regulation) Act, 2021, ensuring complete donor anonymity, clinical excellence, ethical oversight, and safety.
@@ -49,7 +49,7 @@ export default function BecomeASpermDonorPage() {
             <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-[#edf3f1] p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
               <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
                 <Image
-                  src="/img/find_donor_1.png"
+                  src="/img/find_donor_1.webp"
                   alt="Apply as a Sperm Donor"
                   fill
                   className="object-cover"
@@ -308,6 +308,6 @@ export default function BecomeASpermDonorPage() {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

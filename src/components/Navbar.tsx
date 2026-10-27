@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, Menu, X, ShieldCheck } from "lucide-react";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
@@ -73,6 +75,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    // Automatically close dropdown & mobile drawer whenever route changes (e.g. back/forward navigation or clicking links)
+    setOpenDropdown(null);
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
         setOpenDropdown(null);
@@ -102,7 +110,14 @@ const Navbar = () => {
 
       <nav className="mx-auto flex max-w-[1920px] items-center lg:items-start justify-between px-6 lg:px-12 py-3 lg:py-4">
         {/* Logo */}
-        <Link href="/" className="shrink-0 flex items-center group">
+        <Link
+          href="/"
+          onClick={() => {
+            setOpenDropdown(null);
+            setMobileMenuOpen(false);
+          }}
+          className="shrink-0 flex items-center group"
+        >
           <Image
             src="/img/logo.webp"
             alt="Mediyaz ART Bank"
@@ -115,12 +130,14 @@ const Navbar = () => {
 
         {/* Mobile menu toggle */}
         <div className="flex items-center gap-2.5 lg:hidden">
-          <Link
-            href="/donors"
-            className="rounded-full bg-[#ff7468] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#ff5d50] transition-colors"
-          >
-            Donors
-          </Link>
+          {!mobileMenuOpen && (
+            <Link
+              href="/donors"
+              className="rounded-full bg-[#ff7468] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#ff5d50] transition-colors"
+            >
+              Donors
+            </Link>
+          )}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -138,6 +155,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <Link
               href="/donors"
+              onClick={() => setOpenDropdown(null)}
               className="rounded-full bg-[#ff7468] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#ff5d50] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-xs"
             >
               Donors
@@ -145,13 +163,15 @@ const Navbar = () => {
 
             <Link
               href="/inquiry"
+              onClick={() => setOpenDropdown(null)}
               className="rounded-full bg-[#1b4c54] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#153e45] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-xs"
             >
-              Donor Application
+              Donor Inquiry
             </Link>
 
             <Link
               href="/register"
+              onClick={() => setOpenDropdown(null)}
               className="rounded-full bg-[#ff7468] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#ff5d50] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] shadow-xs"
             >
               Register
@@ -161,7 +181,20 @@ const Navbar = () => {
           {/* Navigation Menu */}
           <div className="flex items-center gap-8 xl:gap-10">
             {navLinks.map((link) => (
-              <div key={link.name} className="relative">
+              <div
+                key={link.name}
+                className="relative"
+                onMouseEnter={() => {
+                  if (link.dropdown) {
+                    setOpenDropdown(link.name);
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (link.dropdown) {
+                    setOpenDropdown(null);
+                  }
+                }}
+              >
                 {/* Main Navigation */}
                 {link.dropdown ? (
                   <button
@@ -180,6 +213,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     href={link.href}
+                    onClick={() => setOpenDropdown(null)}
                     className="text-[15px] font-semibold text-[#173d45] transition-colors duration-150 hover:text-[#ff7468] py-1 inline-block"
                   >
                     {link.name}
@@ -248,7 +282,7 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center rounded-xl bg-[#1b4c54] py-3 text-sm font-bold text-white shadow-xs hover:bg-[#153e45] transition-colors"
             >
-              Donor Application
+              Donor Inquiry
             </Link>
             <Link
               href="/register"

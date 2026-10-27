@@ -104,7 +104,7 @@ export default function DonorFaqsPage() {
       : donorFaqs.filter((cat) => cat.title === activeCategory);
 
   return (
-    <main className="min-h-screen w-full overflow-x-hidden bg-white text-[#414141]">
+    <div className="min-h-screen w-full overflow-x-hidden bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
@@ -267,6 +267,6 @@ export default function DonorFaqsPage() {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -1,9 +1,5 @@
-import React from 'react'
+import { redirect } from 'next/navigation';
 
-const SpemRegistration = () => {
-  return (
-    <div>page</div>
-  )
-}
-
-export default SpemRegistration
+export default function EggDonorRegistrationRedirect() {
+  redirect('/register/egg');
+}

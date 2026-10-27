@@ -168,11 +168,28 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
 
   const headings = extractHeadings(blog.content);
 
+  // Sanitize math/latex strings before markdown parsing
+  const cleanMathSymbols = (text: string): string => {
+    if (!text) return "";
+    return text
+      .replace(/\$\\ge\s*([0-9.]+)\\text\{\s*ng\/mL\}\$/g, "≥ $1 ng/mL")
+      .replace(/\$\\ge\s*([0-9.]+)\$/g, "≥ $1")
+      .replace(/\$\\le\s*([0-9.]+)\$/g, "≤ $1")
+      .replace(/\$37(\.0)?\^\\circ\\text\{C\}\$/g, "37°C")
+      .replace(/\$-196\^\\circ\\text\{C\}\$/g, "−196°C")
+      .replace(/\$-78\.5\^\\circ\\text\{C\}\$/g, "−78.5°C")
+      .replace(/\$-150\^\\circ\\text\{C\}\$/g, "−150°C")
+      .replace(/\$20,000\^\\circ\\text\{C\}\$/g, "20,000°C")
+      .replace(/\$E_2\$/g, "E₂ (Estradiol)")
+      .replace(/\$([0-9.]+)\^\\circ\\text\{C\}\$/g, "$1°C");
+  };
+
   // Parse inline markdown (**bold**, *italic*, `code`, [link](url))
   const renderInlineMarkdown = (text: string): React.ReactNode => {
     if (!text) return "";
+    const cleaned = cleanMathSymbols(text);
     const regex = /(\*\*[\s\S]+?\*\*|\*[^\s*][\s\S]*?[^\s*]\*|`[^`]+?`|\[[^\]]+?\]\([^)]+?\))/g;
-    const parts = text.split(regex);
+    const parts = cleaned.split(regex);
 
     return parts.map((part, index) => {
       if (!part) return null;
@@ -233,9 +250,32 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
     const lines = content.split("\n");
     const elements: React.ReactNode[] = [];
     let currentParagraph: string[] = [];
+    let currentListItems: React.ReactNode[] = [];
+    let isOrderedList = false;
     let keyIdx = 0;
 
+    const flushList = () => {
+      if (currentListItems.length > 0) {
+        if (isOrderedList) {
+          elements.push(
+            <ol key={`ol-${keyIdx++}`} className="list-decimal pl-6 mb-6 space-y-2 text-slate-700 text-base sm:text-[17px] leading-relaxed">
+              {currentListItems}
+            </ol>
+          );
+        } else {
+          elements.push(
+            <ul key={`ul-${keyIdx++}`} className="list-disc pl-6 mb-6 space-y-2 text-slate-700 text-base sm:text-[17px] leading-relaxed">
+              {currentListItems}
+            </ul>
+          );
+        }
+        currentListItems = [];
+        isOrderedList = false;
+      }
+    };
+
     const flushParagraph = () => {
+      flushList();
       if (currentParagraph.length > 0) {
         const text = currentParagraph.join(" ").trim();
         if (text) {
@@ -280,7 +320,6 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
         );
       } else if (line.startsWith("> [!NOTE]")) {
         flushParagraph();
-        // Capture alert body
         let alertBody = "";
         i++;
         while (i < lines.length && lines[i].trim().startsWith(">")) {
@@ -338,23 +377,28 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
           </blockquote>
         );
       } else if (line.startsWith("- ") || line.startsWith("* ")) {
-        flushParagraph();
-        elements.push(
-          <li key={`li-${keyIdx++}`} className="text-sm sm:text-base text-slate-700 leading-relaxed ml-6 list-disc mb-2.5">
+        if (currentParagraph.length > 0) flushParagraph();
+        if (isOrderedList && currentListItems.length > 0) flushList();
+        isOrderedList = false;
+        currentListItems.push(
+          <li key={`li-${keyIdx++}`} className="text-sm sm:text-base text-slate-700 leading-relaxed">
             {renderInlineMarkdown(line.replace(/^[-*]\s+/, ""))}
           </li>
         );
       } else if (/^\d+\.\s+/.test(line)) {
-        flushParagraph();
-        elements.push(
-          <p key={`num-${keyIdx++}`} className="text-sm sm:text-base text-slate-700 leading-relaxed mb-3 font-medium">
-            {renderInlineMarkdown(line)}
-          </p>
+        if (currentParagraph.length > 0) flushParagraph();
+        if (!isOrderedList && currentListItems.length > 0) flushList();
+        isOrderedList = true;
+        currentListItems.push(
+          <li key={`num-li-${keyIdx++}`} className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+            {renderInlineMarkdown(line.replace(/^\d+\.\s+/, ""))}
+          </li>
         );
       } else if (line === "---") {
         flushParagraph();
         elements.push(<hr key={`hr-${keyIdx++}`} className="my-8 border-t border-slate-200/80" />);
       } else {
+        flushList();
         currentParagraph.push(line);
       }
     }
@@ -365,7 +409,7 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
 
   return (
     <>
-      <main className="min-h-screen bg-[#fafbfc] pt-6 sm:pt-8 pb-20">
+      <div className="min-h-screen bg-[#fafbfc] pt-6 sm:pt-8 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Breadcrumbs & Navigation Bar */}
@@ -439,9 +483,14 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
                     />
                   </div>
                   <div className="h-5 w-px bg-slate-200 hidden sm:block" />
-                  <p className="text-xs sm:text-sm font-bold text-[#1d3840]">
-                    Published by Mediyaz ART Bank
-                  </p>
+                  <div className="flex flex-col">
+                    <p className="text-xs sm:text-sm font-bold text-[#1d3840]">
+                      Published by Mediyaz ART Bank
+                    </p>
+                    <p className="text-[11px] text-slate-500 font-medium">
+                      {blog.author?.role || "Clinical Editorial & ART Compliance Board"}
+                    </p>
+                  </div>
                 </div>
 
                 {blog.tags && blog.tags.length > 0 && (
@@ -628,7 +677,7 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
           )}
 
         </div>
-      </main>
+      </div>
     </>
   );
 }

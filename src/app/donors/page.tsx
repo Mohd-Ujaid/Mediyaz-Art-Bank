@@ -183,47 +183,17 @@ function FindDonorPageInner({ initialGameteType }: { initialGameteType?: "all" |
   ].filter(Boolean).length;
 
   return (
-    <div className="min-h-screen bg-[#f8faf9] text-[#333] pt-24 pb-20">
+    <div className="min-h-screen bg-[#f8faf9] text-[#333] pb-20">
       {/* ================= HERO HEADER ================= */}
       <section className="bg-gradient-to-r from-[#173037] via-[#214b53] to-[#285b63] text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-[#2d636b]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold tracking-wide text-[#95e0b9] backdrop-blur-xs mb-3 border border-white/15">
-                <svg className="w-3.5 h-3.5 text-[#ff7468]" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                ART Act 2021 Verified 
-              </div>
-              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight">
-                Find Your Donor Match
-              </h1>
-              <p className="mt-3 text-sm sm:text-base text-gray-200 leading-relaxed">
-                Explore medical-grade vitrified oocyte (egg) and cryo-quarantined semen (sperm) donor profiles. Every donor is rigorously screened with Thalassemia HPLC, 550-band chromosomal karyotype, infectious serology, and verified 3-generation medical pedigrees.
-              </p>
-            </div>
-
-            {/* Quick Badges */}
-            <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0">
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[#ff7468]/20 text-[#ff7468] flex items-center justify-center font-bold text-sm">
-                  ✓
-                </div>
-                <div>
-                  <div className="text-xs text-gray-300">Art Act 2021 Compliant</div>
-                  <div className="text-xs font-bold text-white">100% Verified Donor Profile</div>
-                </div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/10 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[#95e0b9]/20 text-[#95e0b9] flex items-center justify-center font-bold text-sm">
-                  🧬
-                </div>
-                <div>
-                  <div className="text-xs text-gray-300">Viral Markers</div>
-                  <div className="text-xs font-bold text-white">Negative</div>
-                </div>
-              </div>
-            </div>
+          <div className="max-w-3xl">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight">
+              Find Your Donor Match
+            </h1>
+            <p className="mt-3 text-sm sm:text-base text-gray-200 leading-relaxed">
+              Explore medical-grade vitrified oocyte (egg) and cryo-quarantined semen (sperm) donor profiles. Every donor is rigorously screened with Thalassemia HPLC, 550-band chromosomal karyotype, infectious serology, and verified 3-generation medical pedigrees.
+            </p>
           </div>
         </div>
       </section>
@@ -745,30 +715,10 @@ function FindDonorPageInner({ initialGameteType }: { initialGameteType?: "all" |
                           </div>
                         </div>
 
-                        {/* Key Background & Education */}
-                        <div className="p-4 space-y-2 border-b border-gray-100 text-xs">
-                          <div className="flex items-baseline justify-between gap-2">
-                            <span className="text-[11px] text-gray-400 uppercase font-semibold shrink-0">Career</span>
-                            <span className="font-medium text-gray-800 text-right truncate">{donor.profession} ({donor.degree})</span>
-                          </div>
-                          <div className="flex items-baseline justify-between gap-2">
-                            <span className="text-[11px] text-gray-400 uppercase font-semibold shrink-0">Heritage</span>
-                            <span className="text-gray-700 text-right">{donor.ethnicity} • {donor.ancestryRegion}</span>
-                          </div>
-                          <div className="bg-[#edf3f1]/80 rounded-xl px-2.5 py-1.5 flex items-center justify-between text-[11px] border border-[#285b63]/10 mt-1">
-                            <span className="font-semibold text-[#285b63] flex items-center gap-1.5">
-                              <svg className="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                              HPLC Thalassemia: {donor.geneticScreenings.thalassemia.status}
-                            </span>
-                            <span className="font-mono text-gray-500 font-medium">{donor.geneticScreenings.karyotype.result}</span>
-                          </div>
-                        </div>
                       </div>
 
                       {/* Card Action Buttons */}
-                      <div className="p-5 pt-0 flex items-center gap-2">
+                      <div className="p-4 pt-3 flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() => {

@@ -217,7 +217,7 @@ export default async function HomePage() {
       </section>
 
       {/* ================= MAIN CONTENT ================= */}
-      <main className="z-1 block relative leading-6">
+      <div className="z-1 block relative leading-6">
         
         {/* ================= SECTION ABOUT / WELCOME ================= */}
         <section
@@ -590,13 +590,13 @@ export default async function HomePage() {
                 href="/blogs"
                 className="inline-flex items-center justify-center rounded-xl border border-[#2b5860]/30 bg-white px-7 py-3.5 text-sm font-bold text-[#1d3840] hover:border-[#ff7468] hover:text-[#ff7468] hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 shadow-2xs"
               >
-                View all 13 clinical articles &amp; regulatory guides →
+                View all clinical articles &amp; regulatory guides →
               </Link>
             </div>
           </div>
         </section>
 
-      </main>
+      </div>
     </>
   );
 }

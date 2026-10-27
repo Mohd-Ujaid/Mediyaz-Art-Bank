@@ -46,11 +46,6 @@ const Footer = () => {
               />
             </Link>
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[11px] font-semibold text-[#95e0b9] border border-white/15 mb-5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#95e0b9]" />
-              <span>ART Act 2021 Registered Bank</span>
-            </div>
-
             <div className="space-y-3 text-xs text-slate-300">
               <a
                 href="tel:+919667780807"
@@ -62,15 +57,16 @@ const Footer = () => {
                 <span className="font-mono font-medium tracking-wide">+91 96677 80807</span>
               </a>
 
-              <Link
-                href="/contacts"
+              <a
+                href="mailto:info@mediyazartbank.com"
                 className="flex items-center gap-2.5 text-slate-300 hover:text-white transition-colors group"
+                title="Email Mediyaz Clinical Liaison Desk"
               >
                 <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-teal-500/20 transition-colors">
                   <Mail className="w-3.5 h-3.5 text-teal-300" />
                 </div>
-                <span>Direct Clinical Liaison Desk</span>
-              </Link>
+                <span>info@mediyazartbank.com</span>
+              </a>
 
               <div className="flex items-center gap-2.5 text-slate-400 text-[11px] pt-0.5">
                 <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
@@ -336,22 +332,6 @@ const Footer = () => {
                   Refer Partner Program
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/refer-partner/dashboard"
-                  className="text-[13px] text-white/75 hover:text-emerald-300 font-medium transition-colors"
-                >
-                  Partner Portal (Dashboard)
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contacts"
-                  className="text-[13px] text-white/75 hover:text-white transition-colors"
-                >
-                  Request Materials
-                </Link>
-              </li>
             </ul>
           </li>
 
@@ -480,11 +460,6 @@ const Footer = () => {
             />
           </Link>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[11px] font-semibold text-[#95e0b9] border border-white/15 mb-4">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#95e0b9]" />
-            <span>ART Act 2021 Registered Bank</span>
-          </div>
-
           <div className="space-y-2.5 text-xs text-slate-300">
             <a
               href="tel:+919667780807"
@@ -496,15 +471,16 @@ const Footer = () => {
               <span className="font-mono font-medium">+91 96677 80807</span>
             </a>
 
-            <Link
-              href="/contacts"
+            <a
+              href="mailto:info@mediyazartbank.com"
               className="flex items-center gap-2.5 text-slate-300 hover:text-white transition-colors"
+              title="Email Mediyaz Clinical Liaison Desk"
             >
               <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
                 <Mail className="w-3.5 h-3.5 text-teal-300" />
               </div>
-              <span>Direct Clinical Liaison Desk</span>
-            </Link>
+              <span>info@mediyazartbank.com</span>
+            </a>
 
             <div className="flex items-center gap-2.5 text-slate-400 text-[11px] pt-0.5">
               <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
@@ -701,16 +677,6 @@ const Footer = () => {
                 <li>
                   <Link href="/refer-partner" className="text-sm text-teal-300 font-medium">
                     Refer Partner Program
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/refer-partner/dashboard" className="text-sm text-emerald-300 font-medium">
-                    Partner Portal (Dashboard)
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contacts" className="text-sm text-white/75 hover:text-white">
-                    Request Materials
                   </Link>
                 </li>
               </ul>

@@ -662,7 +662,7 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
             </div>
 
             <Link href={`/donor/query?type=${selectedInquiryType}`} className="block w-full">
-              <Button className="w-full rounded-[10px] h-10 text-xs font-bold text-slate-950 bg-teal-500 hover:bg-teal-400 shadow-md shadow-teal-500/15 flex items-center justify-center gap-1.5 cursor-pointer">
+              <Button className="w-full rounded-[10px] h-10 text-xs font-bold text-white bg-[#285b63] hover:bg-[#1d3840] shadow-md shadow-[#285b63]/15 flex items-center justify-center gap-1.5 cursor-pointer">
                 Submit Pre-Screening Inquiry <ChevronRight className="w-4 h-4" />
               </Button>
             </Link>
@@ -812,7 +812,7 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
                   type="button"
                   onClick={handleSendOtp}
                   disabled={otpLoading || !canSendOtp}
-                  className="w-full rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs h-10 flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full rounded-xl bg-[#285b63] hover:bg-[#1d3840] text-white font-bold text-xs h-10 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   {otpLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : "Verify & Send WhatsApp OTP"}
                 </Button>
@@ -822,7 +822,7 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
                     type="button"
                     onClick={handleVerifyOtp}
                     disabled={otpLoading || otpInput.length !== 6}
-                    className="w-full rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs h-10 flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="w-full rounded-xl bg-[#285b63] hover:bg-[#1d3840] text-white font-bold text-xs h-10 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     {otpLoading
                       ? <><Loader2 className="w-4 h-4 animate-spin" /> Verifying...</>
@@ -1061,7 +1061,7 @@ export function RegistrationWizard({ donorType, draftId }: RegistrationWizardPro
                         }
                       }
                     }}
-                    className="rounded-xl text-xs gap-1.5 h-10 px-6 font-bold bg-teal-500 hover:bg-teal-400 text-slate-950 shadow-md shadow-teal-500/20 cursor-pointer"
+                    className="rounded-xl text-xs gap-1.5 h-10 px-6 font-bold bg-[#285b63] hover:bg-[#1d3840] text-white shadow-md shadow-[#285b63]/20 cursor-pointer"
                   >
                     Next Step →
                   </Button>

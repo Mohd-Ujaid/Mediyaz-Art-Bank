@@ -10,12 +10,12 @@ export const metadata = {
 
 const FinancingPage = () => {
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/find_donor.jpg"
+            src="/img/find_donor.webp"
             alt="ART Banking Services & Financial Clarity - Mediyaz ART Bank"
             fill
             priority
@@ -37,9 +37,9 @@ const FinancingPage = () => {
         <div className="grid grid-cols-1 gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
           {/* LEFT MAIN ARTICLE */}
           <article className="min-w-0">
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
               Clear, Compliant Banking Fees for Intending Parents
-            </h1>
+            </h2>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-[#555]">
               In strict accordance with Sections 38 and 39 of the Assisted Reproductive Technology (Regulation) Act, 2021, the commercial sale or trading of human gametes is prohibited by law in India. At Mediyaz ART Bank, we maintain absolute pricing transparency. Our service fees cover comprehensive clinical screening, advanced NABL genetic and infectious testing, mandatory 6-month semen quarantine, statutory 12-month donor health insurance, and temperature-monitored cryogenic custody.
@@ -49,7 +49,7 @@ const FinancingPage = () => {
             <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-[#edf3f1] p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
               <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
                 <Image
-                  src="/img/aspiring_parent_3.1.png"
+                  src="/img/aspiring_parent_3.1.webp"
                   alt="Clinical Care Coordinator"
                   fill
                   className="object-cover"
@@ -198,7 +198,7 @@ const FinancingPage = () => {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

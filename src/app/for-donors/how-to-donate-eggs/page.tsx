@@ -26,12 +26,12 @@ export default function HowToDonateEggsPage() {
   ];
 
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/find_donor.jpg"
+            src="/img/find_donor.webp"
             alt="Clinical Oocyte Donation Process - Mediyaz ART Bank India"
             fill
             priority
@@ -53,9 +53,9 @@ export default function HowToDonateEggsPage() {
         <div className="grid grid-cols-1 gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
           {/* LEFT MAIN ARTICLE */}
           <article className="min-w-0">
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
               The Step-by-Step Medical Timeline in India
-            </h1>
+            </h2>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-[#555]">
               Understanding every medical and legal step of oocyte donation provides complete confidence. At Mediyaz ART Bank, every cycle is conducted in strict compliance with the Assisted Reproductive Technology (Regulation) Act, 2021, under the care of certified fertility specialists and clinical embryologists.
@@ -269,6 +269,6 @@ export default function HowToDonateEggsPage() {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

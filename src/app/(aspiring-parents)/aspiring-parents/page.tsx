@@ -10,12 +10,12 @@ export const metadata = {
 
 const AspiringParentsPage = () => {
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/aspiring-parent.jpg"
+            src="/img/aspiring-parent.webp"
             alt="For Intending Parents - Mediyaz ART Bank"
             fill
             priority
@@ -37,9 +37,9 @@ const AspiringParentsPage = () => {
         <div className="grid grid-cols-1 gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
           {/* LEFT MAIN ARTICLE */}
           <article className="min-w-0">
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.5rem] font-normal leading-tight text-[#285b63]">
               How Donor Gamete Access Works in India
-            </h1>
+            </h2>
 
             <h2 className="mt-6 font-serif text-2xl sm:text-3xl font-normal text-[#285b63]">
               Sperm &amp; Oocyte Donation Under the ART Act, 2021
@@ -53,7 +53,7 @@ const AspiringParentsPage = () => {
             <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-[#edf3f1] p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
               <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
                 <Image
-                  src="/img/aspiring_parent_3.3.png"
+                  src="/img/aspiring_parent_3.3.webp"
                   alt="Explore Donor Gametes"
                   fill
                   className="object-cover"
@@ -79,7 +79,7 @@ const AspiringParentsPage = () => {
             <div className="mt-10 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
               <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-[#1d3840]">
                 <Image
-                  src="/img/aspiring_parent_2.png"
+                  src="/img/aspiring_parent_2.webp"
                   alt="Clinical Guidance Under Indian Law"
                   fill
                   className="object-cover opacity-90"
@@ -307,7 +307,7 @@ const AspiringParentsPage = () => {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

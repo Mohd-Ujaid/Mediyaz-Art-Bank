@@ -143,9 +143,9 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Navbar />
-        <div id="main-content" tabIndex={-1} className="flex-1 w-full outline-none">
+        <main id="main-content" tabIndex={-1} className="flex-1 w-full outline-none">
           {children}
-        </div>
+        </main>
         <Footer />
       </body>
     </html>

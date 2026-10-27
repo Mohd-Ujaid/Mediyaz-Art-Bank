@@ -10,12 +10,12 @@ export const metadata = {
 
 const ClinicsPage = () => {
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/about_1.png"
+            src="/img/about_4.webp"
             alt="ART Clinic Partnership - Mediyaz ART Bank India"
             fill
             priority
@@ -185,7 +185,7 @@ const ClinicsPage = () => {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

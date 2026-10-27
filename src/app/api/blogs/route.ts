@@ -7,38 +7,46 @@ export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
 
-    // Ensure all defined blog posts exist in the database
-    const existingSlugs = await Blog.distinct("slug");
-    const missingPosts = INITIAL_BLOG_POSTS.filter((post) => !existingSlugs.includes(post.slug));
-    if (missingPosts.length > 0) {
-      const bulkOps = missingPosts.map((post) => ({
-        updateOne: {
-          filter: { slug: post.slug },
-          update: {
-            $set: {
-              ...post,
-              image: post.coverImage,
-              status: "PUBLISHED",
-              published: true,
-              publishedAt: new Date(post.publishedAt),
+    // Ensure all defined blog posts exist and have updated WebP assets & author credentials
+    const bulkSyncOps = INITIAL_BLOG_POSTS.map((post) => ({
+      updateOne: {
+        filter: { slug: post.slug },
+        update: {
+          $set: {
+            coverImage: post.coverImage,
+            image: post.coverImage,
+            author: {
+              name: "Mediyaz ART Bank",
+              role: "Clinical Editorial Board",
+              avatar: "/img/logo.webp",
             },
           },
-          upsert: true,
+          $setOnInsert: {
+            title: post.title,
+            slug: post.slug,
+            category: post.category,
+            readTime: post.readTime,
+            excerpt: post.excerpt,
+            tags: post.tags,
+            content: post.content,
+            status: "PUBLISHED",
+            published: true,
+            publishedAt: new Date(post.publishedAt),
+          },
         },
-      }));
-      await Blog.bulkWrite(bulkOps);
-    }
+        upsert: true,
+      },
+    }));
+    await Blog.bulkWrite(bulkSyncOps);
 
-    // Update all existing records to ensure author is Mediyaz ART Bank
+    // Update all existing records to ensure consistent author credentials
     await Blog.updateMany(
       {},
       {
         $set: {
-          author: {
-            name: "Mediyaz ART Bank",
-            role: "",
-            avatar: "/img/logo.webp",
-          },
+          "author.name": "Mediyaz ART Bank",
+          "author.role": "Clinical Editorial Board",
+          "author.avatar": "/img/logo.webp",
         },
       }
     );
@@ -86,7 +94,10 @@ export async function GET(request: NextRequest) {
         "Clinical guidance and regulatory information.";
       const wordCount = plainContent ? plainContent.split(/\s+/).length : 0;
       const readTime = b.readTime || `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
-      const coverImage = b.coverImage || b.image || "/img/home.jpg";
+      const rawCover = b.coverImage || b.image || "/img/home.webp";
+      const coverImage = rawCover.startsWith("/img/blogs/") && rawCover.endsWith(".jpg")
+        ? rawCover.replace(".jpg", ".webp")
+        : rawCover;
 
       return {
         ...b,
@@ -97,7 +108,7 @@ export async function GET(request: NextRequest) {
         publishedAt: b.publishedAt || b.createdAt || new Date().toISOString(),
         author: {
           name: "Mediyaz ART Bank",
-          role: "",
+          role: b.author?.role || "Clinical Editorial Board",
           avatar: "/img/logo.webp",
         },
       };

@@ -7,7 +7,12 @@
   :root {
     color-scheme: light;
     --color-coral-text: #df4b3e; /* WCAG AA 4.6:1 contrast ratio against #ffffff */
-    --color-brand-teal: #285d64;
+    --color-brand-teal: #285b63;
+    --brand-teal: #285b63;
+    --brand-teal-dark: #1d3840;
+    --brand-teal-light: #edf3f1;
+    --brand-coral: #ff7468;
+    --brand-coral-hover: #ff5d50;
   }
   html {
     scroll-behavior: smooth;
@@ -21,41 +26,30 @@
   }
 
   ::selection {
-    background-color: #285d64;
+    background-color: #285b63;
     color: #ffffff;
   }
-  /* Completely hide visible scrollbars across all browsers while keeping smooth scrolling fully functional */
-  html,
-  body,
-  * {
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
 
-  ::-webkit-scrollbar,
-  *::-webkit-scrollbar {
-    display: none !important;
-    width: 0px !important;
-    height: 0px !important;
-    background: transparent !important;
-  }
-
-  ::-webkit-scrollbar-thumb,
-  *::-webkit-scrollbar-thumb {
-    display: none !important;
-    background: transparent !important;
-  }
-
-  ::-webkit-scrollbar-track,
-  *::-webkit-scrollbar-track {
-    display: none !important;
-    background: transparent !important;
-  }
-
-  ::-webkit-scrollbar-corner,
-  *::-webkit-scrollbar-corner {
-    display: none !important;
-    background: transparent !important;
+  /* Subtle, modern scrollbar for desktop browsers */
+  @media (min-width: 1024px) {
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
   }
 }
 
@@ -128,9 +122,9 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.01s !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.1s !important;
     scroll-behavior: auto !important;
   }
 }

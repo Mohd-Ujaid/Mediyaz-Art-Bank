@@ -211,7 +211,7 @@ function DonorRequestFormContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8faf9] text-[#333] pt-24 pb-20">
+    <div className="min-h-screen bg-[#f8faf9] text-[#333] pb-20">
       {/* ================= HERO BANNER ================= */}
       <section className="bg-gradient-to-r from-[#173037] via-[#214b53] to-[#285b63] text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-[#2d636b]">
         <div className="max-w-4xl mx-auto text-center">
@@ -231,11 +231,11 @@ function DonorRequestFormContent() {
       {/* ================= MAIN FORM CONTAINER ================= */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         {serverError && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-xl flex items-start shadow-xs">
-            <AlertCircle className="h-5 w-5 text-red-500 mr-3 shrink-0 mt-0.5" />
+          <div className="bg-rose-50/80 border border-rose-200 p-4 mb-6 rounded-2xl flex items-start shadow-xs">
+            <AlertCircle className="h-5 w-5 text-rose-600 mr-3 shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-sm font-bold text-red-800">Please Review Required Fields</h4>
-              <p className="text-xs text-red-700 mt-0.5">{serverError}</p>
+              <h4 className="text-sm font-bold text-rose-900">Please Review Required Fields</h4>
+              <p className="text-xs text-rose-700 mt-0.5 leading-relaxed">{serverError}</p>
             </div>
           </div>
         )}

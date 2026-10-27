@@ -271,13 +271,13 @@ export default function ReferPartnerPage() {
         {/* Hero Header */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-teal-50 text-teal-700 border border-teal-200 shadow-xs">
-            Egg Donor Referral Partner Program
+            Clinical Outreach &amp; Facilitation Program
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
             Partner with Mediyaz ART Clinic
           </h1>
           <p className="text-sm text-slate-500 max-w-xl mx-auto">
-            Refer qualified Egg Donor candidates to our clinical fertility bank. Track your referrals, screening milestones, and receive guaranteed payouts directly from our clinic accounts.
+            Coordinate prospective donors and clinical linkages with Mediyaz ART Bank. Track verification milestones and statutory facilitation allowances in strict compliance with the ART Act 2021.
           </p>
         </div>
 
@@ -315,7 +315,7 @@ export default function ReferPartnerPage() {
               <div className="text-center space-y-1">
                 <h2 className="text-xl font-black text-slate-900">Welcome Back</h2>
                 <p className="text-xs text-slate-500">
-                  Access your referred egg donors, screening status, and clinic payout history.
+                  Access referred candidate status, clinical screening milestones, and facilitation reimbursement records.
                 </p>
               </div>
 
@@ -447,10 +447,10 @@ export default function ReferPartnerPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-700">Agency / Clinic Name (Optional)</label>
+                    <label className="text-xs font-bold text-slate-700">Clinic / Organization Name (Optional)</label>
                     <Input
                       type="text"
-                      placeholder="e.g. LifeCare Fertility"
+                      placeholder="e.g. LifeCare Fertility Clinic"
                       value={agencyName}
                       onChange={(e) => setAgencyName(e.target.value)}
                       className="rounded-xl h-10 text-xs"
@@ -502,10 +502,10 @@ export default function ReferPartnerPage() {
                 <div className="border-b border-slate-100 pb-2">
                   <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-teal-600" />
-                    Payout Bank &amp; UPI Details (Where Clinic Sends Payments)
+                    Facilitation &amp; Reimbursement Bank Details (Statutory Allowances)
                   </h3>
                   <p className="text-xs text-slate-400">
-                    All referral rewards (₹5,000 / approved egg donor) will be deposited directly to this account by Mediyaz ART Clinic.
+                    Statutory conveyance, verified logistical expenses, and institutional coordination allowances will be disbursed directly to this account by Mediyaz ART Clinic.
                   </p>
                 </div>
 

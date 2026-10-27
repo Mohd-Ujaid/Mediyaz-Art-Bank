@@ -22,11 +22,11 @@ export const INITIAL_BLOG_POSTS: BlogPostData[] = [
     category: "Egg Donation Guide",
     readTime: "7 min read",
     publishedAt: "2026-09-01T09:00:00.000Z",
-    coverImage: "/img/blogs/egg-donor-care.jpg",
+    coverImage: "/img/blogs/egg-donor-care.webp",
     tags: ["Egg Donation", "Donor Process", "ART Act 2021", "Oocyte Donor"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -93,11 +93,11 @@ Once cleared, ovarian stimulation begins on Day 2 or 3 of the menstrual cycle:
     category: "Egg Donation Guide",
     readTime: "6 min read",
     publishedAt: "2026-09-03T09:00:00.000Z",
-    coverImage: "/img/blogs/art-regulation.jpg",
+    coverImage: "/img/blogs/art-regulation.webp",
     tags: ["Exclusion Criteria", "Donor Eligibility", "Medical Safety", "ART Act"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -159,11 +159,11 @@ Genetic anomalies that automatically disqualify prospective donors:
     category: "Legal & Regulatory",
     readTime: "6 min read",
     publishedAt: "2026-09-06T09:00:00.000Z",
-    coverImage: "/img/blogs/health-insurance.jpg",
+    coverImage: "/img/blogs/health-insurance.webp",
     tags: ["Compensation", "Altruistic Donation", "ART Act Section 22", "Health Insurance"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -219,11 +219,11 @@ One of the most vital safeguards introduced by **Section 22(1)(b) of the ART Act
     category: "Egg Donation Guide",
     readTime: "5 min read",
     publishedAt: "2026-09-08T09:00:00.000Z",
-    coverImage: "/img/blogs/genetic-screening.jpg",
+    coverImage: "/img/blogs/genetic-screening.webp",
     tags: ["Prerequisites", "Aadhaar KYC", "Informed Consent", "ART Bank"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -269,11 +269,11 @@ Here is the exact checklist required for participating as a registered egg donor
     category: "Donor Care & Health",
     readTime: "6 min read",
     publishedAt: "2026-09-11T09:00:00.000Z",
-    coverImage: "/img/blogs/donor-nutrition.jpg",
+    coverImage: "/img/blogs/donor-nutrition.webp",
     tags: ["Donor Restrictions", "Stimulation Care", "OHSS Safety", "Recovery"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -322,11 +322,11 @@ Following egg retrieval, donors are advised:
     category: "Legal & Regulatory",
     readTime: "7 min read",
     publishedAt: "2026-09-14T09:00:00.000Z",
-    coverImage: "/img/blogs/art-regulation.jpg",
+    coverImage: "/img/blogs/art-regulation.webp",
     tags: ["Legality", "ART Act 2021", "Parentage Law", "Section 31"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -377,11 +377,11 @@ The Act decisively bans commercial egg trafficking:
     category: "Donor Care & Health",
     readTime: "6 min read",
     publishedAt: "2026-09-17T09:00:00.000Z",
-    coverImage: "/img/blogs/egg-donor-care.jpg",
+    coverImage: "/img/blogs/egg-donor-care.webp",
     tags: ["Safety", "OHSS Prevention", "Retrieval Risks", "Clinical Protocol"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -436,11 +436,11 @@ Ovarian stimulation merely rescues the eggs that would have naturally dissolved 
     category: "Clinical Quality & Screening",
     readTime: "7 min read",
     publishedAt: "2026-09-20T09:00:00.000Z",
-    coverImage: "/img/blogs/genetic-screening.jpg",
+    coverImage: "/img/blogs/genetic-screening.webp",
     tags: ["Diagnostic Tests", "Screening Protocol", "Karyotyping", "Infectious Serology"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -498,11 +498,11 @@ Performed on Day 2 or 3 of the menstrual cycle:
     category: "Clinical Procedures",
     readTime: "6 min read",
     publishedAt: "2026-09-23T09:00:00.000Z",
-    coverImage: "/img/blogs/clinic-logistics.jpg",
+    coverImage: "/img/blogs/clinic-logistics.webp",
     tags: ["Egg Retrieval", "OPU Procedure", "Ultrasound Aspiration", "Clinical Timeline"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -555,11 +555,11 @@ Here is the exact step-by-step clinical timeline of retrieval day.
     category: "Embryo & Cryopreservation",
     readTime: "7 min read",
     publishedAt: "2026-09-26T09:00:00.000Z",
-    coverImage: "/img/blogs/cryo-quarantine.jpg",
+    coverImage: "/img/blogs/cryo-quarantine.webp",
     tags: ["Embryo Freezing", "Vitrification", "Cryopreservation", "ART Storage Law"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -608,11 +608,11 @@ The ART (Regulation) Act, 2021 sets explicit rules regarding embryo cryopreserva
     category: "Embryo & Cryopreservation",
     readTime: "6 min read",
     publishedAt: "2026-09-29T09:00:00.000Z",
-    coverImage: "/img/blogs/clinic-logistics.jpg",
+    coverImage: "/img/blogs/clinic-logistics.webp",
     tags: ["Embryo Transport", "Dry Shipper", "Cryo Logistics", "Chain of Custody"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -660,11 +660,11 @@ Under the ART (Regulation) Act, 2021, moving gametes or embryos requires complet
     category: "Clinical Procedures",
     readTime: "6 min read",
     publishedAt: "2026-10-02T09:00:00.000Z",
-    coverImage: "/img/blogs/donor-anonymity.jpg",
+    coverImage: "/img/blogs/donor-anonymity.webp",
     tags: ["Shared Cycle", "Donor Egg Cohort", "IVF Protocols", "Ethical ART"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -717,11 +717,11 @@ Under **Section 28 of the ART Act 2021**:
     category: "Clinical Procedures",
     readTime: "5 min read",
     publishedAt: "2026-10-05T09:00:00.000Z",
-    coverImage: "/img/blogs/art-regulation.jpg",
+    coverImage: "/img/blogs/art-regulation.webp",
     tags: ["Glossary", "Oocyte Pick-Up", "Clinical Definition", "Embryology"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -765,11 +765,11 @@ The entire aspiration typically requires **15 to 25 minutes**. Due to gentle int
     category: "Clinical Procedures",
     readTime: "8 min read",
     publishedAt: "2026-10-20T09:00:00.000Z",
-    coverImage: "/img/blogs/clinic-logistics.jpg",
+    coverImage: "/img/blogs/clinic-logistics.webp",
     tags: ["IVF Treatment", "In Vitro Fertilisation", "Fertility Journey", "Embryo Transfer", "Clinical Procedures"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -833,11 +833,11 @@ IVF is not an instantaneous single-day event; it is a structured, scientific jou
     category: "Clinical Procedures",
     readTime: "6 min read",
     publishedAt: "2026-10-21T09:00:00.000Z",
-    coverImage: "/img/blogs/donor-nutrition.jpg",
+    coverImage: "/img/blogs/donor-nutrition.webp",
     tags: ["IUI Treatment", "Intrauterine Insemination", "Artificial Insemination", "Fertility Treatment", "Clinical Procedures"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -891,11 +891,11 @@ The patient lies comfortably on an examination couch. Using a sterile speculum a
     category: "Clinical Procedures",
     readTime: "7 min read",
     publishedAt: "2026-10-22T09:00:00.000Z",
-    coverImage: "/img/blogs/genetic-screening.jpg",
+    coverImage: "/img/blogs/genetic-screening.webp",
     tags: ["ICSI Treatment", "Male Infertility", "Sperm Injection", "Embryology", "Clinical Procedures"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -944,11 +944,11 @@ ICSI is primarily recommended when conventional IVF may not yield adequate ferti
     category: "Clinical Procedures",
     readTime: "7 min read",
     publishedAt: "2026-10-23T09:00:00.000Z",
-    coverImage: "/img/blogs/genetic-screening.jpg",
+    coverImage: "/img/blogs/genetic-screening.webp",
     tags: ["IMSI Treatment", "Sperm Morphology", "Ultra High Magnification", "DNA Fragmentation", "Clinical Procedures"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -1000,11 +1000,11 @@ IMSI brings peace of mind to couples confronting complex reproductive challenges
     category: "Clinical Procedures",
     readTime: "7 min read",
     publishedAt: "2026-10-24T09:00:00.000Z",
-    coverImage: "/img/blogs/cryo-quarantine.jpg",
+    coverImage: "/img/blogs/cryo-quarantine.webp",
     tags: ["TESA Treatment", "Azoospermia", "Surgical Sperm Retrieval", "Male Fertility", "Clinical Procedures"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -1054,11 +1054,11 @@ Instead, **TESA is always paired with ICSI (Intracytoplasmic Sperm Injection)**,
     category: "Embryo & Cryopreservation",
     readTime: "8 min read",
     publishedAt: "2026-10-25T09:00:00.000Z",
-    coverImage: "/img/blogs/egg-donor-care.jpg",
+    coverImage: "/img/blogs/egg-donor-care.webp",
     tags: ["Egg Freezing", "Oocyte Cryopreservation", "Vitrification", "Fertility Preservation", "Embryo & Cryopreservation"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -1118,11 +1118,11 @@ The optimum biological window for egg freezing is generally between **ages 27 an
     category: "Embryo & Cryopreservation",
     readTime: "7 min read",
     publishedAt: "2026-10-26T09:00:00.000Z",
-    coverImage: "/img/blogs/cryo-quarantine.jpg",
+    coverImage: "/img/blogs/cryo-quarantine.webp",
     tags: ["Sperm Freezing", "Semen Banking", "Cryopreservation", "Male Fertility", "Embryo & Cryopreservation"],
     author: {
       name: "Mediyaz ART Bank",
-      role: "",
+      role: "Clinical Editorial Board",
       avatar: "/img/logo.webp",
     },
     excerpt:

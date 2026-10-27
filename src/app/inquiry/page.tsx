@@ -120,9 +120,9 @@ export default function InquiryPage() {
         </div>
 
         {serverError && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-xl flex items-start">
-            <AlertCircle className="h-5 w-5 text-red-500 mr-3 shrink-0 mt-0.5" />
-            <p className="text-sm text-red-700">{serverError}</p>
+          <div className="bg-rose-50/80 border border-rose-200 p-4 mb-6 rounded-2xl flex items-start shadow-xs">
+            <AlertCircle className="h-5 w-5 text-rose-600 mr-3 shrink-0 mt-0.5" />
+            <p className="text-sm text-rose-800 font-medium leading-relaxed">{serverError}</p>
           </div>
         )}
 

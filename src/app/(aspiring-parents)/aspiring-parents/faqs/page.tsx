@@ -98,7 +98,7 @@ const ParentFaqsPage = () => {
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/aspiring_parent_3.2.png"
+            src="/img/aspiring_parent_3.1.webp"
             alt="Intending Parent FAQs - Mediyaz ART Bank India"
             fill
             priority
@@ -115,8 +115,8 @@ const ParentFaqsPage = () => {
         </div>
       </section>
 
-      {/* MAIN */}
-      <main id="main" className="relative w-full overflow-hidden bg-white">
+      {/* CONTENT */}
+      <div id="faq-content" className="relative w-full overflow-hidden bg-white">
         <div className="relative mx-auto flex w-full max-w-[92.5rem] flex-col px-5 py-12 sm:px-8 sm:py-14 md:px-10 md:py-16 lg:flex-row lg:items-start lg:gap-14 lg:px-16 lg:py-20 xl:gap-20">
           {/* LEFT CONTENT */}
           <div className="min-w-0 w-full lg:flex-1 lg:max-w-[850px]">
@@ -263,7 +263,7 @@ const ParentFaqsPage = () => {
             </div>
           </aside>
         </div>
-      </main>
+      </div>
     </>
   );
 };

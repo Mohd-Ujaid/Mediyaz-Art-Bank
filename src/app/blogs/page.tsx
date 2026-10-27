@@ -102,12 +102,12 @@ export default function BlogsPage() {
   };
 
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/home.jpg"
+            src="/img/home.webp"
             alt="Mediyaz ART Bank Blog"
             fill
             priority
@@ -260,7 +260,7 @@ export default function BlogsPage() {
                   <div className="lg:col-span-5">
                     <div className="relative w-full h-60 sm:h-72 rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
                       <Image
-                        src={filteredPosts[0].coverImage || "/img/home.jpg"}
+                        src={filteredPosts[0].coverImage || "/img/home.webp"}
                         alt={filteredPosts[0].title}
                         fill
                         priority
@@ -285,7 +285,7 @@ export default function BlogsPage() {
                     {/* Article Thumbnail */}
                     <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-100">
                       <Image
-                        src={post.coverImage || "/img/home.jpg"}
+                        src={post.coverImage || "/img/home.webp"}
                         alt={post.title}
                         fill
                         className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
@@ -317,11 +317,7 @@ export default function BlogsPage() {
                     </div>
                   </div>
 
-                  <div className="px-6 pb-6 pt-0 flex items-center justify-between text-xs border-t border-slate-100 pt-4 mt-2">
-                    <span className="text-slate-500 text-[11px] font-medium flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#285b63]"></span>
-                      Mediyaz ART Bank
-                    </span>
+                  <div className="px-6 pb-6 pt-0 flex items-center justify-end text-xs border-t border-slate-100 pt-4 mt-2">
                     <span className="font-bold text-[#ff7468] group-hover:translate-x-1 transition-transform flex items-center gap-1">
                       Read Article <ArrowRight className="w-3.5 h-3.5" />
                     </span>
@@ -332,7 +328,7 @@ export default function BlogsPage() {
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 }
 

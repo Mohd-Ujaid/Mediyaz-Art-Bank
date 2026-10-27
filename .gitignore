@@ -48,3 +48,9 @@ next-env.d.ts
 .gemini/
 .agents/
 scratch/
+
+# Patient Documents & Confidential Medical Records
+*.pdf
+**/*.pdf
+audit_report_*.md
+

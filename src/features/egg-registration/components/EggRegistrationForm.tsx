@@ -1500,7 +1500,7 @@ export function EggRegistrationForm({ draftId }: { draftId?: string }) {
               variant="ghost"
               size="sm"
               onClick={handleOpenExitModal}
-              className="h-8 px-2.5 text-xs text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg gap-1.5 font-medium shrink-0 whitespace-nowrap"
+              className="h-8 px-2.5 text-xs text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-lg gap-1.5 font-medium shrink-0 whitespace-nowrap"
               title="Save draft and exit current session"
             >
               <LogOut className="w-3.5 h-3.5" />

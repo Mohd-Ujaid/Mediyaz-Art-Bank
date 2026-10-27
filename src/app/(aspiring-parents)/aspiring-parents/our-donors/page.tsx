@@ -23,12 +23,12 @@ export const metadata = {
 
 export default function OurDonorsEditorialPage() {
   return (
-    <main className="w-full bg-white text-[#414141]">
+    <div className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/aspiring-parent.jpg"
+            src="/img/aspiring-parent.webp"
             alt="Our Donors - Mediyaz ART Bank"
             fill
             priority
@@ -50,7 +50,7 @@ export default function OurDonorsEditorialPage() {
         </div>
       </section>
 
-      {/* ================= MAIN CONTENT (SIDEBAR LAYOUT LIKE MYEGGBANK) ================= */}
+      {/* ================= MAIN CONTENT ================= */}
       <section className="mx-auto w-full max-w-[1450px] px-6 sm:px-8 md:px-10 lg:px-16">
         <div className="grid grid-cols-1 gap-12 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
           {/* ================= LEFT MAIN ARTICLE ================= */}
@@ -479,6 +479,6 @@ export default function OurDonorsEditorialPage() {
           </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
