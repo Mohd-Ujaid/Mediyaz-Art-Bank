@@ -80,7 +80,7 @@ export default function BecomePartnersPage() {
   return (
     <main className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
-      <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+      <section className="relative w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/img/about_1.png"

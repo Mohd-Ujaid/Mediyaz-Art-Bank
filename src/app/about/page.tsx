@@ -2,123 +2,100 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { 
-  ShieldCheck, 
   Award, 
-  HeartHandshake, 
-  Dna, 
   Building2, 
-  Microscope, 
-  Scale, 
-  Users, 
   CheckCircle2, 
-  ArrowRight,
-  Lock,
-  FileText
+  ArrowRight, 
+  Lock, 
+  Sparkles, 
+  Stethoscope 
 } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Mediyaz ART Bank | Licensed Indian Gamete Bank & Cryo-Facility",
+  title: "About Mediyaz ART Bank | Leadership, Clinical Excellence & Statutory Compliance",
   description:
-    "Learn about Mediyaz ART Bank's commitment to ethical gamete banking, 100% compliance with the Indian ART Act 2021, multi-tier genetic screening, and compassionate patient care.",
+    "Learn about Mediyaz ART Bank: Founded by Imtiyaz Shaikh with 20+ years of gamete banking experience, advised by Chief IVF Specialist Dr. Nalini Gupta (Leeds, UK), and 100% compliant with the Indian ART Act 2021.",
 };
 
 export default function AboutPage() {
-  const pillars = [
+  const stats = [
+    { value: "20+", label: "Years Experience", subtext: "Leadership in Donor & Gamete Care" },
+    { value: "100+", label: "Partner Clinics", subtext: "Accredited IVF Centers Pan-India" },
+    { value: "100%", label: "ART Act 2021", subtext: "Statutory Registry Compliance" },
+    { value: "180-Day", label: "Cryo-Quarantine", subtext: "Tested at -196°C Vapor Phase" },
+  ];
+
+
+  const operationalTeam = [
     {
-      icon: Scale,
-      title: "100% Statutory Compliance",
-      description:
-        "Fully licensed under the Assisted Reproductive Technology (Regulation) Act, 2021 and Rules 2022. Registered on the National ART and Surrogacy Registry portal with zero exceptions.",
-      badge: "ART Act 2021",
+      name: "Dr. S.H. Hashmi",
+      role: "General Physician, MBBS",
+      tagline: "Clinical Health Screening & Medical Fitness",
+      bio: "Oversees rigorous physical examinations, general clinical evaluations, vital parameters, and serological infectious disease screenings for all voluntary donor applicants.",
+      image: "/img/team/dr-hashmi.webp",
+      badge: "MBBS Physician",
     },
     {
-      icon: Dna,
-      title: "Multi-Tier Genetic Screening",
-      description:
-        "Rigorous carrier screening for Beta-Thalassemia (Hb HPLC), G6PD assays, and 550-band G-banding cytogenetic karyotyping to protect your future generations against monogenic disorders.",
-      badge: "Clinical Genetics",
+      name: "Mohd. Faiyaz",
+      role: "Centre Coordinator",
+      tagline: "Facility Operations & Chain-of-Custody",
+      bio: "Manages day-to-day center operations, patient and clinic liaison schedules, biometric donor verification, and strict legal documentation under ART Act protocols.",
+      image: "/img/team/mohd-faiyaz.webp",
+      badge: "Operations Lead",
     },
     {
-      icon: Microscope,
-      title: "180-Day Cryo-Quarantine",
-      description:
-        "Every donor semen specimen undergoes mandatory 6-month cryogenic vapor-phase quarantine with repeat infectious serology before release, eliminating diagnostic window-period risks.",
-      badge: "-196°C Cryo-Chain",
-    },
-    {
-      icon: HeartHandshake,
-      title: "Statutory Donor Protection",
-      description:
-        "Altruistic donors receive mandatory 12-month IRDAI-registered medical insurance (Rule 13), psychological pre-counseling, and strict single-lifetime donation monitoring.",
-      badge: "Rule 13 Compliance",
+      name: "Mohd. Riyaz",
+      role: "Market Coordinator",
+      tagline: "Hospital Outreach & Cryo-Logistics",
+      bio: "Coordinates relationships with accredited fertility clinics, IVF hospitals, and manages rapid, temperature-monitored cryogenic vapor shipper logistics across India.",
+      image: "/img/team/mohd-riyaz.webp",
+      badge: "Logistics Specialist",
     },
   ];
 
   const milestones = [
     {
+      year: "2004",
+      title: "Foundational Vision",
+      text: "Founder Imtiyaz Shaikh begins dedicated work in gamete donor coordination and reproductive services, establishing enduring standards of donor care and patient trust.",
+    },
+    {
       year: "2021",
-      title: "Legislative Foundation",
-      text: "Aligned operations from day one with the landmark Indian ART Regulation Act, creating a clear division between clinical IVF care and gamete banking.",
+      title: "ART Act 2021 Enactment",
+      text: "Mediyaz aligns 100% of its banking architecture with the landmark Assisted Reproductive Technology (Regulation) Act, establishing statutory separation between clinics and gamete banking.",
     },
     {
       year: "2023",
-      title: "Pan-India Clinic Network",
-      text: "Partnered with over 100 accredited fertility clinics, IVF hospitals, and reproductive centers across major metropolitan regions in India.",
+      title: "National Clinic Network",
+      text: "Surpassed 100+ accredited fertility hospital partnerships across Delhi NCR, Uttar Pradesh, Punjab, Haryana, Rajasthan, and major Indian healthcare hubs.",
     },
     {
       year: "2024",
-      title: "Advanced Genetic Panel Integration",
-      text: "Introduced standardized Beta-Thalassemia HPLC, Spinal Muscular Atrophy, and high-resolution karyotyping across all active donor candidates.",
+      title: "Advanced Genetic Panels",
+      text: "Integrated standardized Beta-Thalassemia Hb HPLC, high-resolution karyotyping, and infectious disease nucleic acid testing (NAT) across all donor pipelines.",
     },
     {
       year: "2026",
-      title: "Digitized Cryo-Chain Custody",
-      text: "Deployed tamper-evident cryogenic RFID tracking and verified temperature-logged dry shipper logistics for 100% specimen integrity.",
-    },
-  ];
-
-  const leadership = [
-    {
-      name: "Dr. Arvind Chawla, MD",
-      role: "Head of Diagnostic & Genetic Screening",
-      bio: "Pathologist with over 18 years in hemoglobinopathy diagnostics, karyotyping interpretation, and clinical serology oversight.",
-      image: "/img/man.png",
-    },
-    {
-      name: "Dr. Meenakshi Sundaram, Ph.D.",
-      role: "Chief Cryobiologist & Laboratory Director",
-      bio: "Specialist in gamete vitrification, computer-assisted semen analysis (CASA), and vapor-phase liquid nitrogen storage protocols.",
-      image: "/img/woman.png",
-    },
-    {
-      name: "Adv. Kavita Ramanathan",
-      role: "Legal Director & ART Statutory Counsel",
-      bio: "Legal authority on the ART Act 2021, Surrogacy Act, statutory donor anonymity, and registry governance.",
-      image: "/img/woman.png",
-    },
-    {
-      name: "Dr. Priyamvada Joshi, MS, DNB",
-      role: "Senior Consultant in Reproductive Medicine",
-      bio: "Fertility surgeon guiding safe controlled ovarian stimulation, OHSS prevention, and donor clinical care.",
-      image: "/img/woman.png",
+      title: "Digitized Cryo Telemetry",
+      text: "Deployed continuous liquid nitrogen telemetry monitoring with automated alarms and RFID-verified specimen chain-of-custody tracking.",
     },
   ];
 
   return (
     <div className="w-full overflow-hidden bg-white text-[#414141]">
       {/* ================= HERO SECTION ================= */}
-      <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+      <section className="relative w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/img/about1.jpg"
-            alt="About Mediyaz ART Bank"
+            alt="Mediyaz ART Bank Laboratory"
             fill
             priority
             className="object-cover object-center"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/75" />
         </div>
 
         <div className="relative z-1 mx-auto w-full max-w-[1440px] px-6 pt-8 pb-14 sm:px-8 sm:pt-12 sm:pb-16 md:px-10 md:pt-16 md:pb-20 lg:px-16">
@@ -131,7 +108,7 @@ export default function AboutPage() {
               Pioneering Ethical, Licensed &amp; Advanced ART Banking in India
             </h1>
             <p className="mt-6 text-base sm:text-lg leading-relaxed text-[#555]">
-              Empowering intended parents, fertility specialists, and donors through uncompromising compliance with the Indian ART Act 2021, multi-tiered genetic health safeguards, and compassionate medical care.
+              Empowering intended parents, fertility specialists, and altruistic donors through uncompromising compliance with the Indian ART Act 2021, multi-tiered genetic health safeguards, and over two decades of dedicated care.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -143,98 +120,29 @@ export default function AboutPage() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
-                href="/testimonials"
+                href="/clinics"
                 className="inline-flex items-center justify-center rounded-lg border border-[#2b5860]/30 bg-white/80 px-6 py-3.5 text-sm font-semibold text-[#1d3840] hover:bg-white transition"
               >
-                Read Testimonials
+                For Partner Clinics
               </Link>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ================= MISSION & ETHOS SECTION ================= */}
-      <section className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-8 sm:py-20 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#ff7468]">
-              Our Foundation
-            </span>
-            <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-normal leading-snug text-[#1d3840]">
-              Built to uphold the highest standard of reproductive medicine and legal security.
-            </h2>
-            <div className="mt-6 space-y-4 text-sm sm:text-base leading-relaxed text-[#555]">
-              <p>
-                Mediyaz ART Bank was established with a singular, resolute objective: to provide Indian fertility clinics and aspiring families with an independent, medically rigorous, and legally unassailable source of donor gametes.
-              </p>
-              <p>
-                In compliance with the <strong>Assisted Reproductive Technology (Regulation) Act, 2021</strong>, gamete banking is fundamentally decoupled from IVF clinical treatments. This statutory boundary eliminates conflicts of interest, ensures independent medical clearance, and protects all participants under clear legal parenthood and donor anonymity protections.
-              </p>
-              <p>
-                From voluntary donor recruitment through 180-day cryogenic quarantine, every step in our chain-of-custody is tracked with surgical precision, audited by legal experts, and guided by profound human empathy.
-              </p>
-            </div>
-
-            <div className="mt-8 grid grid-cols-2 gap-4 border-t border-slate-100 pt-6">
-              <div className="rounded-xl bg-[#fff9f8] p-4 border border-[#ff7468]/15">
-                <div className="font-serif text-2xl sm:text-3xl font-bold text-[#1d3840]">100%</div>
-                <div className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">ART Act 2021 Compliant</div>
-              </div>
-              <div className="rounded-xl bg-[#fff9f8] p-4 border border-[#ff7468]/15">
-                <div className="font-serif text-2xl sm:text-3xl font-bold text-[#ff7468]">100+</div>
-                <div className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">Accredited Partner Clinics</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative h-[380px] sm:h-[480px] w-full rounded-2xl overflow-hidden shadow-md border border-slate-100">
-            <Image
-              src="/img/about_2.png"
-              alt="Mediyaz ART Bank cleanroom laboratory"
-              fill
-              className="object-cover object-center"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 4 PILLARS OF CLINICAL EXCELLENCE ================= */}
-      <section className="bg-slate-50/75 py-16 sm:py-24 border-y border-slate-100">
-        <div className="mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-16">
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#ff7468]">
-              Quality Architecture
-            </span>
-            <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-normal text-[#1d3840]">
-              The Four Pillars of Mediyaz ART Banking
-            </h2>
-            <p className="mt-4 text-sm sm:text-base text-slate-600">
-              Every donor profile, gamete specimen, and clinical shipment adheres to stringent diagnostic, cryogenic, and statutory benchmarks.
-            </p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pillars.map((pillar, idx) => (
-              <div
+          {/* Quick Metrics Strip */}
+          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {stats.map((stat, idx) => (
+              <div 
                 key={idx}
-                className="flex flex-col justify-between rounded-xl bg-white p-6 shadow-xs border border-slate-200/80 transition-all hover:shadow-md hover:border-[#ff7468]/40"
+                className="rounded-2xl border border-slate-200/80 bg-white/90 p-5 backdrop-blur-md shadow-xs transition hover:shadow-md hover:border-[#ff7468]/40"
               >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#fff2f0] text-[#ff7468]">
-                      <pillar.icon className="h-6 w-6" />
-                    </div>
-                    <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                      {pillar.badge}
-                    </span>
-                  </div>
-                  <h3 className="mt-5 font-serif text-lg font-bold text-[#1d3840]">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {pillar.description}
-                  </p>
+                <div className="font-serif text-3xl sm:text-4xl font-bold text-[#1d3840]">
+                  {stat.value}
+                </div>
+                <div className="mt-1 text-sm font-semibold text-[#ff7468]">
+                  {stat.label}
+                </div>
+                <div className="mt-1 text-xs text-slate-500">
+                  {stat.subtext}
                 </div>
               </div>
             ))}
@@ -242,9 +150,245 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ================= COMPLIANCE & LEGAL FRAMEWORK ================= */}
+      {/* ================= FOUNDER SPOTLIGHT ================= */}
       <section className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-8 sm:py-24 lg:px-16">
-        <div className="rounded-2xl bg-[#1d3840] text-white p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-xl">
+        <div className="rounded-3xl border border-slate-200/80 bg-gradient-to-br from-slate-50 via-white to-amber-50/30 p-8 sm:p-12 lg:p-16 shadow-xs">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left: Founder Photo & Badge */}
+            <div className="lg:col-span-5 flex flex-col items-center text-center">
+              <div className="relative h-56 w-56 sm:h-64 sm:w-64 rounded-full overflow-hidden border-4 border-white shadow-xl ring-4 ring-[#ff7468]/20 bg-slate-900">
+                <Image
+                  src="/img/team/imtiyaz-shaikh.webp"
+                  alt="Imtiyaz Shaikh - Founder, Mediyaz ART Bank"
+                  fill
+                  className="object-cover object-center"
+                  sizes="256px"
+                />
+              </div>
+
+              <div className="mt-6">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1d3840] px-4 py-1 text-xs font-semibold text-white">
+                  <Award className="h-3.5 w-3.5 text-[#ff7468]" />
+                  Founder &amp; Managing Director
+                </span>
+                <h3 className="mt-3 font-serif text-2xl sm:text-3xl font-bold text-[#1d3840]">
+                  Imtiyaz Shaikh
+                </h3>
+                <p className="mt-1 text-sm font-medium text-[#ff7468]">
+                  20+ Years Track Record in Gamete Banking &amp; Donor Care
+                </p>
+              </div>
+
+              <div className="mt-6 flex flex-wrap justify-center gap-2">
+                <span className="rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 shadow-2xs">
+                  Ethical Gamete Banking
+                </span>
+                <span className="rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 shadow-2xs">
+                  ART Act Compliance
+                </span>
+                <span className="rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 shadow-2xs">
+                  Donor Welfare First
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Founder Message & Vision */}
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#ff7468]">
+                <Sparkles className="h-3.5 w-3.5" />
+                Founder&apos;s Vision &amp; Philosophy
+              </div>
+              
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-snug text-[#1d3840]">
+                &ldquo;Every family&apos;s journey deserves unconditional integrity, transparency, and absolute clinical precision.&rdquo;
+              </h2>
+
+              <div className="space-y-4 text-sm sm:text-base leading-relaxed text-[#555]">
+                <p>
+                  With more than two decades of hands-on experience in assisted reproduction and donor services, <strong>Imtiyaz Shaikh</strong> established Mediyaz ART Bank to address a vital need in Indian healthcare: an independent, fully licensed gamete bank founded on ethical donor care, statutory compliance, and rigorous scientific benchmarks.
+                </p>
+                <p>
+                  Having guided hundreds of aspiring parents and worked directly with donors across varied socio-economic backgrounds, Imtiyaz focuses on relating to people at a deeply personal, human level. His philosophy bridges compassionate patient support with the uncompromising requirements of India&apos;s <strong>ART (Regulation) Act, 2021</strong>.
+                </p>
+                <p>
+                  Under his leadership, Mediyaz ART Bank has grown into a trusted gamete cryo-facility, partnering with over 100 premier IVF hospitals and clinics nationwide, ensuring that every intending couple receives safe, genetically evaluated, and legally protected gametes.
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-slate-200/80 flex items-center gap-6">
+                <div>
+                  <div className="text-sm font-bold text-[#1d3840]">Imtiyaz Shaikh</div>
+                  <div className="text-xs text-slate-500">Founder, Mediyaz ART Bank</div>
+                </div>
+                <div className="h-8 w-px bg-slate-200" />
+                <div className="text-xs text-slate-500">
+                  Registered under ART Act 2021 • New Delhi, India
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CHIEF MEDICAL ADVISOR FEATURE: DR. NALINI GUPTA ================= */}
+      <section className="mx-auto w-full max-w-[1440px] px-6 py-8 sm:px-8 sm:py-12 lg:px-16">
+        <div className="overflow-hidden rounded-3xl bg-white border border-[#b8860b]/30 shadow-lg">
+          {/* Header Bar */}
+          <div className="bg-[#b8860b] px-6 py-6 sm:px-10 sm:py-8 text-white">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+                  <Stethoscope className="h-3.5 w-3.5" />
+                  Chief IVF &amp; Embryology Advisory
+                </span>
+                <h2 className="mt-2 font-serif text-3xl sm:text-4xl font-bold tracking-tight">
+                  Dr. Nalini Gupta
+                </h2>
+                <p className="mt-1 text-sm sm:text-base text-amber-100 font-medium">
+                  MBBS, MD, M.Sc in Clinical Embryology with Distinction from the University of Leeds, United Kingdom
+                </p>
+                <p className="text-xs sm:text-sm text-white/90">
+                  Senior Consultant Gynaecologist &amp; IVF Specialist in New Delhi, India • 30+ Years Experience
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white/10 p-3.5 backdrop-blur-md border border-white/20 text-center sm:text-right hidden sm:block">
+                <div className="text-2xl font-bold text-white">30+</div>
+                <div className="text-xs text-amber-100">Years Clinical Mastery</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content Body */}
+          <div className="p-6 sm:p-10 lg:p-12 bg-gradient-to-b from-[#fffefc] to-white">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Text Description */}
+              <div className="lg:col-span-8 space-y-4 text-sm sm:text-base leading-relaxed text-[#555]">
+                <p className="font-medium text-[#1d3840] text-base sm:text-lg">
+                  Dr. Nalini Gupta is an internationally acclaimed authority in obstetrics, gynaecology, clinical embryology, and advanced assisted reproductive treatments.
+                </p>
+                <p>
+                  She holds an esteemed reputation across India and abroad for her deep clinical expertise in managing complex reproductive challenges, recurrent IVF failure, advanced maternal age protocols, and individualized fertility therapies. Her holistic approach bridges state-of-the-art laboratory embryology with the emotional well-being of prospective parents.
+                </p>
+                <p>
+                  Having earned her <strong>M.Sc in Clinical Embryology with distinction from the University of Leeds (UK)</strong>, Dr. Gupta brings world-class scientific oversight to Mediyaz ART Bank. She advises our clinical teams on laboratory vitrification protocols, carrier genetic screening thresholds, computer-assisted semen analysis (CASA) calibration, and clinic-to-patient matching ethics.
+                </p>
+
+                <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+                  <div className="flex items-center gap-2 rounded-xl bg-amber-50/60 p-3 border border-amber-200/60 text-[#1d3840]">
+                    <CheckCircle2 className="h-4 w-4 text-[#b8860b] shrink-0" />
+                    <span>UK Leeds Embryology Oversight</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-amber-50/60 p-3 border border-amber-200/60 text-[#1d3840]">
+                    <CheckCircle2 className="h-4 w-4 text-[#b8860b] shrink-0" />
+                    <span>Advanced Oocyte &amp; Sperm Screening</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-amber-50/60 p-3 border border-amber-200/60 text-[#1d3840]">
+                    <CheckCircle2 className="h-4 w-4 text-[#b8860b] shrink-0" />
+                    <span>Complex Infertility Specialization</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-amber-50/60 p-3 border border-amber-200/60 text-[#1d3840]">
+                    <CheckCircle2 className="h-4 w-4 text-[#b8860b] shrink-0" />
+                    <span>Holistic, Patient-Centric Ethics</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Portrait */}
+              <div className="lg:col-span-4 flex flex-col items-center text-center">
+                <div className="relative h-60 w-60 sm:h-64 sm:w-64 rounded-full overflow-hidden border-4 border-[#b8860b]/30 shadow-xl bg-slate-100 ring-4 ring-amber-100">
+                  <Image
+                    src="/img/team/dr-nalini-gupta.webp"
+                    alt="Dr. Nalini Gupta - Senior IVF Specialist & Clinical Embryology Advisor"
+                    fill
+                    className="object-cover object-center"
+                    sizes="256px"
+                  />
+                </div>
+                <div className="mt-4">
+                  <div className="font-serif text-lg font-bold text-[#1d3840]">
+                    Dr. Nalini Gupta
+                  </div>
+                  <div className="text-xs text-[#b8860b] font-semibold">
+                    MBBS, MD, M.Sc Embryology (Leeds, UK)
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1">
+                    Gynaecologist &amp; IVF Specialist • New Delhi
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CORE OPERATIONAL & CLINICAL TEAM ================= */}
+      <section className="bg-slate-50/70 py-16 sm:py-24 border-y border-slate-100">
+        <div className="mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-16">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#ff7468]">
+              The Care Team
+            </span>
+            <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-normal text-[#1d3840]">
+              Clinical Governance &amp; Operations Team
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-slate-600">
+              Dedicated professionals ensuring medical fitness, strict ART Act compliance, seamless facility coordination, and pan-India cryogenic delivery.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {operationalTeam.map((member, idx) => (
+              <div
+                key={idx}
+                className="flex flex-col justify-between rounded-2xl bg-white p-6 shadow-xs border border-slate-200/80 transition-all hover:shadow-md hover:border-[#ff7468]/40"
+              >
+                <div>
+                  <div className="relative h-44 w-44 mx-auto rounded-full overflow-hidden bg-slate-100 border-3 border-white shadow-md ring-2 ring-slate-100">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-center"
+                      sizes="176px"
+                    />
+                  </div>
+
+                  <div className="mt-6 text-center">
+                    <span className="inline-block rounded-full bg-[#fff2f0] px-3 py-0.5 text-[11px] font-bold text-[#ff7468] uppercase tracking-wider">
+                      {member.badge}
+                    </span>
+                    <h3 className="mt-2 font-serif text-xl font-bold text-[#1d3840]">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs font-semibold text-[#173d45]">
+                      {member.role}
+                    </p>
+                    <p className="mt-1 text-xs text-[#ff7468] font-medium">
+                      {member.tagline}
+                    </p>
+                    <p className="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed text-left">
+                      {member.bio}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                  <span className="flex items-center gap-1.5 text-emerald-600 font-medium">
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                    Verified ART Personnel
+                  </span>
+                  <span>Mediyaz Team</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ================= COMPLIANCE & LEGAL FRAMEWORK ================= */}
+      <section className="mx-auto w-full max-w-[1440px] px-6 py-8 sm:px-8 sm:py-12 lg:px-16">
+        <div className="rounded-3xl bg-[#1d3840] text-white p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-xl">
           <div className="relative z-1 max-w-3xl">
             <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#ff7468]">
               <Lock className="h-3.5 w-3.5" />
@@ -284,52 +428,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ================= MEDICAL LEADERSHIP & TEAM ================= */}
-      <section className="bg-slate-50/60 py-16 sm:py-24 border-t border-slate-100">
-        <div className="mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-16">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#ff7468]">
-              Clinical Governance
-            </span>
-            <h2 className="mt-3 font-serif text-3xl sm:text-4xl font-normal text-[#1d3840]">
-              Our Medical &amp; Regulatory Leadership
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-slate-600">
-              Guided by distinguished authorities across embryology, reproductive pathology, cytogenetics, and health law.
-            </p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {leadership.map((member, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl bg-white p-6 shadow-xs border border-slate-200/80 transition hover:shadow-md hover:border-[#ff7468]/30"
-              >
-                <div className="relative h-28 w-28 mx-auto rounded-full overflow-hidden bg-slate-100 border-2 border-[#fff2f0]">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-center"
-                  />
-                </div>
-                <div className="mt-5 text-center">
-                  <h3 className="font-serif text-base sm:text-lg font-bold text-[#1d3840]">
-                    {member.name}
-                  </h3>
-                  <p className="mt-1 text-xs font-semibold text-[#ff7468]">
-                    {member.role}
-                  </p>
-                  <p className="mt-3 text-xs text-slate-600 leading-relaxed">
-                    {member.bio}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ================= ACCREDITATIONS & MILESTONES ================= */}
       <section className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-8 sm:py-24 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -341,13 +439,13 @@ export default function AboutPage() {
               Milestones in Quality &amp; Trust
             </h2>
             <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
-              Since our establishment, Mediyaz ART Bank has continually elevated the quality standards of gamete cryopreservation in India.
+              Founded on deep clinical experience, Mediyaz ART Bank has continually elevated the quality standards of gamete cryopreservation and ethical reproduction in India.
             </p>
 
             <div className="mt-8 space-y-6">
               {milestones.map((item, idx) => (
                 <div key={idx} className="flex gap-4 items-start">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#fff2f0] text-xs font-bold text-[#ff7468]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#fff2f0] text-xs font-bold text-[#ff7468]">
                     {item.year}
                   </div>
                   <div>
@@ -363,7 +461,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xs">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-10 shadow-xs">
             <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#1d3840] mb-6">
               Accreditations &amp; Protocol Standards
             </h3>

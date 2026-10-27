@@ -126,7 +126,7 @@ export default function TestimonialsPage() {
   return (
     <main className="w-full overflow-hidden bg-white text-[#414141]">
       {/* ================= HERO SECTION ================= */}
-      <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+      <section className="relative w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/img/home.jpg"

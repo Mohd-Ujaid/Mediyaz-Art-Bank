@@ -570,10 +570,7 @@ export default async function HomePage() {
                     </div>
                   </div>
 
-                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-[11px] text-slate-400 font-medium truncate max-w-[60%]">
-                      {article.author?.name ? article.author.name.split("&")[0].trim() : "Mediyaz Clinical"}
-                    </span>
+                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-end">
                     <Link
                       className="inline-flex items-center text-xs font-bold text-[#ff7664] hover:text-[#ff5242] transition gap-1 group-hover:translate-x-1 duration-200"
                       href={`/blogs/${article.slug}`}
