@@ -25,8 +25,8 @@ export const INITIAL_BLOG_POSTS: BlogPostData[] = [
     coverImage: "/img/blogs/egg-donor-care.jpg",
     tags: ["Egg Donation", "Donor Process", "ART Act 2021", "Oocyte Donor"],
     author: {
-      name: "Dr. Shalini Nair, DGO, FRCOG",
-      role: "Lead Clinical Embryologist & ART Director",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -96,8 +96,8 @@ Once cleared, ovarian stimulation begins on Day 2 or 3 of the menstrual cycle:
     coverImage: "/img/blogs/art-regulation.jpg",
     tags: ["Exclusion Criteria", "Donor Eligibility", "Medical Safety", "ART Act"],
     author: {
-      name: "Dr. Arvind Raghavan, MD",
-      role: "Reproductive Geneticist & Clinical Quality Auditor",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -162,8 +162,8 @@ Genetic anomalies that automatically disqualify prospective donors:
     coverImage: "/img/blogs/health-insurance.jpg",
     tags: ["Compensation", "Altruistic Donation", "ART Act Section 22", "Health Insurance"],
     author: {
-      name: "Adv. Kavita Ramanathan",
-      role: "Lead Regulatory Counsel & ART Statutory Compliance",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -222,8 +222,8 @@ One of the most vital safeguards introduced by **Section 22(1)(b) of the ART Act
     coverImage: "/img/blogs/genetic-screening.jpg",
     tags: ["Prerequisites", "Aadhaar KYC", "Informed Consent", "ART Bank"],
     author: {
-      name: "Dr. Shalini Nair, DGO, FRCOG",
-      role: "Lead Clinical Embryologist & ART Director",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -272,8 +272,8 @@ Here is the exact checklist required for participating as a registered egg donor
     coverImage: "/img/blogs/donor-nutrition.jpg",
     tags: ["Donor Restrictions", "Stimulation Care", "OHSS Safety", "Recovery"],
     author: {
-      name: "Dr. Shalini Nair, DGO, FRCOG",
-      role: "Lead Clinical Embryologist & ART Director",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -325,8 +325,8 @@ Following egg retrieval, donors are advised:
     coverImage: "/img/blogs/art-regulation.jpg",
     tags: ["Legality", "ART Act 2021", "Parentage Law", "Section 31"],
     author: {
-      name: "Adv. Kavita Ramanathan",
-      role: "Lead Regulatory Counsel & ART Statutory Compliance",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -380,8 +380,8 @@ The Act decisively bans commercial egg trafficking:
     coverImage: "/img/blogs/egg-donor-care.jpg",
     tags: ["Safety", "OHSS Prevention", "Retrieval Risks", "Clinical Protocol"],
     author: {
-      name: "Dr. Shalini Nair, DGO, FRCOG",
-      role: "Lead Clinical Embryologist & ART Director",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -439,8 +439,8 @@ Ovarian stimulation merely rescues the eggs that would have naturally dissolved 
     coverImage: "/img/blogs/genetic-screening.jpg",
     tags: ["Diagnostic Tests", "Screening Protocol", "Karyotyping", "Infectious Serology"],
     author: {
-      name: "Dr. Arvind Raghavan, MD",
-      role: "Reproductive Geneticist & Clinical Quality Auditor",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -501,8 +501,8 @@ Performed on Day 2 or 3 of the menstrual cycle:
     coverImage: "/img/blogs/clinic-logistics.jpg",
     tags: ["Egg Retrieval", "OPU Procedure", "Ultrasound Aspiration", "Clinical Timeline"],
     author: {
-      name: "Dr. Shalini Nair, DGO, FRCOG",
-      role: "Lead Clinical Embryologist & ART Director",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -558,8 +558,8 @@ Here is the exact step-by-step clinical timeline of retrieval day.
     coverImage: "/img/blogs/cryo-quarantine.jpg",
     tags: ["Embryo Freezing", "Vitrification", "Cryopreservation", "ART Storage Law"],
     author: {
-      name: "Dr. Arvind Raghavan, MD",
-      role: "Reproductive Geneticist & Clinical Quality Auditor",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -611,8 +611,8 @@ The ART (Regulation) Act, 2021 sets explicit rules regarding embryo cryopreserva
     coverImage: "/img/blogs/clinic-logistics.jpg",
     tags: ["Embryo Transport", "Dry Shipper", "Cryo Logistics", "Chain of Custody"],
     author: {
-      name: "Dr. Arvind Raghavan, MD",
-      role: "Reproductive Geneticist & Clinical Quality Auditor",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -663,8 +663,8 @@ Under the ART (Regulation) Act, 2021, moving gametes or embryos requires complet
     coverImage: "/img/blogs/donor-anonymity.jpg",
     tags: ["Shared Cycle", "Donor Egg Cohort", "IVF Protocols", "Ethical ART"],
     author: {
-      name: "Dr. Shalini Nair, DGO, FRCOG",
-      role: "Lead Clinical Embryologist & ART Director",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -720,8 +720,8 @@ Under **Section 28 of the ART Act 2021**:
     coverImage: "/img/blogs/art-regulation.jpg",
     tags: ["Glossary", "Oocyte Pick-Up", "Clinical Definition", "Embryology"],
     author: {
-      name: "Dr. Shalini Nair, DGO, FRCOG",
-      role: "Lead Clinical Embryologist & ART Director",
+      name: "Mediyaz ART Bank",
+      role: "",
       avatar: "/img/logo.webp",
     },
     excerpt:
@@ -757,6 +757,414 @@ Under **Section 28 of the ART Act 2021**:
 ## Patient Safety & Post-Operative Expectations
 
 The entire aspiration typically requires **15 to 25 minutes**. Due to gentle intravenous sedation, patients experience no intra-operative pain. Post-procedure cramping is generally mild, resolving within 24 hours with basic oral analgesia.
+    `,
+  },
+  {
+    title: "Understanding IVF: The Step-by-Step Patient Guide to In Vitro Fertilisation",
+    slug: "ivf-treatment-step-by-step-guide",
+    category: "Clinical Procedures",
+    readTime: "8 min read",
+    publishedAt: "2026-10-20T09:00:00.000Z",
+    coverImage: "/img/blogs/clinic-logistics.jpg",
+    tags: ["IVF Treatment", "In Vitro Fertilisation", "Fertility Journey", "Embryo Transfer", "Clinical Procedures"],
+    author: {
+      name: "Mediyaz ART Bank",
+      role: "",
+      avatar: "/img/logo.webp",
+    },
+    excerpt:
+      "A complete, compassionate guide to In Vitro Fertilisation (IVF): ovarian stimulation, egg retrieval, laboratory fertilisation, blastocyst culture, and embryo transfer.",
+    content: `
+## What is In Vitro Fertilisation (IVF)?
+
+**In Vitro Fertilisation (IVF)** is one of the most widely recognized and successful forms of Assisted Reproductive Technology (ART). Since its clinical debut, IVF has helped bring millions of healthy babies into the world for couples and individuals experiencing fertility hurdles.
+
+The Latin phrase *"in vitro"* translates literally to "in glass," describing the controlled laboratory environment where eggs and sperm combine outside the body before returning to the uterus.
+
+---
+
+## When is IVF Recommended?
+
+IVF is a versatile treatment that can overcome multiple underlying fertility factors:
+- **Fallopian Tube Blockage or Damage:** Prevents natural transport of eggs and sperm.
+- **Moderate to Severe Endometriosis:** Distorts pelvic anatomy or impairs egg quality.
+- **Ovulation Disorders:** Including treatment-resistant Polycystic Ovary Syndrome (PCOS).
+- **Advanced Maternal Age:** Where maximizing quality eggs within a cycle is crucial.
+- **Unexplained Infertility:** After simpler interventions such as medication or IUI fail.
+- **Severe Male Factor Infertility:** Often paired with ICSI or donor sperm.
+
+---
+
+## The 5 Crucial Stages of an IVF Cycle
+
+### 1. Controlled Ovarian Stimulation
+Normally, a woman's body releases only one egg per cycle. For IVF, natural hormone medications (gonadotropins) are taken daily for 9 to 12 days to stimulate multiple follicles to mature simultaneously. Ultrasound monitoring and estrogen blood tests track follicle size and growth.
+
+### 2. Egg Retrieval (Follicular Aspiration)
+When follicles reach mature size (typically 18–20 mm), an injection called a "trigger shot" initiates final egg maturation. Around 35 to 36 hours later, the doctor performs a minor transvaginal ultrasound-guided aspiration under gentle intravenous sedation. The procedure takes only 15 to 20 minutes, with zero incisions.
+
+### 3. Laboratory Fertilisation & Embryo Culture
+On retrieval day, healthy sperm from a partner or certified donor bank is prepared. The eggs and sperm are placed together in specialized culture incubators. The resulting embryos are carefully nurtured in high-precision culture media over 3 to 5 days until they develop into **Day-5 blastocysts**.
+
+### 4. Embryo Grading & Genetic Screening (Optional)
+Embryologists grade the blastocysts based on inner cell mass and trophectoderm quality. Couples may also opt for Pre-implantation Genetic Testing for Aneuploidies (PGT-A) to screen for chromosomal normality.
+
+### 5. Embryo Transfer
+A single healthy blastocyst is loaded into a soft, flexible catheter and gently placed into the woman's uterus under abdominal ultrasound guidance. The transfer is painless, takes just a few minutes, and requires no anaesthesia.
+
+---
+
+## What Determines IVF Success?
+Key factors influencing IVF success include:
+- **Maternal Age:** Egg chromosomal normality is highest under age 35.
+- **Embryo Quality:** Day-5 blastocysts yield significantly higher implantation rates.
+- **Endometrial Receptivity:** An optimal uterine lining thickness of 8–11 mm.
+- **Laboratory Standards:** State-of-the-art air filtration and incubation in an accredited ART clinic.
+
+---
+
+## Key Patient Takeaway
+IVF is not an instantaneous single-day event; it is a structured, scientific journey. With tailored medication protocols, advanced embryology techniques, and compassionate clinical guidance, the majority of couples achieve healthy, successful pregnancies within 1 to 3 cycles.
+    `,
+  },
+  {
+    title: "IUI Treatment Explained: What to Expect from Intrauterine Insemination",
+    slug: "iui-treatment-intrauterine-insemination-guide",
+    category: "Clinical Procedures",
+    readTime: "6 min read",
+    publishedAt: "2026-10-21T09:00:00.000Z",
+    coverImage: "/img/blogs/donor-nutrition.jpg",
+    tags: ["IUI Treatment", "Intrauterine Insemination", "Artificial Insemination", "Fertility Treatment", "Clinical Procedures"],
+    author: {
+      name: "Mediyaz ART Bank",
+      role: "",
+      avatar: "/img/logo.webp",
+    },
+    excerpt:
+      "Everything you need to know about IUI treatment: how washed sperm insemination works, who it is recommended for, cycle timing, and success rates.",
+    content: `
+## What is Intrauterine Insemination (IUI)?
+
+**Intrauterine Insemination (IUI)**—frequently referred to as artificial insemination—is a gentle, first-line fertility procedure where specially prepared, concentrated sperm is placed directly into the woman's uterus right at the time of ovulation.
+
+In unassisted conception, sperm must swim from the vagina through the cervix and into the uterine cavity; many perish along the way. IUI bypasses cervical barriers, depositing millions of motile sperm closer to the fallopian tubes where the waiting egg is located.
+
+---
+
+## Who is an Ideal Candidate for IUI?
+
+IUI is best suited for couples or individuals where:
+- **Mild Male Factor:** Slightly reduced sperm concentration or borderline motility.
+- **Unexplained Infertility:** When standard reproductive workups appear normal.
+- **Cervical Mucus Hostility:** Thick, acidic, or scarring cervical mucus impeding sperm.
+- **Mild Ovulatory Dysfunction:** Paired with mild oral medications like letrozole.
+- **Single Women & Couples Using Donor Sperm:** Utilizing screened, certified donor sperm.
+
+*Clinical Requirement:* The woman must have at least one patent (open) and healthy fallopian tube verified by a HyCoSy or HSG scan.
+
+---
+
+## The IUI Procedure: Step-by-Step
+
+### Step 1: Cycle Monitoring
+Your doctor tracks follicular development using transvaginal ultrasound starting on Day 2 or 3 of your menstrual cycle. Oral medications or low-dose injections may be prescribed to encourage 1 to 2 follicles to mature.
+
+### Step 2: Ovulation Timing (Trigger Shot)
+When the dominant follicle reaches roughly 18 to 20 mm, an hCG trigger shot is given to ensure ovulation occurs within 36 to 40 hours.
+
+### Step 3: Sperm Washing & Preparation
+A semen sample is processed in the andrology laboratory using density-gradient centrifugation. This step isolates the healthiest, fastest-moving sperm while removing seminal prostaglandins, bacteria, and sluggish cells.
+
+### Step 4: Insemination
+The patient lies comfortably on an examination couch. Using a sterile speculum and a whisper-thin catheter, the doctor gently injects the concentrated sperm directly into the uterine cavity. The procedure takes under 5 minutes and feels virtually identical to a routine Pap smear.
+
+---
+
+## Recovery and Success Expectations
+- **Immediate Recovery:** After resting quietly for 10 to 15 minutes, you can resume all regular daily activities. There is no requirement for bed rest.
+- **Success Rates:** Typical success rates range from 10% to 20% per cycle. Specialists generally recommend attempting 3 to 4 well-timed cycles before considering IVF.
+    `,
+  },
+  {
+    title: "What is ICSI? Overcoming Severe Male Infertility with Precision ART",
+    slug: "icsi-treatment-intracytoplasmic-sperm-injection",
+    category: "Clinical Procedures",
+    readTime: "7 min read",
+    publishedAt: "2026-10-22T09:00:00.000Z",
+    coverImage: "/img/blogs/genetic-screening.jpg",
+    tags: ["ICSI Treatment", "Male Infertility", "Sperm Injection", "Embryology", "Clinical Procedures"],
+    author: {
+      name: "Mediyaz ART Bank",
+      role: "",
+      avatar: "/img/logo.webp",
+    },
+    excerpt:
+      "How Intracytoplasmic Sperm Injection (ICSI) revolutionizes male-factor fertility by micro-injecting a single healthy sperm directly into a mature egg.",
+    content: `
+## What is ICSI Treatment?
+
+**Intracytoplasmic Sperm Injection (ICSI)** is an advanced laboratory micromanipulation technique performed during an IVF cycle. Rather than placing thousands of sperm around an egg and waiting for one to penetrate, an embryologist hand-selects a single optimal sperm and injects it directly into the inner cytoplasm of a mature egg.
+
+First introduced in 1992, ICSI revolutionized the treatment of severe male-factor infertility, transforming cases that once had almost zero chance of fertilisation into high-probability successes.
+
+---
+
+## When is ICSI Indicated?
+
+ICSI is primarily recommended when conventional IVF may not yield adequate fertilisation:
+- **Severe Oligozoospermia:** Extremely low sperm count (less than 5 million/mL).
+- **Asthenozoospermia:** Very poor sperm motility (inability to swim forward).
+- **Teratozoospermia:** Abnormal sperm morphology where sperm lack the enzymes or shape needed to penetrate the egg shell.
+- **Surgically Retrieved Sperm:** Sperm obtained via TESA, PESA, or micro-TESE.
+- **High Anti-Sperm Antibodies:** Immune factors causing sperm clumping.
+- **Previous IVF Fertilisation Failure:** Past cycles where standard IVF yielded low or zero fertilised eggs.
+- **Frozen Oocyte (Egg) Cycles:** Vitrified eggs have a hardened outer shell (zona pellucida) that benefits greatly from micro-injection.
+
+---
+
+## How ICSI is Performed in the Lab
+
+1. **Oocyte Denudation:** Retrieved eggs are treated with an enzyme called hyaluronidase to gently strip away the outer cumulus cells. The embryologist evaluates maturity; only Metaphase II (MII) eggs with extruded polar bodies are selected.
+2. **Sperm Selection:** Under an inverted microscope at 400x magnification, the embryologist evaluates swimming pattern, head symmetry, and tail movement.
+3. **Immobilisation:** The selected sperm is touched across its tail with a glass micropipette to immobilize it and activate membrane permeability.
+4. **Micro-Injection:** The mature egg is held securely by a gentle suction holding pipette. The injection micropipette penetrates the outer zona pellucida, enters the cytoplasm, and gently releases the single sperm.
+5. **Incubation:** Injected eggs are returned to physiological incubators. Fertilisation is verified 16 to 18 hours later by the presence of two distinct pronuclei.
+
+---
+
+## ICSI Success Rates and Safety
+- **Fertilisation Rate:** ICSI successfully fertilises **70% to 85%** of mature eggs injected.
+- **Embryo Development:** Embryos produced via ICSI demonstrate equivalent implantation, pregnancy, and live-birth rates compared to conventional IVF.
+- **Child Health:** Decades of follow-up studies confirm that children born via ICSI are as healthy as naturally conceived children.
+    `,
+  },
+  {
+    title: "IMSI Treatment: High-Magnification Precision for Complex Male Infertility",
+    slug: "imsi-treatment-high-magnification-sperm-selection",
+    category: "Clinical Procedures",
+    readTime: "7 min read",
+    publishedAt: "2026-10-23T09:00:00.000Z",
+    coverImage: "/img/blogs/genetic-screening.jpg",
+    tags: ["IMSI Treatment", "Sperm Morphology", "Ultra High Magnification", "DNA Fragmentation", "Clinical Procedures"],
+    author: {
+      name: "Mediyaz ART Bank",
+      role: "",
+      avatar: "/img/logo.webp",
+    },
+    excerpt:
+      "A clinical look at IMSI: examining sperm at 6,000x magnification to detect subtle nuclear vacuoles, improve blastocyst formation, and reduce miscarriage risks.",
+    content: `
+## What is IMSI Treatment?
+
+**Intracytoplasmic Morphologically Selected Sperm Injection (IMSI)** is an ultra-advanced refinement of ICSI. While conventional ICSI inspects sperm under 200x to 400x magnification, IMSI utilizes high-powered digital optics that magnify sperm up to **6,000x to 6,600x**.
+
+This extreme magnification allows embryologists to inspect the minute internal structure of individual sperm heads in real-time, detecting microscopic craters and defects that are invisible under standard microscopes.
+
+---
+
+## Why Sperm Micro-Architecture Matters
+
+At the cellular level, the head of a sperm contains tightly packed paternal DNA. Under 6,000x magnification, embryologists frequently uncover **intranuclear vacuoles**—tiny hollow pockets or indentations in the sperm head.
+
+Clinical studies demonstrate that sperm with prominent nuclear vacuoles are strongly correlated with:
+- Elevated sperm DNA fragmentation.
+- Arrested embryo division before reaching Day-5 blastocyst stage.
+- Higher rates of early pregnancy loss and biochemical miscarriages.
+- Failed implantation despite good egg quality.
+
+---
+
+## Who Benefits Most from IMSI?
+
+IMSI is recommended selectively for couples presenting with:
+- **Severe Teratozoospermia:** When fewer than 2% of sperm have normal shape under standard criteria.
+- **High Sperm DNA Fragmentation:** Men whose DNA Fragmentation Index (DFI) exceeds 25–30%.
+- **Recurrent Implantation Failure (RIF):** Couples who have experienced 2 or more failed standard IVF/ICSI transfers with seemingly viable embryos.
+- **Unexplained Recurrent Miscarriage:** Couples experiencing repeated early pregnancy losses.
+- **Advanced Paternal Age:** Men over 40–45 seeking to optimize embryo quality.
+
+---
+
+## The Clinical IMSI Advantage
+By filtering out sperm with subtle nuclear defects and selecting only pristine, Grade-I sperm cells:
+- Blastocyst formation rates increase.
+- Implantation rates improve significantly in previous-failure cohorts.
+- Early miscarriage rates are substantially reduced.
+
+IMSI brings peace of mind to couples confronting complex reproductive challenges by leaving nothing to chance at the microscopic level.
+    `,
+  },
+  {
+    title: "TESA Treatment: Surgical Sperm Retrieval for Obstructive Azoospermia",
+    slug: "tesa-treatment-testicular-sperm-aspiration-guide",
+    category: "Clinical Procedures",
+    readTime: "7 min read",
+    publishedAt: "2026-10-24T09:00:00.000Z",
+    coverImage: "/img/blogs/cryo-quarantine.jpg",
+    tags: ["TESA Treatment", "Azoospermia", "Surgical Sperm Retrieval", "Male Fertility", "Clinical Procedures"],
+    author: {
+      name: "Mediyaz ART Bank",
+      role: "",
+      avatar: "/img/logo.webp",
+    },
+    excerpt:
+      "How Testicular Sperm Aspiration (TESA) allows men with zero sperm count (azoospermia) to retrieve viable sperm directly from testicular tissue for ICSI.",
+    content: `
+## What is TESA Treatment?
+
+**Testicular Sperm Aspiration (TESA)** is a minor, needle-based outpatient procedure designed to harvest sperm directly from the testicles for men who have no detectable sperm in their semen—a medical condition known as **azoospermia**.
+
+For many men, an azoospermia diagnosis feels like an absolute barrier to biological fatherhood. However, in a large percentage of men, healthy sperm production is occurring inside the testes, but an anatomical obstruction or transport issue prevents the sperm from exiting during ejaculation. TESA provides a simple, direct bridge.
+
+---
+
+## Obstructive vs. Non-Obstructive Azoospermia
+
+Understanding your diagnosis is key:
+- **Obstructive Azoospermia (OA):** Sperm factory is working, but the delivery path is blocked. Common causes include previous vasectomy, congenital absence of the vas deferens (CBAVD), past hernia surgery, or scarring from infection. **TESA success in OA is over 90–95%.**
+- **Non-Obstructive Azoospermia (NOA):** The testicles produce very little sperm due to hormonal, genetic, or developmental factors. In some cases, localized micro-pockets of sperm can still be extracted through TESA or micro-TESE.
+
+---
+
+## What Happens During the TESA Procedure?
+
+### 1. Preparation & Local Anaesthesia
+The procedure is performed in an outpatient clinic or day-surgery suite. Local anaesthetic is administered to completely numb the scrotal skin and spermatic cord. Patients feel gentle pressure, but no sharp discomfort.
+
+### 2. Needle Aspiration
+A fine-gauge needle attached to a specialized syringe is inserted into the testis. The specialist applies gentle negative suction to aspirate a tiny amount of testicular fluid and seminiferous tubule tissue.
+
+### 3. Immediate Laboratory Verification
+The aspirated fluid is passed to the embryologist in the adjacent laboratory. The sample is examined under a high-power microscope immediately. Once viable, healthy sperm are identified, the procedure is concluded.
+
+### 4. Recovery
+The entire procedure takes 15 to 25 minutes. After a brief 30-minute recovery, the patient can walk out and return home.
+
+---
+
+## How is TESA Sperm Used?
+Because sperm retrieved directly from testicular tissue are not fully mature swimmers, they cannot penetrate an egg naturally in conventional IVF. 
+
+Instead, **TESA is always paired with ICSI (Intracytoplasmic Sperm Injection)**, where an embryologist injects a single retrieved sperm directly into the partner’s egg. Surplus retrieved sperm can be cryopreserved at an accredited ART bank so future cycles do not require repeating the aspiration.
+    `,
+  },
+  {
+    title: "Egg Freezing (Oocyte Cryopreservation): Preserving Your Reproductive Choices",
+    slug: "egg-freezing-oocyte-cryopreservation-guide",
+    category: "Embryo & Cryopreservation",
+    readTime: "8 min read",
+    publishedAt: "2026-10-25T09:00:00.000Z",
+    coverImage: "/img/blogs/egg-donor-care.jpg",
+    tags: ["Egg Freezing", "Oocyte Cryopreservation", "Vitrification", "Fertility Preservation", "Embryo & Cryopreservation"],
+    author: {
+      name: "Mediyaz ART Bank",
+      role: "",
+      avatar: "/img/logo.webp",
+    },
+    excerpt:
+      "A complete guide to egg freezing: vitrification technology, stimulation cycles, retrieval safety, ideal age windows, and lifelong cryostorage security.",
+    content: `
+## What is Egg Freezing?
+
+**Egg Freezing (Oocyte Cryopreservation)** is a safe, medically advanced method that allows a woman to harvest and store her mature eggs at their peak genetic quality for future use. 
+
+A woman is born with all the eggs she will ever possess. Over time, both egg quantity and chromosomal quality naturally decline, with a more pronounced drop occurring after age 35. Egg freezing acts as an effective medical "pause button," preserving eggs at their current biological age indefinitely.
+
+---
+
+## The Breakthrough: Modern Vitrification
+
+Historically, slow-freezing methods carried a risk of forming ice crystals that could damage delicate egg cells upon thawing. 
+
+Modern fertility science uses **vitrification**—an ultra-rapid flash cooling technology that lowers the temperature to **-196°C** in liquid nitrogen within fractions of a second. The cellular water solidifies into a smooth, glass-like state without damaging crystal formation. 
+
+Today, egg thaw survival rates routinely exceed **90% to 95%** in high-standard ART laboratories.
+
+---
+
+## Why Women Choose Egg Freezing
+
+### 1. Social & Personal Reasons
+- Pursuing higher education, professional milestones, or career building.
+- Waiting for the right partner before embarking on parenthood.
+- Personal readiness on your own terms.
+
+### 2. Medical Reasons
+- **Oncofertility:** Preserving healthy eggs prior to chemotherapy, pelvic radiation, or radical surgery.
+- **Endometriosis & Ovarian Surgery:** Progressive conditions that diminish healthy ovarian reserve over time.
+- **Family History of Early Menopause:** Premature Ovarian Insufficiency (POI) running in family genetics.
+
+---
+
+## Ideal Age and Timeline
+
+The optimum biological window for egg freezing is generally between **ages 27 and 35**:
+- Egg quality and chromosomal stability are at their highest.
+- Ovaries respond efficiently to stimulation, yielding more mature eggs per cycle.
+- Freezing 15 to 20 mature eggs provides an approximately **80% to 85%** cumulative probability of at least one future live birth.
+
+---
+
+## The Freezing Cycle Overview
+1. **Ovarian Reserve Testing:** AMH blood test and antral follicle ultrasound scan.
+2. **Hormone Stimulation (10–12 days):** Self-administered micro-injections to mature multiple follicles.
+3. **Outpatient Retrieval (15 mins):** Gentle transvaginal aspiration under light sedation with zero incisions.
+4. **Cryogenic Banking:** Cryovials cataloged and stored safely in specialized liquid nitrogen tanks at an accredited ART bank.
+    `,
+  },
+  {
+    title: "Sperm Freezing: Why and How Men Should Protect Their Future Fertility",
+    slug: "sperm-freezing-semen-cryopreservation-guide",
+    category: "Embryo & Cryopreservation",
+    readTime: "7 min read",
+    publishedAt: "2026-10-26T09:00:00.000Z",
+    coverImage: "/img/blogs/cryo-quarantine.jpg",
+    tags: ["Sperm Freezing", "Semen Banking", "Cryopreservation", "Male Fertility", "Embryo & Cryopreservation"],
+    author: {
+      name: "Mediyaz ART Bank",
+      role: "",
+      avatar: "/img/logo.webp",
+    },
+    excerpt:
+      "A practical guide to semen cryopreservation: medical and lifestyle indications, sample collection, laboratory analysis, and decades-long cryogenic storage.",
+    content: `
+## What is Sperm Freezing?
+
+**Sperm Freezing (Semen Cryopreservation)** is a well-established, non-invasive method of collecting, processing, and storing viable sperm cells at cryogenic temperatures (-196°C). 
+
+At this temperature, cellular metabolism stops completely, preserving sperm viability, motility, and DNA integrity for decades without degradation.
+
+---
+
+## Why Men Choose Sperm Cryopreservation
+
+### 1. Medical Protection
+- **Pre-Cancer Therapies (Oncofertility):** Chemotherapy and radiation frequently cause temporary or permanent testicular damage. Freezing sperm prior to oncology treatment is an essential safeguard.
+- **Pre-Vasectomy Insurance:** Banking healthy sperm prior to vasectomy preserves family-building options if circumstances change later in life.
+- **Testicular or Prostate Surgeries:** Operations with risks of nerve damage or retrograde ejaculation.
+
+### 2. Occupational & Environmental Hazards
+- High-heat occupations (foundry, commercial kitchens, long-distance driving).
+- Exposure to industrial toxins, heavy metals, or ionizing radiation.
+- High-impact extreme sports or military deployment.
+
+### 3. Age & Declining Semen Parameters
+- Paternal age above 40–45 is scientifically linked to higher DNA fragmentation and subtle reproductive decline.
+- Men observing declining sperm counts during routine checks can bank samples as an insurance measure.
+
+### 4. Assisted Reproduction Convenience
+- Providing a backup sample before an IVF or ICSI cycle ensures gametes are ready on egg retrieval day, even if unexpected travel, illness, or performance stress occurs.
+
+---
+
+## The Banking Process: 4 Simple Steps
+
+1. **Infectious Disease Screening:** Rapid blood tests (HIV, Hepatitis B & C, VDRL) to ensure biological safety in storage tanks.
+2. **Sample Collection:** Produced via masturbation in a private, comfortable room after 2 to 5 days of abstinence.
+3. **Comprehensive Andrology Analysis:** Assessment of sample volume, sperm concentration, progressive motility, and morphology.
+4. **Cryoprotection & Storage:** Samples are treated with cryoprotectant media, slowly cooled, and placed in labeled cryovials inside dedicated liquid nitrogen storage tanks.
+
+Semen banking is fast, painless, affordable, and provides lifelong reproductive reassurance.
     `,
   },
 ];

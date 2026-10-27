@@ -1,16 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Blog } from "@/models/Blog";
+import { INITIAL_BLOG_POSTS } from "@/lib/blogs-data";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    await connectToDatabase();
     const { slug } = await params;
+    let blog: any = null;
 
-    const blog = await Blog.findOne({ slug, published: true }).lean();
+    try {
+      await connectToDatabase();
+      blog = await Blog.findOne({
+        slug,
+        $or: [{ published: true }, { status: "PUBLISHED" }, { status: { $exists: false } }],
+      }).lean();
+    } catch (dbErr) {
+      console.warn("DB connection warning in single blog API:", dbErr);
+    }
+
+    if (!blog) {
+      blog = INITIAL_BLOG_POSTS.find((p) => p.slug === slug);
+    }
 
     if (!blog) {
       return NextResponse.json(

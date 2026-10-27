@@ -7,10 +7,11 @@ export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
 
-    // One-time initial seed if the database collection is completely empty
-    const existingCount = await Blog.countDocuments();
-    if (existingCount === 0) {
-      const bulkOps = INITIAL_BLOG_POSTS.map((post) => ({
+    // Ensure all defined blog posts exist in the database
+    const existingSlugs = await Blog.distinct("slug");
+    const missingPosts = INITIAL_BLOG_POSTS.filter((post) => !existingSlugs.includes(post.slug));
+    if (missingPosts.length > 0) {
+      const bulkOps = missingPosts.map((post) => ({
         updateOne: {
           filter: { slug: post.slug },
           update: {
@@ -27,6 +28,20 @@ export async function GET(request: NextRequest) {
       }));
       await Blog.bulkWrite(bulkOps);
     }
+
+    // Update all existing records to ensure author is Mediyaz ART Bank
+    await Blog.updateMany(
+      {},
+      {
+        $set: {
+          author: {
+            name: "Mediyaz ART Bank",
+            role: "",
+            avatar: "/img/logo.webp",
+          },
+        },
+      }
+    );
 
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
@@ -80,14 +95,11 @@ export async function GET(request: NextRequest) {
         excerpt,
         readTime,
         publishedAt: b.publishedAt || b.createdAt || new Date().toISOString(),
-        author:
-          typeof b.author === "object" && b.author?.name
-            ? b.author
-            : {
-                name: "Mediyaz Clinical Editorial Board",
-                role: "ART Clinical & Embryology Specialists",
-                avatar: "/img/logo.webp",
-              },
+        author: {
+          name: "Mediyaz ART Bank",
+          role: "",
+          avatar: "/img/logo.webp",
+        },
       };
     });
 
@@ -97,10 +109,34 @@ export async function GET(request: NextRequest) {
       blogs,
     });
   } catch (error: any) {
-    console.error("Error fetching blogs from DB:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch articles from database" },
-      { status: 500 }
-    );
+    console.error("Error fetching blogs from DB, using fallback:", error);
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get("category");
+    const search = searchParams.get("search");
+
+    let fallback = INITIAL_BLOG_POSTS.map((b) => ({
+      ...b,
+      published: true,
+      status: "PUBLISHED",
+    }));
+
+    if (category && category !== "All") {
+      fallback = fallback.filter((b) => b.category === category);
+    }
+    if (search && search.trim()) {
+      const q = search.toLowerCase().trim();
+      fallback = fallback.filter(
+        (b) =>
+          b.title.toLowerCase().includes(q) ||
+          b.excerpt.toLowerCase().includes(q) ||
+          b.tags.some((t) => t.toLowerCase().includes(q))
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      count: fallback.length,
+      blogs: fallback,
+    });
   }
 }

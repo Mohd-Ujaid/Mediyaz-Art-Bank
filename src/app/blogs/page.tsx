@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Clock, Calendar, ArrowRight, Loader2, BookOpen, AlertCircle, RefreshCw } from "lucide-react";
+import { Search, Clock, Calendar, ArrowRight, BookOpen, AlertCircle, RefreshCw } from "lucide-react";
+import { INITIAL_BLOG_POSTS } from "@/lib/blogs-data";
 
 interface BlogPost {
   _id?: string;
@@ -24,37 +25,51 @@ interface BlogPost {
 
 const categories = [
   "All",
-  "Egg Donation Guide",
-  "Legal & Regulatory",
   "Clinical Procedures",
   "Embryo & Cryopreservation",
+  "Egg Donation Guide",
+  "Legal & Regulatory",
   "Donor Care & Health",
   "Clinical Quality & Screening",
 ];
 
 export default function BlogsPage() {
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Pre-seed articles directly from INITIAL_BLOG_POSTS for instant, zero-delay initial render
+  const [blogs, setBlogs] = useState<BlogPost[]>(() =>
+    INITIAL_BLOG_POSTS.map((b) => ({
+      title: b.title,
+      slug: b.slug,
+      category: b.category,
+      readTime: b.readTime,
+      excerpt: b.excerpt,
+      author: {
+        name: "Mediyaz ART Bank",
+        role: "",
+        avatar: "/img/logo.webp",
+      },
+      publishedAt: b.publishedAt,
+      coverImage: b.coverImage,
+      tags: b.tags,
+    }))
+  );
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Stale-while-revalidate pattern: fetch latest from DB silently in background
   const fetchBlogs = async () => {
-    setLoading(true);
-    setError(null);
     try {
-      const res = await fetch("/api/blogs");
+      const res = await fetch("/api/blogs", { cache: "no-store" });
       const data = await res.json();
-      if (data.success && Array.isArray(data.blogs)) {
+      if (data.success && Array.isArray(data.blogs) && data.blogs.length > 0) {
         setBlogs(data.blogs);
-      } else {
-        throw new Error(data.error || "Failed to load articles");
       }
     } catch (err: any) {
-      console.error("Error fetching blogs:", err);
-      setError(err.message || "Unable to connect to articles database.");
-    } finally {
-      setLoading(false);
+      console.warn("Background blog sync warning:", err);
+      if (blogs.length === 0) {
+        setError(err.message || "Unable to connect to articles database.");
+      }
     }
   };
 
@@ -89,7 +104,7 @@ export default function BlogsPage() {
   return (
     <main className="w-full bg-white text-[#414141]">
       {/* ================= HERO ================= */}
-      <section className="relative w-full overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+      <section className="relative w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/img/home.jpg"
@@ -102,7 +117,7 @@ export default function BlogsPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/55 to-white/90" />
         </div>
 
-        <div className="relative z-1 mx-auto w-full max-w-[1440px] px-6 pt-8 pb-10 sm:px-8 sm:pt-12 sm:pb-12 md:px-10 md:pt-16 md:pb-14 lg:px-16">
+        <div className="relative z-1 mx-auto w-full max-w-[1440px] px-6 pt-7 pb-8 sm:px-8 sm:pt-9 sm:pb-10 md:px-10 lg:px-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#285b63]/10 text-[#285b63] text-xs font-semibold uppercase tracking-wider mb-3">
             <BookOpen className="w-3.5 h-3.5" /> Clinical Publications &amp; Regulatory Insights
           </div>
@@ -118,9 +133,9 @@ export default function BlogsPage() {
       {/* ================= CONTENT ================= */}
       <section className="mx-auto w-full max-w-[1440px] px-6 py-10 sm:px-8 sm:py-14 md:px-10 lg:px-16">
         {/* Search and Category Filter Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-slate-200/80">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 pb-6 border-b border-slate-200/80">
           {/* Category Tabs */}
-          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 sm:flex-wrap">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -138,13 +153,13 @@ export default function BlogsPage() {
           </div>
 
           {/* Search Input */}
-          <div className="relative w-full md:w-80 shrink-0">
+          <div className="relative w-full lg:w-72 shrink-0">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <Search className="w-4 h-4" />
             </div>
             <input
               type="text"
-              placeholder="Search by topic, keyword, or law..."
+              placeholder="Search by topic, keyword, or treatment..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-8 py-2.5 text-xs text-slate-900 outline-none transition focus:border-[#285b63] focus:ring-2 focus:ring-[#285b63]/20 shadow-2xs"
@@ -160,13 +175,8 @@ export default function BlogsPage() {
           </div>
         </div>
 
-        {/* Loading State */}
-        {loading && (
-          <div className="py-24 text-center">
-            <Loader2 className="w-9 h-9 text-[#285b63] animate-spin mx-auto mb-3" />
-            <p className="text-sm font-medium text-[#285b63]">Fetching articles from database...</p>
-          </div>
-        )}
+        {/* Skeleton Loading State */}
+        {loading && <BlogSkeleton />}
 
         {/* Error State */}
         {!loading && error && (
@@ -308,8 +318,9 @@ export default function BlogsPage() {
                   </div>
 
                   <div className="px-6 pb-6 pt-0 flex items-center justify-between text-xs border-t border-slate-100 pt-4 mt-2">
-                    <span className="text-slate-500 text-[11px] font-medium">
-                      {post.author?.name ? post.author.name.split("&")[0].trim() : "Mediyaz Clinical"}
+                    <span className="text-slate-500 text-[11px] font-medium flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#285b63]"></span>
+                      Mediyaz ART Bank
                     </span>
                     <span className="font-bold text-[#ff7468] group-hover:translate-x-1 transition-transform flex items-center gap-1">
                       Read Article <ArrowRight className="w-3.5 h-3.5" />
@@ -322,5 +333,59 @@ export default function BlogsPage() {
         )}
       </section>
     </main>
+  );
+}
+
+function BlogSkeleton() {
+  return (
+    <div className="mt-8 space-y-10 animate-pulse">
+      {/* Featured Banner Skeleton */}
+      <div className="relative rounded-3xl overflow-hidden bg-slate-100/90 border border-slate-200 p-6 sm:p-10 lg:p-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-7 space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-36 rounded-full bg-slate-200" />
+              <div className="h-6 w-28 rounded-full bg-slate-200" />
+              <div className="h-6 w-20 rounded-full bg-slate-200" />
+            </div>
+            <div className="h-9 w-4/5 rounded-xl bg-slate-200" />
+            <div className="h-9 w-2/3 rounded-xl bg-slate-200" />
+            <div className="space-y-2 pt-2">
+              <div className="h-4 w-full rounded bg-slate-200" />
+              <div className="h-4 w-5/6 rounded bg-slate-200" />
+            </div>
+            <div className="pt-2 h-11 w-40 rounded-xl bg-slate-200" />
+          </div>
+          <div className="lg:col-span-5 h-64 lg:h-72 rounded-2xl bg-slate-200" />
+        </div>
+      </div>
+
+      {/* Grid Cards Skeleton */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="flex flex-col justify-between rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-xs"
+          >
+            <div>
+              <div className="w-full h-48 sm:h-52 bg-slate-200" />
+              <div className="p-6 space-y-3">
+                <div className="h-4 w-28 rounded bg-slate-200" />
+                <div className="h-5 w-5/6 rounded bg-slate-200" />
+                <div className="h-5 w-3/5 rounded bg-slate-200" />
+                <div className="space-y-1.5 pt-2">
+                  <div className="h-3.5 w-full rounded bg-slate-100" />
+                  <div className="h-3.5 w-4/5 rounded bg-slate-100" />
+                </div>
+              </div>
+            </div>
+            <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div className="h-4 w-24 rounded bg-slate-200" />
+              <div className="h-4 w-20 rounded bg-slate-200" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

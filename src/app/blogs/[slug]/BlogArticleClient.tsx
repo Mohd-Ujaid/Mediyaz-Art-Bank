@@ -333,7 +333,7 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
       } else if (line.startsWith("> ")) {
         flushParagraph();
         elements.push(
-          <blockquote key={`bq-${keyIdx++}`} className="p-5 my-6 border-l-4 border-[#285b63] bg-[#edf3f1]/50 rounded-r-2xl italic text-sm sm:text-base text-[#1d3840] leading-relaxed">
+          <blockquote key={`bq-${keyIdx++}`} className="p-5 my-6 border border-slate-200/80 bg-[#edf3f1]/40 rounded-2xl italic text-sm sm:text-base text-[#1d3840] leading-relaxed">
             {renderInlineMarkdown(line.replace(/^>\s+/, ""))}
           </blockquote>
         );
@@ -365,7 +365,7 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
 
   return (
     <>
-      <main className="min-h-screen bg-[#fafbfc] pt-24 pb-20">
+      <main className="min-h-screen bg-[#fafbfc] pt-6 sm:pt-8 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Breadcrumbs & Navigation Bar */}
@@ -414,10 +414,6 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
                 <span className="flex items-center gap-1 text-xs text-slate-500 font-medium">
                   <Calendar className="w-3.5 h-3.5 text-slate-400" /> {formatDate(blog.publishedAt)}
                 </span>
-                <span className="text-slate-300">•</span>
-                <span className="inline-flex items-center gap-1 text-xs text-emerald-700 font-semibold bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                  <ShieldCheck className="w-3.5 h-3.5" /> ART Act 2021 Verified
-                </span>
               </div>
 
               {/* Title */}
@@ -426,24 +422,26 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
               </h1>
 
               {/* Summary Lead Excerpt */}
-              <div className="text-base sm:text-lg text-slate-700 leading-relaxed italic border-l-4 border-[#285b63] pl-4 py-2 mb-8 bg-[#edf3f1]/40 rounded-r-2xl">
+              <div className="text-base sm:text-lg text-slate-700 leading-relaxed italic border border-slate-200/80 p-5 mb-8 bg-[#edf3f1]/40 rounded-2xl">
                 {renderInlineMarkdown(blog.excerpt)}
               </div>
 
               {/* Author Attribution Card */}
               <div className="flex items-center justify-between p-4 mb-8 rounded-2xl bg-slate-50 border border-slate-100 flex-wrap gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-full bg-[#285b63]/10 flex items-center justify-center text-[#285b63]">
-                    <User className="w-5 h-5" />
+                <div className="flex items-center gap-3.5">
+                  <div className="h-8 relative flex items-center">
+                    <Image
+                      src="/img/logo.webp"
+                      alt="Mediyaz ART Bank"
+                      width={160}
+                      height={48}
+                      className="h-7 w-auto object-contain"
+                    />
                   </div>
-                  <div>
-                    <p className="text-xs sm:text-sm font-bold text-[#1d3840]">
-                      {blog.author?.name || "Mediyaz Clinical Editorial Board"}
-                    </p>
-                    <p className="text-[11px] text-slate-500 font-medium">
-                      {blog.author?.role || "ART Clinical & Embryology Specialists"}
-                    </p>
-                  </div>
+                  <div className="h-5 w-px bg-slate-200 hidden sm:block" />
+                  <p className="text-xs sm:text-sm font-bold text-[#1d3840]">
+                    Published by Mediyaz ART Bank
+                  </p>
                 </div>
 
                 {blog.tags && blog.tags.length > 0 && (
@@ -518,7 +516,7 @@ export default function BlogArticleClient({ blog, related }: BlogArticleClientPr
               
               {/* Sticky Table of Contents */}
               {headings.length > 0 && (
-                <div className="sticky top-28 bg-white rounded-3xl border border-slate-200/90 p-6 shadow-xs">
+                <div className="sticky top-36 bg-white rounded-3xl border border-slate-200/90 p-6 shadow-xs">
                   <div className="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100 text-[#1d3840] font-serif font-bold text-base">
                     <List className="w-4 h-4 text-[#285b63]" />
                     <span>Table of Contents</span>

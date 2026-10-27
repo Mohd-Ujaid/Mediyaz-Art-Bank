@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Blog } from "@/models/Blog";
+import { INITIAL_BLOG_POSTS } from "@/lib/blogs-data";
 import { 
   ArrowLeft, 
   Calendar, 
@@ -22,12 +23,22 @@ interface PageProps {
 
 async function getBlogData(slug: string) {
   try {
-    await connectToDatabase();
-    
-    let rawBlog = await Blog.findOne({
-      slug,
-      $or: [{ published: true }, { status: "PUBLISHED" }, { status: { $exists: false } }],
-    }).lean();
+    let rawBlog: any = null;
+    let rawRelated: any[] = [];
+
+    try {
+      await connectToDatabase();
+      rawBlog = await Blog.findOne({
+        slug,
+        $or: [{ published: true }, { status: "PUBLISHED" }, { status: { $exists: false } }],
+      }).lean();
+    } catch (dbErr) {
+      console.warn("DB connection warning in getBlogData:", dbErr);
+    }
+
+    if (!rawBlog) {
+      rawBlog = INITIAL_BLOG_POSTS.find((p) => p.slug === slug);
+    }
 
     if (!rawBlog) return null;
 
@@ -46,23 +57,30 @@ async function getBlogData(slug: string) {
       excerpt,
       readTime,
       publishedAt: (rawBlog as any).publishedAt || (rawBlog as any).createdAt || new Date().toISOString(),
-      author:
-        typeof (rawBlog as any).author === "object" && (rawBlog as any).author?.name
-          ? (rawBlog as any).author
-          : {
-              name: "Mediyaz Clinical Editorial Board",
-              role: "ART Clinical & Embryology Specialists",
-              avatar: "/img/logo.webp",
-            },
+      author: {
+        name: "Mediyaz ART Bank",
+        role: "",
+        avatar: "/img/logo.webp",
+      },
     };
 
-    const rawRelated = await Blog.find({
-      category: (blog as any).category,
-      slug: { $ne: (blog as any).slug },
-      $or: [{ published: true }, { status: "PUBLISHED" }, { status: { $exists: false } }],
-    })
-      .limit(3)
-      .lean();
+    try {
+      rawRelated = await Blog.find({
+        category: (blog as any).category,
+        slug: { $ne: (blog as any).slug },
+        $or: [{ published: true }, { status: "PUBLISHED" }, { status: { $exists: false } }],
+      })
+        .limit(3)
+        .lean();
+    } catch {
+      rawRelated = [];
+    }
+
+    if (!rawRelated || rawRelated.length === 0) {
+      rawRelated = INITIAL_BLOG_POSTS.filter(
+        (p) => p.category === (blog as any).category && p.slug !== (blog as any).slug
+      ).slice(0, 3);
+    }
 
     const related = rawRelated.map((r: any) => ({
       title: r.title,
